@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.codingfactory</groupId>
-    <artifactId>Porare</artifactId>
+    <artifactId>porare</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Java-Spring-Boot-Web-Project</name>
     <description>Java-Spring-Boot-Web-Project</description>
@@ -24,6 +24,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jersey</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

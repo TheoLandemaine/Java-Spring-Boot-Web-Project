@@ -5,8 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class PorareApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(PorareApplication.class, args);
-    }
+
+	public static void main(String[] args) {
+		SpringApplication.run(PorareApplication.class, args);
+	}
 
 }
