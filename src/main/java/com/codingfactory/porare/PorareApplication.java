@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProrareApplication {
-
+public class PorareApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ProrareApplication.class, args);
+        SpringApplication.run(PorareApplication.class, args);
     }
 
 }
