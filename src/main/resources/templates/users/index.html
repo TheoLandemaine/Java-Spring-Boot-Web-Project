@@ -14,30 +14,6 @@
     </tr>
 </table>
 
-<script>
-    // Create a new Fetch Request
-    $.ajax({
-        url: 'http://localhost:8080/api/users',
-        type: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            console.log(data);
-
-            // Create a new table row for each user
-            for (var i = 0; i < data.length; i++) {
-                var user = data[i];
-                $(`table`).append(`
-                    <tr>
-                        <td>${user.firstName}</td>
-                        <td>${user.lastName}</td>
-                    </tr>
-                `);
-            }
-
-            $(`script`).remove();
-        }
-    });
-
-</script>
+<script src="./js/index.script.js"></script>
 </body>
 </html>
