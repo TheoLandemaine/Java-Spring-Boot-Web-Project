@@ -29,7 +29,7 @@ public class PorareController {
 		List<User> users = userService.getAllUsers();
 		
 		model.addAttribute("users", users);
-		return "UserView";
+		return "users/index";
 	}
 	
 
