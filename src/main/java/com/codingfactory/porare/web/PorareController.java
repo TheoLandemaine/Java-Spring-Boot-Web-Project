@@ -31,6 +31,11 @@ public class PorareController {
 		model.addAttribute("users", users);
 		return "users/index";
 	}
+
+	@GetMapping("register")
+	public String register() {
+		return "register/index";
+	}
 	
 
 }

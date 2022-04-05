@@ -7,6 +7,7 @@ function load(url) {
 }
 // Load all Includes
 document.querySelector("head").innerHTML += load("./inc/head.html");
+document.querySelector("header").innerHTML += load("./inc/header.html");
 document.querySelector("nav").innerHTML += load("./inc/nav.html");
 document.querySelector("footer").innerHTML += load("./inc/footer.html");
 // Remove the script tag
