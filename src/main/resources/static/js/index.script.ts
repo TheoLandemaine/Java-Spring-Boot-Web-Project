@@ -1,23 +1,22 @@
 // Create Fetch API request
-const url:string = 'http://localhost:8080/api/users';
+const url: string = 'http://localhost:8080/api/users';
 
-fetch(url)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data:string) {
-        console.log(data);
+// Create XMLHttpRequest request GET
+var xhr: XMLHttpRequest = new XMLHttpRequest();
 
-        // Create a new table row for each user
-        for (var i:number = 0; i < data.length; i++) {
-            var user:any = data[i];
-            $(`table`).append(`
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        for (var i: number = 0; i < JSON.parse(xhr.responseText).length; i++) {
+            var user: any = JSON.parse(xhr.responseText)[i];
+            document.querySelector(`table`).innerHTML += `
                     <tr>
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
                     </tr>
-                `);
+                `;
         }
+    }
+};
 
-        $(`script`).remove();
-    });
+xhr.open('GET', url, true);
+xhr.send();
