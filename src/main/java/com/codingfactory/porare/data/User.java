@@ -17,17 +17,17 @@ public class User implements Serializable {
 	// Creation of the attributes of the class
 	private String userId;
 	private String username;
-	private String password;
+	private String email;
 
 	public User() {
 
 	}
 
 	// Creation of the constructor of the class
-	public User(String userId, String username, String password) {
+	public User(String userId, String username, String email) {
 		this.userId = userId; // Creation of the attribute userId
 		this.username = username; // Creation of the attribute username
-		this.password = password; // Creation of the attribute password
+		this.email = email; // Creation of the attribute password
 	}
 
 	public String getUserId() {
@@ -46,11 +46,11 @@ public class User implements Serializable {
 		this.username = username; // Set the value of the attribute username
 	}
 
-	public String getPassword(String u_password) {
-		return password; // Return the value of the attribute password
+	public String getEmail() {
+		return email;
 	}
 
-	public void setPassword(String password) {
-		this.password = password; // Set the value of the attribute password
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

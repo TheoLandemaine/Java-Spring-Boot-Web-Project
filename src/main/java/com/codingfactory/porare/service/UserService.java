@@ -39,7 +39,7 @@ public class UserService {
                 User user = new User(); // Create a new user
                 user.setUserId(String.valueOf((int) row.get("u_id"))); // Set the user id
                 user.setUsername((String) row.get("u_username")); // Set the username
-                user.setPassword((String) row.get("u_password")); // Set the password
+                user.setEmail((String) row.get("u_email")); // Set the password
 
                 users.add(user); // Add the user to the list
             }

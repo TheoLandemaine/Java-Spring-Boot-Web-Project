@@ -19,7 +19,7 @@ function realTime() {
                     <tr>
                         <td>${user.userId}</td>
                         <td>${user.username}</td>
-                        <td>${user.password}</td>
+                        <td>${user.email}</td>
                     </tr>
                 `;
             }

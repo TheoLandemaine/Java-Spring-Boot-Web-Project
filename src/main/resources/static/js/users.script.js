@@ -13,7 +13,7 @@ function realTime() {
             table.innerHTML = '';
             for (var i = 0; i < JSON.parse(xhr.responseText).length; i++) {
                 var user = JSON.parse(xhr.responseText)[i];
-                table.innerHTML += "\n                    <tr>\n                        <td>".concat(user.userId, "</td>\n                        <td>").concat(user.username, "</td>\n                        <td>").concat(user.password, "</td>\n                    </tr>\n                ");
+                table.innerHTML += "\n                    <tr>\n                        <td>".concat(user.userId, "</td>\n                        <td>").concat(user.username, "</td>\n                        <td>").concat(user.email, "</td>\n                    </tr>\n                ");
             }
         }
     };
