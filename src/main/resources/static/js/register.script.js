@@ -13,8 +13,8 @@ document.querySelector('#submit').addEventListener('click', function (e) {
     var xhr = new XMLHttpRequest();
     if (username && password && email && confirmPassword && (password === confirmPassword)) {
         // Register the account into the api
-        var url_1 = 'http://localhost:8080/api/register';
-        xhr.open('POST', url_1, true);
+        var url = 'http://localhost:8080/api/register';
+        xhr.open('POST', url, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // If response is true, redirect to login page
