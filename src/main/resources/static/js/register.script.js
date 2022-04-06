@@ -13,8 +13,8 @@ document.querySelector('#submit').addEventListener('click', function (e) {
     var xhr = new XMLHttpRequest();
     if (username && password && email && confirmPassword && (password === confirmPassword)) {
         // Register the account into the api
-        var url_1 = 'http://localhost:8080/api/register';
-        xhr.open('POST', url_1, true);
+        var url = 'http://localhost:8080/api/register';
+        xhr.open('POST', url, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // If response is true, redirect to login page
@@ -35,6 +35,24 @@ document.querySelector('#submit').addEventListener('click', function (e) {
                 '<p class="popupMessage">Please fill in all the fields</p>' +
                 '<button class="popupButton">OK</button>' +
                 '</div>';
+        var popups = document.querySelectorAll('.popup');
+        for (var y = 0; y < popups.length; y++) {
+            if (popups[y].classList.contains('coming')) {
+                popups[y].classList.remove('coming');
+            }
+        }
+        for (var i = popups.length - 1; i < popups.length; i++) {
+            popups[i].classList.add('coming');
+        }
+        setTimeout(function () {
+            var popups = document.querySelectorAll('.popup');
+            for (var i = 0; i < popups.length; i++) {
+                if (!popups[i].classList.contains('leaving')) {
+                    popups[i].classList.add('leaving');
+                    break;
+                }
+            }
+        }, 1000);
         // After 1.5 seconds the popup will disappear 
         setTimeout(function () {
             document.querySelector('.popup').remove();
@@ -46,6 +64,24 @@ document.querySelector('#submit').addEventListener('click', function (e) {
                 '<p class="popupMessage">Passwords do not match</p>' +
                 '<button class="popupButton">OK</button>' +
                 '</div>';
+        var popups = document.querySelectorAll('.popup');
+        for (var y = 0; y < popups.length; y++) {
+            if (popups[y].classList.contains('coming')) {
+                popups[y].classList.remove('coming');
+            }
+        }
+        for (var i = popups.length - 1; i < popups.length; i++) {
+            popups[i].classList.add('coming');
+        }
+        setTimeout(function () {
+            var popups = document.querySelectorAll('.popup');
+            for (var i = 0; i < popups.length; i++) {
+                if (!popups[i].classList.contains('leaving')) {
+                    popups[i].classList.add('leaving');
+                    break;
+                }
+            }
+        }, 1000);
         setTimeout(function () {
             document.querySelector('.popup').remove();
         }, 1500);
