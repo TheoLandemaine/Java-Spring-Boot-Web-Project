@@ -13,12 +13,14 @@ document.querySelector('#submit').addEventListener('click', function (e) {
     var xhr = new XMLHttpRequest();
     if (username && password && email && confirmPassword && (password === confirmPassword)) {
         // Register the account into the api
-        var url = 'http://localhost:8080/api/register';
-        xhr.open('POST', url, true);
+        var url_1 = 'http://localhost:8080/api/register';
+        xhr.open('POST', url_1, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // If response is true, redirect to login page
-                if (xhr.responseText === 'true') {
+                if (xhr.responseText !== 'false') {
+                    // Create cookie and stock result in him
+                    document.cookie = 'token=' + xhr.responseText;
                     window.location.href = './login';
                 }
                 else {

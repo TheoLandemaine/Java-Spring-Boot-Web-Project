@@ -9,6 +9,9 @@ package com.codingfactory.porare.service;
  * @since 06/04/2022
  */
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -23,7 +26,7 @@ public class LoginService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public boolean registerUser(String username, String email, String password, String confirmPassword) {
+    public String registerUser(String username, String email, String password, String confirmPassword) {
         try { // Try to get all users from the database
             if (password.equals(confirmPassword)) { // Check if the password and the confirm password are the same
 
@@ -48,11 +51,10 @@ public class LoginService {
                     password = sb.toString();
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
-                    return false;
+                    return "false";
                 }
 
                 String sql = "SELECT COUNT(*) FROM user WHERE u_username = ? OR u_email = ?";
-
                 int count = jdbcTemplate.queryForObject(sql, Integer.class, username, email);
 
                 if (count == 0) { // Check if the username is already in the database
@@ -62,18 +64,29 @@ public class LoginService {
                     // Execute the query
                     jdbcTemplate.update(sql, username, email, password);
 
-                    // Return true if the query is executed
-                    return true;
+                    // Get User ID
+                    sql = "SELECT u_id FROM user WHERE u_username = ?";
+                    int userId = jdbcTemplate.queryForObject(sql, Integer.class, username);
+
+                    // Create JWT token
+                    try {
+                        Algorithm algorithm = Algorithm.HMAC256(password);
+                        // Create Token variable to create JWT token and return this token
+                        return JWT.create().withClaim("userId", userId).withClaim("username", username).withClaim("email", email).sign(algorithm);
+                    } catch (JWTCreationException exception) {
+                        //Invalid Signing configuration / Couldn't convert Claims
+                        return "false";
+                    }
                 } else {
-                    return false;
+                    return "false";
                 }
             } else { // If the password and the confirm password are different
                 System.out.println("Password and confirm password are not the same");
-                return false;
+                return "false";
             }
         } catch (Exception e) { // Catch any exceptions
             e.printStackTrace();
-            return false;
+            return "false";
         }
     }
 

@@ -1,7 +1,6 @@
 package com.codingfactory.porare.web;
 
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.codingfactory.porare.service.LoginService;
@@ -35,11 +34,11 @@ public class PorareRestController {
     }
 
     @PostMapping("register")
-    public boolean register(@RequestParam String username, // Get username from the request
-                            @RequestParam String email, // Get email from the request
-                            @RequestParam String password, // Get password from the request
-                            @RequestParam String confirmPassword, // Get confirm password from the request
-                            HttpServletRequest httpServletRequest) {
+    public String register(@RequestParam String username, // Get username from the request
+                           @RequestParam String email, // Get email from the request
+                           @RequestParam String password, // Get password from the request
+                           @RequestParam String confirmPassword, // Get confirm password from the request
+                           HttpServletRequest httpServletRequest) {
 
         /*
         * Return @Boolean

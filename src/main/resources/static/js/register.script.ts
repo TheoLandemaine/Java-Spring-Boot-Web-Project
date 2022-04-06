@@ -22,7 +22,10 @@ document.querySelector('#submit').addEventListener('click', function(e) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // If response is true, redirect to login page
-                if (xhr.responseText === 'true') {
+                if (xhr.responseText !== 'false') {
+                    // Create cookie and stock result in him
+                    document.cookie = 'token=' + xhr.responseText;
+
                     window.location.href = './login';
                 } else {
                     // If response is false, show error message
