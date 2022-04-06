@@ -76,4 +76,45 @@ public class LoginService {
             return false;
         }
     }
+
+    public boolean loginUser(String email, String password) {
+        try { // Try to get all users from the database
+            // Crypt the password
+            try {
+                // Create MessageDigest instance for MD5
+                MessageDigest md = MessageDigest.getInstance("MD5");
+
+                // Add password bytes to digest
+                md.update(password.getBytes());
+
+                // Get the hash's bytes
+                byte[] bytes = md.digest();
+
+                // This bytes[] has bytes in decimal format. Convert it to hexadecimal format
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < bytes.length; i++) {
+                    sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                }
+
+                // Get complete hashed password in hex format
+                password = sb.toString();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            String sql = "SELECT COUNT(*) FROM user WHERE u_email = ? AND u_password = ?";
+
+            int count = jdbcTemplate.queryForObject(sql, Integer.class, email, password);
+
+            if (count == 1) { // Check if the username is already in the database
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) { // Catch any exceptions
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
