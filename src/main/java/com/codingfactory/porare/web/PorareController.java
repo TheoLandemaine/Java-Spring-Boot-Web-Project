@@ -8,6 +8,8 @@ import com.codingfactory.porare.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.codingfactory.porare.data.User;
@@ -30,6 +32,11 @@ public class PorareController {
 		
 		model.addAttribute("users", users);
 		return "users/index";
+	}
+
+	@GetMapping("register")
+	public String register() {
+		return "register/index";
 	}
 	
 

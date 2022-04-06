@@ -1,0 +1,46 @@
+#popUpContainer {
+  position: fixed;
+  top: 120px;
+  right: 30px;
+  width: 25%;
+  height: 10%;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+}
+#popUpContainer .popup {
+  width: 100%;
+  max-height: 90px;
+  margin-bottom: 30px;
+  background-color: rgba(100, 19, 19, 0.5529411765);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(51, 51, 51, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#popUpContainer .popup .popupMessage {
+  color: rgb(116, 0, 0);
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+#popUpContainer .popup .popupButton {
+  width: 40%;
+  height: 40px;
+  background-color: rgba(72, 72, 72, 0.6705882353);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(51, 51, 51, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  margin-top: -10px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.5529411765);
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+
+/*# sourceMappingURL=popup.style.css.map */

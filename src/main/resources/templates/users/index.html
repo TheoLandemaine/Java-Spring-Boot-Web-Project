@@ -1,43 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Utilisateurs</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-</head>
+
+<head></head>
+
 <body>
-<table>
-    <tr>
-        <th>First name |</th>
-        <th>Last name</th>
-    </tr>
-</table>
+    <header class="header"></header>
+    <table>
+        <tr>
+            <th>First name |</th>
+            <th>Last name</th>
+        </tr>
+    </table>
 
-<script>
-    // Create a new Fetch Request
-    $.ajax({
-        url: 'http://localhost:8080/api/users',
-        type: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            console.log(data);
+    <footer></footer>
 
-            // Create a new table row for each user
-            for (var i = 0; i < data.length; i++) {
-                var user = data[i];
-                $(`table`).append(`
-                    <tr>
-                        <td>${user.firstName}</td>
-                        <td>${user.lastName}</td>
-                    </tr>
-                `);
-            }
-
-            $(`script`).remove();
-        }
-    });
-
-</script>
+    <script src="./js/loader.script.js" id="loader"></script>
+    <script src="./js/users.script.js"></script>
 </body>
+
 </html>
