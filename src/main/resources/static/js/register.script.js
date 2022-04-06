@@ -1,25 +1,29 @@
-// Register the account into the api
-// @ts-ignore
-var url = 'http://localhost:8080/api/register';
+// On submit click
 document.querySelector('#submit').addEventListener('click', function (e) {
     e.preventDefault();
-    var username = document.querySelector('#username').value;
-    var password = document.querySelector('#password').value;
-    var confirmPassword = document.querySelector('#confirmPassword').value;
-    var email = document.querySelector('#email').value;
-    var data = 'username=' + username + '&password=' + password + '&confirmPassword' + confirmPassword + '&email=' + email;
+    var username = document.querySelector('#username').value; // Get the username value
+    var password = document.querySelector('#password').value; // Get the password value
+    var confirmPassword = document.querySelector('#confirmPassword').value; // Get the confirm password value
+    var email = document.querySelector('#email').value; // Get the email value
+    var data = new FormData();
+    data.append("username", username);
+    data.append("email", email);
+    data.append("password", password);
+    data.append("confirmPassword", confirmPassword);
     var xhr = new XMLHttpRequest();
     if (username && password && email && confirmPassword && (password === confirmPassword)) {
-        xhr.open('POST', url, true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        // Register the account into the api
+        var url_1 = 'http://localhost:8080/api/register';
+        xhr.open('POST', url_1, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                var json = JSON.parse(xhr.responseText);
-                if (json.success) {
-                    window.location.href = 'http://localhost:8080/login';
+                // If response is true, redirect to login page
+                if (xhr.responseText === 'true') {
+                    window.location.href = './login';
                 }
                 else {
-                    alert(json.message);
+                    // If response is false, show error message
+                    alert('Username already exists');
                 }
             }
         };
