@@ -105,12 +105,29 @@ function searchingPokeData(theGeneration, theType, name) {
         finalURL = "https://pokeapi.co/api/v2/pokemon/" + name;
 
         console.log(finalURL);
+        let divResult = document.querySelector('#pokeResults');
 
+        console.log("test avant fetch");
         fetch(finalURL)
             .then(function (response) {
+
+                console.log("test dans premier then");
+                console.log(response.ok);
+                if (response.ok == false) {
+                    console.log("erreur ta mere");
+                    document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>no card matches your search</h2>";
+                    divResult.style.display = 'flex';
+                    divResult.style.alignItems = 'center';
+                } else {
+                    divResult.style.display = 'block';
+                }
+
                 return response.json();
             })
             .then(function (data) {
+
+                console.log("test dans 2e then");
+
                 var pokemonNameArray = [];
                 pokemonNameArray.push(data.name);
                 searchingTCGData(pokemonNameArray);
@@ -151,7 +168,12 @@ function getCardsOfType(type, genArray) {
 // Non Sorted
 // Takes the names from the PokeAPI database and runs for matches in TCG
 function searchingTCGData(pokemonData) {
+
+    console.log("pokemonData");
+
     for (i = 0; i < pokemonData.length; i++) {
+        console.log(pokemonData);
+
         pokeCardURL = "https://api.pokemontcg.io/v2/cards?q=name:" + pokemonData[i];
 
         fetch(pokeCardURL, {
@@ -311,6 +333,10 @@ searchButton1.addEventListener("click", function () {
     searchedName = nameSearch1.value;
     searchedName = searchedName.toLowerCase();
 
+    if (searchedName == "oui") {
+        console.log("oui")
+    }
+
     console.log(
         "Type: " + parameterType + "  Generation: " + parameterGeneration
     );
@@ -379,7 +405,9 @@ collectionsDisplayClose.addEventListener("click", function () {
 
     collectionsModal.style.display = "none";
 });
+
 startPageSearch();
+
 // Handle Collections Modal
 savedCardsBtn1.addEventListener("click", function (e) {
     console.log(e);
@@ -387,5 +415,4 @@ savedCardsBtn1.addEventListener("click", function (e) {
     getSavedCards(collectedCards);
     console.log(collectedCards);
 });
-
 

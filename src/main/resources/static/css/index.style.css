@@ -218,6 +218,12 @@ img:hover {
   cursor: pointer;
 }
 
+div#pokeResults {
+  width: auto;
+  height: 90vh;
+  text-align: center;
+}
+
 .top-search {
   display: none;
   background-color: teal;
