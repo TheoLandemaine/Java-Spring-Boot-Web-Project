@@ -1,27 +1,32 @@
-// Register the account into the api
-// @ts-ignore
-var url:string = 'http://localhost:8080/api/register';
-
-
-
+// On submit click
 document.querySelector('#submit').addEventListener('click', function(e) {
     e.preventDefault();
-    var username:string = (<HTMLInputElement>document.querySelector('#username')).value;
-    var password:string = (<HTMLInputElement>document.querySelector('#password')).value;
-    var confirmPassword:string = (<HTMLInputElement>document.querySelector('#confirmPassword')).value;
-    var email:string = (<HTMLInputElement>document.querySelector('#email')).value;
-    var data:string = 'username=' + username + '&password=' + password + '&confirmPassword' + confirmPassword + '&email=' + email;
-    var xhr:XMLHttpRequest = new XMLHttpRequest();
+
+    const username:string = (<HTMLInputElement>document.querySelector('#username')).value; // Get the username value
+    const password:string = (<HTMLInputElement>document.querySelector('#password')).value; // Get the password value
+    const confirmPassword:string = (<HTMLInputElement>document.querySelector('#confirmPassword')).value; // Get the confirm password value
+    const email:string = (<HTMLInputElement>document.querySelector('#email')).value; // Get the email value
+
+    const data = new FormData();
+    data.append("username", username);
+    data.append("email", email);
+    data.append("password", password);
+    data.append("confirmPassword", confirmPassword);
+
+    const xhr:XMLHttpRequest = new XMLHttpRequest();
     if (username && password && email && confirmPassword && (password === confirmPassword)) {
+        // Register the account into the api
+        const url: string = 'http://localhost:8080/api/register';
+
         xhr.open('POST', url, true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                var json: any = JSON.parse(xhr.responseText);
-                if (json.success) {
-                    window.location.href = 'http://localhost:8080/login';
+                // If response is true, redirect to login page
+                if (xhr.responseText === 'true') {
+                    window.location.href = './login';
                 } else {
-                    alert(json.message);
+                    // If response is false, show error message
+                    alert('Username already exists');
                 }
             }
         };

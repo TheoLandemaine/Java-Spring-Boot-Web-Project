@@ -27,17 +27,26 @@ public class PorareRestController {
 
     @GetMapping("users")
     public List<User> getUsers() {
+        /*
+        * Return @List<User>
+        * List of all users
+        */
         return userService.getAllUsers();
     }
 
     @PostMapping("register")
-    public boolean register(@RequestParam String username,
-                               @RequestParam String email,
-                               @RequestParam String password,
-                               @RequestParam String confirmPassword,
-                               HttpServletRequest httpServletRequest) {
+    public boolean register(@RequestParam String username, // Get username from the request
+                            @RequestParam String email, // Get email from the request
+                            @RequestParam String password, // Get password from the request
+                            @RequestParam String confirmPassword, // Get confirm password from the request
+                            HttpServletRequest httpServletRequest) {
 
-        return loginService.registerUser(username, email, password, confirmPassword);
+        /*
+        * Return @Boolean
+        * true if the registration is successful
+        * false if the registration is not successful
+        */
+        return loginService.registerUser(username, email, password, confirmPassword); // Return Result
     }
 
 }
