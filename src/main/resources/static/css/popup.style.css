@@ -5,66 +5,124 @@
   width: 25%;
   height: 10%;
   z-index: 9999;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
+
 #popUpContainer .popup {
   width: 100%;
   max-height: 90px;
   margin-bottom: 30px;
   background-color: #ff000058;
   border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 #popUpContainer .popup .popupMessage {
   color: #ca2121;
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
 }
+
 #popUpContainer .popup .popupButton {
   width: 20%;
   height: 20px;
   background-color: #7e7e7e80;
   border: none;
   border-radius: 30px;
-  box-shadow: 0 0 10px rgba(75, 75, 75, 0.5);
+  -webkit-box-shadow: 0 0 10px rgba(75, 75, 75, 0.5);
+          box-shadow: 0 0 10px rgba(75, 75, 75, 0.5);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   font-size: 1.1rem;
   margin-top: -10px;
   font-weight: bold;
   color: #ffffff;
   cursor: pointer;
-  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
+
 #popUpContainer .coming {
-  animation: slideInLeft 0.5s;
-  animation-fill-mode: forwards;
+  -webkit-animation: slideInLeft 0.5s;
+          animation: slideInLeft 0.5s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
 }
+
 #popUpContainer .leaving {
-  animation: slideInRight 0.5s;
-  animation-fill-mode: forwards;
+  -webkit-animation: slideInRight 0.5s;
+          animation: slideInRight 0.5s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
 }
-@keyframes slideInLeft {
+
+@-webkit-keyframes slideInLeft {
   from {
-    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
   }
   to {
-    transform: translateX(0);
-  }
-}
-@keyframes slideInRight {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
   }
 }
 
+@keyframes slideInLeft {
+  from {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+  to {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes slideInRight {
+  from {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  to {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  to {
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
+  }
+}
 /*# sourceMappingURL=popup.style.css.map */
