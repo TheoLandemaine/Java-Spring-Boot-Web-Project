@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="./css/form.style.css">
+    <link rel="stylesheet" href="./css/popup.style.css">
+
+</head>
+
+<body>
+<header class="header"></header>
+
+<div id="popUpContainer"></div>
+<h1>Login ta mere (a supprimer)</h1>
+
+<form class="form" method="post" action="">
+    <!-- Add an input for username, email and password and confirm password -->
+    <div class="formRow">
+        <input type="text" name="username" id="username" placeholder="Username">
+        <input type="text" name="email" id="email" placeholder="Email">
+    </div>
+    <div class="formRow">
+        <input type="password" name="password" id="password" placeholder="Password">
+        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+    </div>
+    <div class="formRow">
+        <input type="submit" id="submit" name="submit" value="Register">
+    </div>
+</form>
+
+<footer></footer>
+
+<script src="./js/loader.script.js" id="loader"></script>
+<script src="./js/register.script.js" id="register"></script>
+</body>
+
+</html>

@@ -36,7 +36,12 @@ public class PorareController {
 
 	@GetMapping("register")
 	public String register() {
-		return "register/index";
+		return "login/register";
+	}
+
+	@GetMapping("login")
+	public String login() {
+		return "login/login";
 	}
 
 	@GetMapping("search")
