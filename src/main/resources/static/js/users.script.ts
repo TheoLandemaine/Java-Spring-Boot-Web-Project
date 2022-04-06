@@ -1,7 +1,8 @@
 // Create Fetch API request
-const url: string = 'http://localhost:8080/api/users';
+// @ts-ignore
+const url:string = 'http://localhost:8080/api/users';
 
-setInterval(() => {if (!document.hidden) {realTime();}}, 1000);
+realTime();setInterval(() => {if (!document.hidden) {realTime();}}, 1000);
 
 function realTime() {
     // Create XMLHttpRequest request GET

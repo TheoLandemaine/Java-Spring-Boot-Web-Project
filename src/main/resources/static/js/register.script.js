@@ -1,4 +1,5 @@
 // Register the account into the api
+// @ts-ignore
 var url = 'http://localhost:8080/api/register';
 document.querySelector('#submit').addEventListener('click', function (e) {
     e.preventDefault();
