@@ -1,5 +1,7 @@
 // Create Fetch API request
+// @ts-ignore
 var url = 'http://localhost:8080/api/users';
+realTime();
 setInterval(function () { if (!document.hidden) {
     realTime();
 } }, 1000);

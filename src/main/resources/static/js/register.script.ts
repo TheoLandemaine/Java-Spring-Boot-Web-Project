@@ -1,4 +1,5 @@
 // Register the account into the api
+// @ts-ignore
 var url:string = 'http://localhost:8080/api/register';
 
 

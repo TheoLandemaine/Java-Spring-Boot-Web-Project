@@ -34,8 +34,8 @@ public class PorareController {
 		return "users/index";
 	}
 
-	@PostMapping("register")
-	public String register(@RequestBody String name, @RequestBody String email, @RequestBody String password, @RequestBody String confirmPassword) {
+	@GetMapping("register")
+	public String register() {
 		return "register/index";
 	}
 	
