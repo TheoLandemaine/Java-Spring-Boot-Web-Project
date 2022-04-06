@@ -38,6 +38,11 @@ public class PorareController {
 	public String register() {
 		return "register/index";
 	}
+
+	@GetMapping("search")
+	public String search() {
+		return "search/index";
+	}
 	
 
 }

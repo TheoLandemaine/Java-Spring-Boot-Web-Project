@@ -5,7 +5,7 @@ nameSearch = document.getElementById("name-input");
 
 searchBtn.addEventListener("click", function () {
     location.assign(
-        "./search.html?name=" +
+        "./index.html?name=" +
         nameSearch.value +
         "&type=" +
         typeSearch.value +
