@@ -49,4 +49,17 @@ public class PorareRestController {
         return loginService.registerUser(username, email, password, confirmPassword); // Return Result
     }
 
+
+    @PostMapping("login")
+    public boolean login(@RequestParam String email, // Get username from the request
+                         @RequestParam String password, // Get password from the request
+                         HttpServletRequest httpServletRequest) {
+
+        /*
+        * Return @Boolean
+        * true if the login is successful
+        * false if the login is not successful
+        */
+        return loginService.loginUser(email, password); // Return Result
+    }
 }
