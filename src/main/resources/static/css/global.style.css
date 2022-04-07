@@ -64,23 +64,23 @@ footer #footer .socials {
 }
 footer #footer .socials .logo {
   text-decoration: none;
-  color: #1d1d37;
+  color: rgb(29, 29, 55);
   font-size: 1.4em;
   padding-left: 40px;
 }
 footer #footer .socials .fa-facebook {
-  color: #0047a3;
+  color: rgb(0, 71, 163);
 }
 footer #footer .socials .fa-facebook:hover {
   font-size: 110%;
-  color: #003272;
+  color: rgb(0, 50, 114);
 }
 footer #footer .socials .fa-twitter {
-  color: #76aed2;
+  color: rgb(118, 174, 210);
 }
 footer #footer .socials .fa-twitter:hover {
   font-size: 110%;
-  color: #6190b1;
+  color: rgb(97, 144, 177);
 }
 footer #footer .socials .fa-instagram {
   background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
