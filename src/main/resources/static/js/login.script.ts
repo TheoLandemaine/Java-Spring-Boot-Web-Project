@@ -21,7 +21,8 @@ document.querySelector('#submit').addEventListener('click', function(e) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // If response is true, redirect to login page
-                if (xhr.responseText !== 'false') {
+
+                if (xhr.responseText) {
                     document.cookie = 'token=' + xhr.responseText;
 
                     window.location.href = '/';
@@ -33,33 +34,6 @@ document.querySelector('#submit').addEventListener('click', function(e) {
                         '<button class="popupButton">OK</button>' +
                         '</div>';
 
-                    let popups = document.querySelectorAll('.popup');
-                    for (let y = 0;  y < popups.length; y++) {
-                        if (popups[y].classList.contains('coming')) {
-                            popups[y].classList.remove('coming');
-                        }
-                    }
-                    for (let i = popups.length-1; i < popups.length; i++) {
-                        popups[i].classList.add('coming');
-                    }
-
-
-
-                    setTimeout(function () {
-                        let popups = document.querySelectorAll('.popup')
-                        for (let i = 0; i < popups.length; i++) {
-                            if (!popups[i].classList.contains('leaving')) {
-                                popups[i].classList.add('leaving');
-                                break;
-                            }
-                        }
-                    } , 1000);
-
-                    setTimeout(function () {
-                        document.querySelector('.popup').remove();
-                    } , 1500);
-
-
                 }
             }
         };
@@ -70,36 +44,33 @@ document.querySelector('#submit').addEventListener('click', function(e) {
             '<p class="popupMessage">Please fill in all the fields</p>' +
             '<button class="popupButton">OK</button>' +
             '</div>';
-
-        let popups = document.querySelectorAll('.popup');
-        for (let y = 0;  y < popups.length; y++) {
-            if (popups[y].classList.contains('coming')) {
-                popups[y].classList.remove('coming');
-            }
-        }
-        for (let i = popups.length-1; i < popups.length; i++) {
-            popups[i].classList.add('coming');
-        }
-
-
-
-        setTimeout(function () {
-            let popups = document.querySelectorAll('.popup')
-            for (let i = 0; i < popups.length; i++) {
-                if (!popups[i].classList.contains('leaving')) {
-                    popups[i].classList.add('leaving');
-                    break;
-                }
-            }
-        } , 1000);
-
-        // After 1.5 seconds the popup will disappear
-        setTimeout(function () {
-            document.querySelector('.popup').remove();
-        } , 1500);
-
-
     }
+
+    let popups = document.querySelectorAll('.popup');
+    for (let y = 0; y < popups.length; y++) {
+        if (popups[y].classList.contains('coming')) {
+            popups[y].classList.remove('coming');
+        }
+    }
+    for (let i = popups.length - 1; i < popups.length; i++) {
+        popups[i].classList.add('coming');
+    }
+
+
+    setTimeout(function () {
+        let popups = document.querySelectorAll('.popup')
+        for (let i = 0; i < popups.length; i++) {
+            if (!popups[i].classList.contains('leaving')) {
+                popups[i].classList.add('leaving');
+                break;
+            }
+        }
+    }, 1000);
+
+    // After 1.5 seconds the popup will disappear
+    setTimeout(function () {
+        document.querySelector('.popup').remove();
+    }, 1500);
 
 });
 
@@ -109,4 +80,5 @@ document.addEventListener('click', (e) => {
         //@ts-ignore
         e.target.parentNode.remove();
     }
+    
 });

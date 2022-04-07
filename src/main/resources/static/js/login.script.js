@@ -16,7 +16,7 @@ document.querySelector('#submit').addEventListener('click', function (e) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // If response is true, redirect to login page
-                if (xhr.responseText !== 'false') {
+                if (xhr.responseText) {
                     document.cookie = 'token=' + xhr.responseText;
                     window.location.href = '/';
                 }
@@ -27,27 +27,6 @@ document.querySelector('#submit').addEventListener('click', function (e) {
                             '<p class="popupMessage">This account does not exist</p>' +
                             '<button class="popupButton">OK</button>' +
                             '</div>';
-                    var popups = document.querySelectorAll('.popup');
-                    for (var y = 0; y < popups.length; y++) {
-                        if (popups[y].classList.contains('coming')) {
-                            popups[y].classList.remove('coming');
-                        }
-                    }
-                    for (var i = popups.length - 1; i < popups.length; i++) {
-                        popups[i].classList.add('coming');
-                    }
-                    setTimeout(function () {
-                        var popups = document.querySelectorAll('.popup');
-                        for (var i = 0; i < popups.length; i++) {
-                            if (!popups[i].classList.contains('leaving')) {
-                                popups[i].classList.add('leaving');
-                                break;
-                            }
-                        }
-                    }, 1000);
-                    setTimeout(function () {
-                        document.querySelector('.popup').remove();
-                    }, 1500);
                 }
             }
         };
@@ -59,29 +38,29 @@ document.querySelector('#submit').addEventListener('click', function (e) {
                 '<p class="popupMessage">Please fill in all the fields</p>' +
                 '<button class="popupButton">OK</button>' +
                 '</div>';
-        var popups = document.querySelectorAll('.popup');
-        for (var y = 0; y < popups.length; y++) {
-            if (popups[y].classList.contains('coming')) {
-                popups[y].classList.remove('coming');
-            }
-        }
-        for (var i = popups.length - 1; i < popups.length; i++) {
-            popups[i].classList.add('coming');
-        }
-        setTimeout(function () {
-            var popups = document.querySelectorAll('.popup');
-            for (var i = 0; i < popups.length; i++) {
-                if (!popups[i].classList.contains('leaving')) {
-                    popups[i].classList.add('leaving');
-                    break;
-                }
-            }
-        }, 1000);
-        // After 1.5 seconds the popup will disappear
-        setTimeout(function () {
-            document.querySelector('.popup').remove();
-        }, 1500);
     }
+    var popups = document.querySelectorAll('.popup');
+    for (var y = 0; y < popups.length; y++) {
+        if (popups[y].classList.contains('coming')) {
+            popups[y].classList.remove('coming');
+        }
+    }
+    for (var i = popups.length - 1; i < popups.length; i++) {
+        popups[i].classList.add('coming');
+    }
+    setTimeout(function () {
+        var popups = document.querySelectorAll('.popup');
+        for (var i = 0; i < popups.length; i++) {
+            if (!popups[i].classList.contains('leaving')) {
+                popups[i].classList.add('leaving');
+                break;
+            }
+        }
+    }, 1000);
+    // After 1.5 seconds the popup will disappear
+    setTimeout(function () {
+        document.querySelector('.popup').remove();
+    }, 1500);
 });
 document.addEventListener('click', function (e) {
     //@ts-ignore
