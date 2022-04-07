@@ -22,7 +22,7 @@ document.querySelector('#submit').addEventListener('click', function(e) {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 // If response is true, redirect to login page
 
-                if (xhr.responseText) {
+                if (xhr.responseText !== "false") {
                     document.cookie = 'token=' + xhr.responseText;
 
                     window.location.href = '/';
