@@ -24,7 +24,20 @@ if (checkCookie()) {
     // @ts-ignore
     $('.navColumn').empty();
     // @ts-ignore
-    $('.navColumn').append("\n        <li> <a href=\"/\">Profile </a> </li>\n        <li> <a onClick=\"document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; window.location.href = 'google.com'\">Logout </a> </li>\n       ");
+    console.log($('.navColumn'));
+    // @ts-ignore
+    $('.navColumn').append("\n        <li> <a href=\"/profile\">Profile </a> </li>\n        <li> <a href=\"/api/logout\">Logout </a> </li>\n       ");
+    // When user log out, delete token from the cookie
+    // @ts-ignore
+    $('.navColumn').on('click', function (e) {
+        // @ts-ignore
+        if (e.target.innerText === 'Logout') {
+            // @ts-ignore
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            // @ts-ignore
+            window.location.href = '/';
+        }
+    });
 }
 else {
     // @ts-ignore
