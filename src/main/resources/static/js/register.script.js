@@ -37,28 +37,6 @@ document.querySelector('#submit').addEventListener('click', function (e) {
                 '<p class="popupMessage">Please fill in all the fields</p>' +
                 '<button class="popupButton">OK</button>' +
                 '</div>';
-        var popups = document.querySelectorAll('.popup');
-        for (var y = 0; y < popups.length; y++) {
-            if (popups[y].classList.contains('coming')) {
-                popups[y].classList.remove('coming');
-            }
-        }
-        for (var i = popups.length - 1; i < popups.length; i++) {
-            popups[i].classList.add('coming');
-        }
-        setTimeout(function () {
-            var popups = document.querySelectorAll('.popup');
-            for (var i = 0; i < popups.length; i++) {
-                if (!popups[i].classList.contains('leaving')) {
-                    popups[i].classList.add('leaving');
-                    break;
-                }
-            }
-        }, 1000);
-        // After 1.5 seconds the popup will disappear 
-        setTimeout(function () {
-            document.querySelector('.popup').remove();
-        }, 1500);
     }
     else {
         document.querySelector('#popUpContainer').innerHTML +=
@@ -66,27 +44,35 @@ document.querySelector('#submit').addEventListener('click', function (e) {
                 '<p class="popupMessage">Passwords do not match</p>' +
                 '<button class="popupButton">OK</button>' +
                 '</div>';
+    }
+    var popups = document.querySelectorAll('.popup');
+    for (var y = 0; y < popups.length; y++) {
+        if (popups[y].classList.contains('coming')) {
+            popups[y].classList.remove('coming');
+        }
+    }
+    for (var i = popups.length - 1; i < popups.length; i++) {
+        popups[i].classList.add('coming');
+    }
+    setTimeout(function () {
         var popups = document.querySelectorAll('.popup');
-        for (var y = 0; y < popups.length; y++) {
-            if (popups[y].classList.contains('coming')) {
-                popups[y].classList.remove('coming');
+        for (var i = 0; i < popups.length; i++) {
+            if (!popups[i].classList.contains('leaving')) {
+                popups[i].classList.add('leaving');
+                break;
             }
         }
-        for (var i = popups.length - 1; i < popups.length; i++) {
-            popups[i].classList.add('coming');
-        }
-        setTimeout(function () {
-            var popups = document.querySelectorAll('.popup');
-            for (var i = 0; i < popups.length; i++) {
-                if (!popups[i].classList.contains('leaving')) {
-                    popups[i].classList.add('leaving');
-                    break;
-                }
-            }
-        }, 1000);
-        setTimeout(function () {
-            document.querySelector('.popup').remove();
-        }, 1500);
+    }, 1000);
+    // After 1.5 seconds the popup will disappear
+    setTimeout(function () {
+        document.querySelector('.popup').remove();
+    }, 1500);
+    // @ts-ignore
+    if (checkValues()) {
+        document.querySelector('#submit').removeAttribute('disabled');
+    }
+    else {
+        document.querySelector('#submit').setAttribute('disabled', 'disabled');
     }
 });
 document.addEventListener('click', function (e) {
