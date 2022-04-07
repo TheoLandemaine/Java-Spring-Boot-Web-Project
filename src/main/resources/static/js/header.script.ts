@@ -8,7 +8,7 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('mouseover', (e) => {
     // @ts-ignore
-    console.log(e.target.classList)
+    // console.log(e.target.classList)
     // @ts-ignore
     if (e.target.classList.contains('logotype')) {
         // @ts-ignore
