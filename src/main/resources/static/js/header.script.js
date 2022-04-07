@@ -22,12 +22,9 @@ if (checkCookie()) {
     // @ts-ignore
     console.log('user is logged in , is token : ', checkCookie());
     // @ts-ignore
-    // $('.navColumn').empty();
-    // // @ts-ignore
-    // $('.navColumn').append(`
-    //     <li> <a href="/">Profile </a> </li>
-    //     <li> <a href="/">Logout </a> </li>
-    //    `);
+    $('.navColumn').empty();
+    // @ts-ignore
+    $('.navColumn').append("\n        <li> <a href=\"/\">Profile </a> </li>\n        <li> <a onClick=\"document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'; window.location.href = 'google.com'\">Logout </a> </li>\n       ");
 }
 else {
     // @ts-ignore
