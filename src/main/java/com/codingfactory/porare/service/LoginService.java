@@ -72,7 +72,7 @@ public class LoginService {
                     try {
                         Algorithm algorithm = Algorithm.HMAC256(password);
                         // Create Token variable to create JWT token and return this token
-                        return JWT.create().withClaim("userId", userId).withClaim("username", username).withClaim("email", email).sign(algorithm);
+                        return JWT.create().withClaim("userId", userId).sign(algorithm);
                     } catch (JWTCreationException exception) {
                         //Invalid Signing configuration / Couldn't convert Claims
                         return "false";
@@ -90,7 +90,7 @@ public class LoginService {
         }
     }
 
-    public boolean loginUser(String email, String password) {
+    public String loginUser(String email, String password) {
         try { // Try to get all users from the database
             // Crypt the password
             try {
@@ -113,7 +113,7 @@ public class LoginService {
                 password = sb.toString();
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
-                return false;
+                return "false";
             }
 
             String sql = "SELECT COUNT(*) FROM user WHERE u_email = ? AND u_password = ?";
@@ -121,13 +121,26 @@ public class LoginService {
             int count = jdbcTemplate.queryForObject(sql, Integer.class, email, password);
 
             if (count == 1) { // Check if the username is already in the database
-                return true;
+
+                // Get User ID
+                sql = "SELECT u_id FROM user WHERE u_email = ?";
+                int userId = jdbcTemplate.queryForObject(sql, Integer.class, email);
+
+                // Create JWT token
+                try {
+                    Algorithm algorithm = Algorithm.HMAC256(password);
+                    // Create Token variable to create JWT token and return this token
+                    return JWT.create().withClaim("userId", userId).sign(algorithm);
+                } catch (JWTCreationException exception) {
+                    //Invalid Signing configuration / Couldn't convert Claims
+                    return "false";
+                }
             } else {
-                return false;
+                return "false";
             }
         } catch (Exception e) { // Catch any exceptions
             e.printStackTrace();
-            return false;
+            return "false";
         }
     }
 }

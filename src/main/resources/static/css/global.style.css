@@ -7,10 +7,6 @@
 
 header {
   display: flex;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 300;
   background-color: #f5f5f5;
   max-height: 80px;
   flex-direction: row;
@@ -52,14 +48,9 @@ header ul li a:hover {
 }
 
 footer {
-  position: fixed;
-  bottom: 0;
-  z-index: 300;
   background-color: #f5f5f5;
   align-items: center;
   width: 100%;
-  position: fixed;
-  bottom: 0;
   padding: 1em;
 }
 footer #footer {

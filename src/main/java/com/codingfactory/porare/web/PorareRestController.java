@@ -50,9 +50,9 @@ public class PorareRestController {
 
 
     @PostMapping("login")
-    public boolean login(@RequestParam String email, // Get username from the request
-                         @RequestParam String password, // Get password from the request
-                         HttpServletRequest httpServletRequest) {
+    public String login(@RequestParam String email, // Get username from the request
+                        @RequestParam String password, // Get password from the request
+                        HttpServletRequest httpServletRequest) {
 
         /*
         * Return @Boolean

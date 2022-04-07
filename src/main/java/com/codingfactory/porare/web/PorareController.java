@@ -48,6 +48,15 @@ public class PorareController {
 	public String search() {
 		return "search/index";
 	}
+
+	@GetMapping("profile")
+	public String profile() { return "profile/index"; }
+
+	@GetMapping("edit")
+	public String editProfile() { return "profile/edit"; }
+
+	@GetMapping("password")
+	public String editPassword() { return "profile/editPassword"; }
 	
 
 }
