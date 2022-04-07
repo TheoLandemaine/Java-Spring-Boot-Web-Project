@@ -13,6 +13,7 @@ document.querySelector('#submit').addEventListener('click', function(e) {
 
     const xhr:XMLHttpRequest = new XMLHttpRequest();
     if ( password && email ) {
+        console.log(password + " " + email);
         // Register the account into the api
         const url: string = 'http://localhost:8080/api/login';
 
@@ -24,7 +25,33 @@ document.querySelector('#submit').addEventListener('click', function(e) {
                     window.location.href = '/';
                 } else {
                     // If response is false, show error message
-                    alert('Account doesn\'t exists');
+                    document.querySelector('#popUpContainer').innerHTML +=
+                        '<div class="popup">' +
+                        '<p class="popupMessage">This account does not exist</p>' +
+                        '<button class="popupButton">OK</button>' +
+                        '</div>';
+
+                    let popups = document.querySelectorAll('.popup');
+                    for (let y = 0;  y < popups.length; y++) {
+                        if (popups[y].classList.contains('coming')) {
+                            popups[y].classList.remove('coming');
+                        }
+                    }
+                    for (let i = popups.length-1; i < popups.length; i++) {
+                        popups[i].classList.add('coming');
+                    }
+
+
+
+                    setTimeout(function () {
+                        let popups = document.querySelectorAll('.popup')
+                        for (let i = 0; i < popups.length; i++) {
+                            if (!popups[i].classList.contains('leaving')) {
+                                popups[i].classList.add('leaving');
+                                break;
+                            }
+                        }
+                    } , 1000);
                 }
             }
         };
@@ -56,10 +83,6 @@ document.querySelector('#submit').addEventListener('click', function(e) {
                     break;
                 }
             }
-
-
-
-
         } , 1000);
 
         // After 1.5 seconds the popup will disappear

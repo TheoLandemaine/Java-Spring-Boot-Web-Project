@@ -9,6 +9,7 @@ document.querySelector('#submit').addEventListener('click', function (e) {
     data.append("password", password);
     var xhr = new XMLHttpRequest();
     if (password && email) {
+        console.log(password + " " + email);
         // Register the account into the api
         var url_1 = 'http://localhost:8080/api/login';
         xhr.open('POST', url_1, true);
@@ -20,7 +21,29 @@ document.querySelector('#submit').addEventListener('click', function (e) {
                 }
                 else {
                     // If response is false, show error message
-                    alert('Account doesn\'t exists');
+                    document.querySelector('#popUpContainer').innerHTML +=
+                        '<div class="popup">' +
+                            '<p class="popupMessage">This account does not exist</p>' +
+                            '<button class="popupButton">OK</button>' +
+                            '</div>';
+                    var popups = document.querySelectorAll('.popup');
+                    for (var y = 0; y < popups.length; y++) {
+                        if (popups[y].classList.contains('coming')) {
+                            popups[y].classList.remove('coming');
+                        }
+                    }
+                    for (var i = popups.length - 1; i < popups.length; i++) {
+                        popups[i].classList.add('coming');
+                    }
+                    setTimeout(function () {
+                        var popups = document.querySelectorAll('.popup');
+                        for (var i = 0; i < popups.length; i++) {
+                            if (!popups[i].classList.contains('leaving')) {
+                                popups[i].classList.add('leaving');
+                                break;
+                            }
+                        }
+                    }, 1000);
                 }
             }
         };
