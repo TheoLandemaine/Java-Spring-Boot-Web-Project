@@ -248,7 +248,7 @@ h3 {
 }
 #pokeResults {
   img {
-    width: 30%;
+    width: 20%;
     height: auto;
     margin: 1em;
     transition: all 0.5s;
@@ -292,28 +292,6 @@ h3 {
   tr {
     border-bottom: none;
   }
-
-
-  @media screen and (max-width: 993px){
-    .modal{
-      height: 75%;
-      width: 75%;
-      font-size: 55%;
-    }
-    #collections-modal{
-      /* height: max-content;
-      width: max-content; */
-      left: 0px;
-    }
-    .top-search{
-      display: flex;
-      width: 100%;
-      //background-image: url(images/pokedexflip.jpg);
-
-    }
-
-  }
-
 
   .col {
     .row {
@@ -525,6 +503,71 @@ h3 {
     .col.push-s12 {
       left: 100%;
     }
+  }
+
+  .modal {
+
+    &:focus {
+      outline: none;
+    }
+    h1 {
+      margin-top: 0;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    h3 {
+      margin-top: 0;
+    }
+    h4 {
+      margin-top: 0;
+    }
+    .modal-content {
+      padding: 24px;
+    }
+    .modal-close {
+      cursor: pointer;
+    }
+    .modal-footer {
+      border-radius: 0 0 2px 2px;
+      background-color: #fafafa;
+      padding: 4px 6px;
+      height: 56px;
+      width: 100%;
+      text-align: right;
+      .btn {
+        margin: 6px 0;
+      }
+      .btn-large {
+        margin: 6px 0;
+      }
+      .btn-small {
+        margin: 6px 0;
+      }
+      .btn-flat {
+        margin: 6px 0;
+      }
+    }
+  }
+
+  @media screen and (max-width: 993px){
+    .modal{
+      height: 75%;
+      width: 75%;
+      font-size: 55%;
+    }
+    #collections-modal{
+      /* height: max-content;
+      width: max-content; */
+      left: 0px;
+    }
+    .top-search{
+      display: flex;
+      width: 100%;
+      //background-image: url(images/pokedexflip.jpg);
+
+    }
+
   }
 
   @media only screen and (min-width: 601px) {
@@ -770,50 +813,6 @@ h3 {
       bottom: auto;
       text-align: center;
       margin-top: 1.2rem;
-    }
-  }
-  .modal {
-
-    &:focus {
-      outline: none;
-    }
-    h1 {
-      margin-top: 0;
-    }
-    h2 {
-      margin-top: 0;
-    }
-    h3 {
-      margin-top: 0;
-    }
-    h4 {
-      margin-top: 0;
-    }
-    .modal-content {
-      padding: 24px;
-    }
-    .modal-close {
-      cursor: pointer;
-    }
-    .modal-footer {
-      border-radius: 0 0 2px 2px;
-      background-color: #fafafa;
-      padding: 4px 6px;
-      height: 56px;
-      width: 100%;
-      text-align: right;
-      .btn {
-        margin: 6px 0;
-      }
-      .btn-large {
-        margin: 6px 0;
-      }
-      .btn-small {
-        margin: 6px 0;
-      }
-      .btn-flat {
-        margin: 6px 0;
-      }
     }
   }
 
