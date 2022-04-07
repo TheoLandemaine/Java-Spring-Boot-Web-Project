@@ -44,6 +44,9 @@ document.querySelector('#submit').addEventListener('click', function (e) {
                             }
                         }
                     }, 1000);
+                    setTimeout(function () {
+                        document.querySelector('.popup').remove();
+                    }, 1500);
                 }
             }
         };
