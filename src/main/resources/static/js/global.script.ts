@@ -24,9 +24,9 @@ function checkCookie() {
 
     const token = getCookie("token");
 
-    // console.log(token);
-    // return token;
-
-    // If token is not null return true
-    return token != null;
+    if (token != null) {
+        return token;
+    } else {
+        return 'false';
+    }
 }

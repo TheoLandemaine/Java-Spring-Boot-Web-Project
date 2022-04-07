@@ -17,8 +17,10 @@ function getCookie(cookie) {
 // Function to check if the user is logged in
 function checkCookie() {
     var token = getCookie("token");
-    // console.log(token);
-    // return token;
-    // If token is not null return true
-    return token != null;
+    if (token != null) {
+        return token;
+    }
+    else {
+        return 'false';
+    }
 }

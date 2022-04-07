@@ -19,8 +19,9 @@ document.addEventListener('mouseover', (e) => {
 // @ts-ignore
 checkCookie();
 // @ts-ignore
-// console.log('token',checkCookie());
-if (checkCookie()) {
+console.log('token',checkCookie());
+// @ts-ignore
+if (checkCookie() !== 'false') {
     // @ts-ignore
     console.log('user is logged in , is token : ', checkCookie());
     // @ts-ignore
