@@ -4,9 +4,13 @@
 }
 
 header {
+    display: flex;
+    position:fixed;
+    width: 100%;
+    top: 0;
+    z-index: 300;
     background-color: #f5f5f5;
     max-height: 80px;
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -48,16 +52,24 @@ header {
 }
 
 footer {
+    position:fixed;
+    bottom: 0;
+    z-index: 300;
     background-color: #f5f5f5;
     align-items: center;
     width: 100%;
+<<<<<<< Updated upstream
+    position: fixed;
     bottom: 0;
-  
+=======
+>>>>>>> Stashed changes
     #footer {
         display: flex;
         flex-direction: row;
         text-align: center;
         justify-content: space-between;
+
+        bottom: 0;
         line-height: 200%;
         .socials {
             display: flex;
