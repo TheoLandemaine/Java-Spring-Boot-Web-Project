@@ -31,7 +31,7 @@ if (checkCookie()) {
     // @ts-ignore
     $('.navColumn').append(`
         <li> <a href="/profile">Profile </a> </li>
-        <li> <a href="/api/logout">Logout </a> </li>
+        <li> <a href="/">Logout </a> </li>
        `);
 
     // When user log out, delete token from the cookie
