@@ -1,109 +1,17 @@
-* {
-  margin: 0;
-  padding: 0;
-}
+/* Error: expected "{".
+ *    ,
+ * 62 |     position: fixed;
+ *    |                    ^
+ *    '
+ *   src/main/resources/static/css/global.style.scss 62:20  root stylesheet */
 
-header {
-  background-color: #f5f5f5;
-  max-height: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: 'Error: expected "{".\a    \2577 \a 62 \2502      position: fixed;\a    \2502                     ^\a    \2575 \a   src/main/resources/static/css/global.style.scss 62:20  root stylesheet';
 }
-header #logo img {
-  width: 40%;
-  margin-left: 30px;
-  max-width: 120px;
-  height: auto;
-}
-header h1 {
-  font-size: 2.5em;
-  color: #000;
-  margin-left: 10%;
-  padding: 0;
-}
-header ul {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-header ul li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-header ul li a {
-  color: #000;
-  text-decoration: none;
-  font-size: 1.2em;
-  padding-right: 30px;
-  font-weight: bold;
-}
-header ul li a:hover {
-  color: #000;
-}
-
-footer {
-  background-color: #f5f5f5;
-  align-items: center;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-}
-footer #footer {
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-  justify-content: space-between;
-  line-height: 200%;
-}
-footer #footer .socials {
-  display: flex;
-  flex-direction: row;
-}
-footer #footer .socials .logo {
-  text-decoration: none;
-  color: rgb(29, 29, 55);
-  font-size: 1.4em;
-  padding-left: 40px;
-}
-footer #footer .socials .fa-facebook {
-  color: rgb(0, 71, 163);
-}
-footer #footer .socials .fa-facebook:hover {
-  font-size: 110%;
-  color: rgb(0, 50, 114);
-}
-footer #footer .socials .fa-twitter {
-  color: rgb(118, 174, 210);
-}
-footer #footer .socials .fa-twitter:hover {
-  font-size: 110%;
-  color: rgb(97, 144, 177);
-}
-footer #footer .socials .fa-instagram {
-  background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-footer #footer .socials .fa-instagram:hover {
-  font-size: 110%;
-  background: -webkit-linear-gradient(45deg, #3551de, #4039c9, #7e2fb3, #ad1f6f, #b11d4e, #ce1313);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-footer #footer h4 {
-  font-size: 1.2em;
-  color: #000;
-  padding-right: 30px;
-  font-weight: bold;
-}
-footer #footer a {
-  text-decoration: none;
-}
-
-/*# sourceMappingURL=global.style.css.map */
