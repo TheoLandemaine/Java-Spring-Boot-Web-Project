@@ -19,18 +19,20 @@ document.addEventListener('mouseover', (e) => {
 // @ts-ignore
 checkCookie();
 // @ts-ignore
-// console.log('token',checkCookie());
-if (checkCookie()) {
+console.log('token',checkCookie());
+// @ts-ignore
+if (checkCookie() !== 'false') {
     // @ts-ignore
     console.log('user is logged in , is token : ', checkCookie());
     // @ts-ignore
     $('.navColumn').empty();
 
+    // @ts-ignore
     console.log($('.navColumn'));
     // @ts-ignore
     $('.navColumn').append(`
         <li> <a href="/profile">Profile </a> </li>
-        <li> <a href="/api/logout">Logout </a> </li>
+        <li> <a href="/">Logout </a> </li>
        `);
 
     // When user log out, delete token from the cookie
