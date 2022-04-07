@@ -23,6 +23,13 @@ checkCookie();
 if (checkCookie()) {
     // @ts-ignore
     console.log('user is logged in , is token : ', checkCookie());
+    // @ts-ignore
+    $('.navColumn').empty();
+    // @ts-ignore
+    $('.navColumn').append(`
+        <li> <a href="/">Profile </a> </li>
+        <li> <a href="/">Logout </a> </li>
+       `);
 } else {
     // @ts-ignore
     console.log('user is not logged in , is token : ', checkCookie());
