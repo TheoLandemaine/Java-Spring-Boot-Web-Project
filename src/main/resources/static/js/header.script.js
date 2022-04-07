@@ -7,7 +7,7 @@ document.addEventListener('click', function (e) {
 });
 document.addEventListener('mouseover', function (e) {
     // @ts-ignore
-    console.log(e.target.classList);
+    // console.log(e.target.classList)
     // @ts-ignore
     if (e.target.classList.contains('logotype')) {
         // @ts-ignore
@@ -22,9 +22,12 @@ if (checkCookie()) {
     // @ts-ignore
     console.log('user is logged in , is token : ', checkCookie());
     // @ts-ignore
-    $('.navColumn').empty();
-    // @ts-ignore
-    $('.navColumn').append("\n        <li> <a href=\"/\">Profile </a> </li>\n        <li> <a href=\"/\">Logout </a> </li>\n       ");
+    // $('.navColumn').empty();
+    // // @ts-ignore
+    // $('.navColumn').append(`
+    //     <li> <a href="/">Profile </a> </li>
+    //     <li> <a href="/">Logout </a> </li>
+    //    `);
 }
 else {
     // @ts-ignore
