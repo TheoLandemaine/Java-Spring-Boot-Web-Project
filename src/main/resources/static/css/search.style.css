@@ -130,9 +130,9 @@ body {
 }
 
 h3 {
-  font-size: 2.92rem;
+  font-size: 2.52rem;
   line-height: 100%;
-  margin: 0 0 5rem 0;
+  margin: 0 0 3rem 0;
 }
 
 .col-sm-8:hover {
@@ -217,14 +217,14 @@ h3 {
   cursor: pointer;
 }
 
-rom img {
+#pokeResults img {
   width: 30%;
   height: auto;
   margin: 1em;
   transition: all 0.5s;
   border-radius: 4%;
 }
-rom img:hover {
+#pokeResults img:hover {
   box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.5);
   transform: scale(1.05);
   cursor: pointer;
