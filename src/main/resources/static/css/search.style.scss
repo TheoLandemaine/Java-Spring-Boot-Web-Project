@@ -11,6 +11,19 @@
   text-shadow: 4px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }
 
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 300;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    z-index: 300;
+    width: 100%;
+}
 
 button{
   margin-top: 5px;
