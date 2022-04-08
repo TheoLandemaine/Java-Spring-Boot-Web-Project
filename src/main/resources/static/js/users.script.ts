@@ -2,8 +2,6 @@
 // @ts-ignore
 const url:string = 'http://localhost:8080/api/users';
 
-realTime();setInterval(() => {if (!document.hidden) {realTime();}}, 1000);
-
 function realTime() {
     // Create XMLHttpRequest request GET
     var xhr: XMLHttpRequest = new XMLHttpRequest();

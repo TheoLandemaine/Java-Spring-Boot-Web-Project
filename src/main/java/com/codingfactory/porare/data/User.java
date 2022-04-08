@@ -18,6 +18,7 @@ public class User implements Serializable {
 	private String userId;
 	private String username;
 	private String email;
+	private String password;
 
 	public User() {
 
@@ -28,6 +29,7 @@ public class User implements Serializable {
 		this.userId = userId; // Creation of the attribute userId
 		this.username = username; // Creation of the attribute username
 		this.email = email; // Creation of the attribute password
+		this.password = password;
 	}
 
 	public String getUserId() {
@@ -52,5 +54,12 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public void setPassword(String u_password) {
+	}
+
+	public String getPassword() {
+		return password;
 	}
 }

@@ -1,3 +1,8 @@
+// @ts-ignore
+realTime();
+setInterval(function () { if (!document.hidden) {
+    realTime();
+} }, 1000);
 // Function to get the current token
 function getCookie(cookie) {
     // Divides the cookie string and retrieves all individual name=value pairs in an array and split it

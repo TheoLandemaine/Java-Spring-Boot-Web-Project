@@ -225,7 +225,7 @@ h3 {
 }
 
 #pokeResults img {
-  width: 30%;
+  width: 20%;
   height: auto;
   margin: 1em;
   transition: all 0.5s;
@@ -265,24 +265,6 @@ tr {
   border-bottom: none;
 }
 
-@media screen and (max-width: 993px) {
-  .modal {
-    height: 75%;
-    width: 75%;
-    font-size: 55%;
-  }
-
-  #collections-modal {
-    /* height: max-content;
-    width: max-content; */
-    left: 0px;
-  }
-
-  .top-search {
-    display: flex;
-    width: 100%;
-  }
-}
 .col .row {
   margin-left: -0.75rem;
   margin-right: -0.75rem;
@@ -493,6 +475,66 @@ tr {
   left: 100%;
 }
 
+.modal:focus {
+  outline: none;
+}
+.modal h1 {
+  margin-top: 0;
+}
+.modal h2 {
+  margin-top: 0;
+}
+.modal h3 {
+  margin-top: 0;
+}
+.modal h4 {
+  margin-top: 0;
+}
+.modal .modal-content {
+  padding: 24px;
+}
+.modal .modal-close {
+  cursor: pointer;
+}
+.modal .modal-footer {
+  border-radius: 0 0 2px 2px;
+  background-color: #fafafa;
+  padding: 4px 6px;
+  height: 56px;
+  width: 100%;
+  text-align: right;
+}
+.modal .modal-footer .btn {
+  margin: 6px 0;
+}
+.modal .modal-footer .btn-large {
+  margin: 6px 0;
+}
+.modal .modal-footer .btn-small {
+  margin: 6px 0;
+}
+.modal .modal-footer .btn-flat {
+  margin: 6px 0;
+}
+
+@media screen and (max-width: 993px) {
+  .modal {
+    height: 75%;
+    width: 75%;
+    font-size: 55%;
+  }
+
+  #collections-modal {
+    /* height: max-content;
+    width: max-content; */
+    left: 0px;
+  }
+
+  .top-search {
+    display: flex;
+    width: 100%;
+  }
+}
 @media only screen and (min-width: 601px) {
   .hide-on-med-and-up {
     display: none !important;
@@ -747,48 +789,6 @@ tr {
     margin-top: 1.2rem;
   }
 }
-.modal:focus {
-  outline: none;
-}
-.modal h1 {
-  margin-top: 0;
-}
-.modal h2 {
-  margin-top: 0;
-}
-.modal h3 {
-  margin-top: 0;
-}
-.modal h4 {
-  margin-top: 0;
-}
-.modal .modal-content {
-  padding: 24px;
-}
-.modal .modal-close {
-  cursor: pointer;
-}
-.modal .modal-footer {
-  border-radius: 0 0 2px 2px;
-  background-color: #fafafa;
-  padding: 4px 6px;
-  height: 56px;
-  width: 100%;
-  text-align: right;
-}
-.modal .modal-footer .btn {
-  margin: 6px 0;
-}
-.modal .modal-footer .btn-large {
-  margin: 6px 0;
-}
-.modal .modal-footer .btn-small {
-  margin: 6px 0;
-}
-.modal .modal-footer .btn-flat {
-  margin: 6px 0;
-}
-
 @media only screen and (min-width: 993px) {
   .hide-on-large-only {
     display: none !important;

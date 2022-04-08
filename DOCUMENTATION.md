@@ -75,3 +75,26 @@ Multipart Form : `true`
 - `email` : `String`
 - `password` : `String`
 - `confirmPassword` : `String`
+
+#### Returned JSON
+Return a token if the user is registered correctly. Otherwise, return false (`String`).
+- `token` : `String`
+
+#### Get User Information
+#### Informations :
+Register a new user
+
+URL : `http://localhost:8080/api/getUserInformations`
+
+Method : `POST`
+
+Multipart Form : `true`
+
+#### Required Multipart Form
+- `token` : `String`
+
+#### Returned JSON
+Return user information if token is valid. Otherwise, return null.
+- `userId` : `String`
+- `username` : `String`
+- `email` : `String`

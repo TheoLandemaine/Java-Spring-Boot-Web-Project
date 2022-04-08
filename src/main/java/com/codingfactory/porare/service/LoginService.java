@@ -72,7 +72,7 @@ public class LoginService {
                     try {
                         Algorithm algorithm = Algorithm.HMAC256(password);
                         // Create Token variable to create JWT token and return this token
-                        return JWT.create().withClaim("userId", userId).sign(algorithm);
+                        return JWT.create().withClaim("userId", userId).withIssuer("auth0").sign(algorithm);
                     } catch (JWTCreationException exception) {
                         //Invalid Signing configuration / Couldn't convert Claims
                         return "false";
@@ -130,7 +130,7 @@ public class LoginService {
                 try {
                     Algorithm algorithm = Algorithm.HMAC256(password);
                     // Create Token variable to create JWT token and return this token
-                    return JWT.create().withClaim("userId", userId).sign(algorithm);
+                    return JWT.create().withClaim("userId", userId).withIssuer("auth0").sign(algorithm);
                 } catch (JWTCreationException exception) {
                     //Invalid Signing configuration / Couldn't convert Claims
                     return "false";

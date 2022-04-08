@@ -1,3 +1,5 @@
+// @ts-ignore
+realTime();setInterval(() => {if (!document.hidden) {realTime();}}, 1000);
 
 // Function to get the current token
 function getCookie(cookie) {
