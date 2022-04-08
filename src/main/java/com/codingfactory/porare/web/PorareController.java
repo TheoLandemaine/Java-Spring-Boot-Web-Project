@@ -57,6 +57,12 @@ public class PorareController {
 
 	@GetMapping("password")
 	public String editPassword() { return "profile/editPassword"; }
+
+	@GetMapping("myCards")
+	public String cards() { return "profile/cards"; }
+
+	@GetMapping("packOpening")
+	public String packs() { return "profile/packs"; }
 	
 
 }
