@@ -52,7 +52,9 @@ document.querySelector('#submit').addEventListener('click', function(e) {
             popups[y].classList.remove('coming');
         }
     }
-    for (let i = popups.length - 1; i < popups.length; i++) {
+
+    for (let i = popups.length-1; i < popups.length; i++) {
+        console.log('coucou')
         popups[i].classList.add('coming');
     }
 
@@ -65,12 +67,12 @@ document.querySelector('#submit').addEventListener('click', function(e) {
                 break;
             }
         }
-    }, 1000);
+    }, 3000);
 
     // After 1.5 seconds the popup will disappear
     setTimeout(function () {
         document.querySelector('.popup').remove();
-    }, 1500);
+    }, 3500);
 
 });
 
