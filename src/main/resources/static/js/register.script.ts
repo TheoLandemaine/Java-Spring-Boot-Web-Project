@@ -71,12 +71,12 @@ document.querySelector('#submit').addEventListener('click', function(e) {
                 break;
             }
         }
-    }, 1000);
+    }, 3000);
 
     // After 1.5 seconds the popup will disappear
     setTimeout(function () {
         document.querySelector('.popup').remove();
-    }, 1500);
+    }, 3500);
 
     // @ts-ignore
     if (checkValues()) {
