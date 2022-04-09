@@ -1,7 +1,7 @@
 searchButton1 = document.getElementById("search-button");
 resultsContainer = document.getElementById("pokeResults");
 currentSelect = document.getElementById("pokeSelect");
-selectGeneration = document.getElementById("generation-search");
+selectRarity = document.getElementById("rarity-search");
 selectType = document.getElementById("type-search");
 cardsOnPage = document.getElementsByClassName("resultsImage");
 nameSearch1 = document.getElementById("name-input");
@@ -39,54 +39,85 @@ if (savedCollectedCards !== null) {
 }
 
 // Function that returns both the name and parameter search inputs
-function searchingPokeData(theGeneration, theType, name) {
+function searchingPokeData(TheRarity, theType, name) {
     // Sorted
-    // Check to see if there is a type and generation being searched
-    if (theGeneration && theType && !name) {
-        generationURL = "https://pokeapi.co/api/v2/" + theGeneration;
+    // Check to see if there is a type and rarity being searched
+    if (TheRarity && theType && name) {
+        rarityURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name + "%20rarity:" + TheRarity + "%20types:" + theType ;
 
-        fetch(generationURL)
+        fetch(rarityURL)
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                // Returns an array of the Generation requested
-                var pokemonGenerationArray = [];
+                console.log(data);
 
-                for (i = 0; i < data.pokemon_species.length; i++) {
-                    pokemonGenerationArray.push(data.pokemon_species[i].name);
-                }
-
-                // Run the array through the TCG Api
-                console.log(pokemonGenerationArray);
-                getCardsOfType(theType, pokemonGenerationArray);
+                postPokemonCardInfo(data.data);
             });
 
         // Sorted
-        // Check to see if there is only a generation being searched
-    } else if (theGeneration && !theType && !name) {
-        generationURL = "https://pokeapi.co/api/v2/" + theGeneration;
+        // Check to see if there is only a Rarity being searched
+    } else if (TheRarity && theType && !name) {
+        rarityURL = "https://api.pokemontcg.io/v2/cards?q=rarity:" + TheRarity + "%20types:" + theType;
 
-        fetch(generationURL)
+        fetch(rarityURL)
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                // Returns an array of the Generation requested
-                var pokemonGenerationArray = [];
+                console.log(data);
 
-                for (i = 0; i < data.pokemon_species.length; i++) {
-                    pokemonGenerationArray.push(data.pokemon_species[i].name);
-                }
+                postPokemonCardInfo(data.data);
+            });
 
-                // Run the array through the TCG Api
-                console.log(pokemonGenerationArray);
-                searchingTCGData(pokemonGenerationArray);
+        // Sorted
+        // Check to see if there is only a Rarity being searched
+    } else if (name && TheRarity && !theType) {
+        rarityURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name + "%20rarity:" + TheRarity;
+
+        fetch(rarityURL)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
+
+                postPokemonCardInfo(data.data);
             });
 
         // Sorted
         // Check to see if there is only a type being searched
-    } else if (theType && !theGeneration && !name) {
+    }else if (name && theType && !TheRarity) {
+        rarityURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name + "%20types:" + theType;
+
+        fetch(rarityURL)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
+
+                postPokemonCardInfo(data.data);
+            });
+
+        // Sorted
+        // Check to see if there is only a type being searched
+    }else if (TheRarity && !theType && !name) {
+        rarityURL = "https://api.pokemontcg.io/v2/cards?q=rarity:" + TheRarity;
+
+        fetch(rarityURL)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
+
+                postPokemonCardInfo(data.data);
+            });
+
+        // Sorted
+        // Check to see if there is only a type being searched
+    } else if (theType && !TheRarity && !name) {
         typeCardURL = "https://api.pokemontcg.io/v2/cards?q=types:" + theType;
 
         fetch(typeCardURL)
@@ -102,7 +133,7 @@ function searchingPokeData(theGeneration, theType, name) {
         // Non Sorted
         // Check if there was a name inputed
     } else if (name) {
-        finalURL = "https://pokeapi.co/api/v2/pokemon/" + name;
+        finalURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name;
 
         console.log(finalURL);
         let divResult = document.querySelector('#pokeResults');
@@ -313,15 +344,15 @@ function startPageSearch() {
     const urlParams = new URLSearchParams(queryString);
 
     parameterType = urlParams.get("type");
-    parameterGeneration = urlParams.get("generation");
+    parameterRarity = urlParams.get("rarity");
     searchedName = urlParams.get("name");
     console.log(searchedName);
     searchedName = searchedName.toLowerCase();
 
     console.log(
-        "Type: " + parameterType + "  Generation: " + parameterGeneration
+        "Type: " + parameterType + "  Rarity: " + parameterRarity
     );
-    searchingPokeData(parameterGeneration, parameterType, searchedName);
+    searchingPokeData(parameterRarity, parameterType, searchedName);
 
     resultsContainer.innerHTML = "";
 }
@@ -329,16 +360,16 @@ function startPageSearch() {
 // Button click event that passes input info
 searchButton1.addEventListener("click", function () {
     parameterType = selectType.value;
-    // parameterGeneration = selectGeneration.value;
-    parameterGeneration = recupValeurs(selectGeneration);
+    // parameterRarity = selectRarity.value;
+    parameterRarity = recupRarity(selectRarity);
 
     searchedName = nameSearch1.value;
     searchedName = searchedName.toLowerCase();
 
     console.log(
-        "Type: " + parameterType + "  Generation: " + parameterGeneration
+        "Type: " + parameterType + "  Rarity: " + parameterRarity
     );
-    searchingPokeData(parameterGeneration, parameterType, searchedName);
+    searchingPokeData(parameterRarity, parameterType, searchedName);
 
     resultsContainer.innerHTML = "";
 });
@@ -406,8 +437,8 @@ collectionsDisplayClose.addEventListener("click", function () {
 
 startPageSearch();
 
-function recupValeurs() {
-    var cases = document.getElementsByName('generation');
+function recupRarity() {
+    var cases = document.getElementsByName('rarity');
     var resultat = "";
     for (var i = 0; i < cases.length; i++) {
         if (cases[i].checked) {
