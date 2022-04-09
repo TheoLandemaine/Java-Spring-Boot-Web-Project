@@ -61,7 +61,7 @@ public class PorareController {
 	@GetMapping("myCards")
 	public String cards() { return "profile/cards"; }
 
-	@GetMapping("packOpening")
+	@GetMapping("myPacks")
 	public String packs() { return "profile/packs"; }
 	
 
