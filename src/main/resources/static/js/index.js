@@ -329,13 +329,11 @@ function startPageSearch() {
 // Button click event that passes input info
 searchButton1.addEventListener("click", function () {
     parameterType = selectType.value;
-    parameterGeneration = selectGeneration.value;
+    // parameterGeneration = selectGeneration.value;
+    parameterGeneration = recupValeurs(selectGeneration);
+
     searchedName = nameSearch1.value;
     searchedName = searchedName.toLowerCase();
-
-    if (searchedName == "oui") {
-        console.log("oui")
-    }
 
     console.log(
         "Type: " + parameterType + "  Generation: " + parameterGeneration
@@ -407,6 +405,18 @@ collectionsDisplayClose.addEventListener("click", function () {
 });
 
 startPageSearch();
+
+function recupValeurs() {
+    var cases = document.getElementsByName('generation');
+    var resultat = "";
+    for (var i = 0; i < cases.length; i++) {
+        if (cases[i].checked) {
+            resultat += cases[i].value;
+        }
+    }
+    return resultat;
+    // alert("Valeurs sélectionnées : " + resultat);
+}
 
 // Handle Collections Modal
 savedCardsBtn1.addEventListener("click", function (e) {
