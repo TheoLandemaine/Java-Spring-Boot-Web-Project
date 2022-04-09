@@ -111,10 +111,9 @@ function searchingPokeData(theGeneration, theType, name) {
         fetch(finalURL)
             .then(function (response) {
 
-                console.log("test dans premier then");
                 console.log(response.ok);
                 if (response.ok == false) {
-                    console.log("erreur ta mere");
+
                     document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>no card matches your search</h2>";
                     divResult.style.display = 'flex';
                     divResult.style.alignItems = 'center';
