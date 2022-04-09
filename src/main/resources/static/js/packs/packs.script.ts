@@ -6,27 +6,95 @@
 // Au chargement du document en jquery
 $(document).ready(() => {
     // drawRandomPokemons();
+    generatePacksArtificially();
+});
 
-    drawPokemons('colorless');
+function generatePacksArtificially() {
+    for (let i = 0; i < 3; i++) {
+        generatePacks('colorless');
+        generatePacks('fire');
+        generatePacks('grass');
+        generatePacks('random');
+
+    }
+}
+
+$(document).click((e) => {
+    // @ts-ignore
+    if (e.target.classList.contains('openPack')) {
+        clearPacks();
+        // @ts-ignore
+       drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'))
+    }
 
 
-    function drawPokemons(type) {
-        type = type.toLowerCase();
+    // When all cards are drawn, show the button to return the packs
+    $('.toFlip').click( () => {
+        //console.log($('.toFlip').length - 1);
+        //console.log($('.carte').length);
+    if (document.querySelectorAll('.toFlip').length -1 === 0 && document.querySelectorAll('.carte').length === 5) {
+        // @ts-ignore
+            // @ts-ignore
+            $('.returnToPacks').css('display', 'block');
+    }
+    })
+
+    $('.returnToPacks').click( () => {
+        clearCards();
+        generatePacksArtificially();
+        $('.returnToPacks').css('display', 'none');
+    })
+});
+
+
+$(document).mouseover((e) => {
+    // @ts-ignore
+    if (e.target.classList.contains("arriere") || e.target.classList.contains("openPack")) {
+        // @ts-ignore
+        e.target.style.cursor = "pointer";
+    }
+});
+
+
+function generatePacks(packType) {
+    packType = packType.toLowerCase();
+
+
+    $('.allPacks').append(`
+            <div class = "pack" data-attr="${packType}">
+                <div class = "packFace">
+                <img  class="openPack" src="${packVisual(packType)}">
+                </div> 
+            </div>`);
+
+}
+
+//  Vider la div allPacks
+function clearPacks() {
+    $('.allPacks').empty();
+}
+
+function clearCards() {
+    $('.allCards').empty();
+}
+
+function drawPokemons(type) {
+    type = type.toLowerCase();
+
         let pokemonsDrawed = [];
-
-
-
 
         for (let i = 0; i < 5; i++) {
             // If type = Colorless, randomPage could go only to page 7
 
             let pokemons = [];
             let pokeCardURL = '';
+            let randomPage = numberPage(type);
             if (type !== 'random') {
-                pokeCardURL = `https://api.pokemontcg.io/v2/cards?q=types:${type}&page=${numberPage(type)}`;
-                console.log(" page : " + numberPage(type));
+                pokeCardURL = `https://api.pokemontcg.io/v2/cards?q=types:${type}&page=${randomPage}`;
+                //console.log(" page : " + randomPage);
             } else {
-                pokeCardURL = `https://api.pokemontcg.io/v2/cards?page=${numberPage(type)}`;
+
+                pokeCardURL = `https://api.pokemontcg.io/v2/cards?page=${randomPage}`;
             }
 
             fetch(pokeCardURL, {
@@ -54,40 +122,33 @@ $(document).ready(() => {
 
 
             setInterval(() => {
-
+                if ($('.carte').length != 5 && $('.pack').length === 0) {
+                //console.log(randomPage);
                 if (pokemonsDrawed.length < 5) {
+                    console.log("Page " + randomPage + " " + pokemons[0]['name']);
                     let random = Math.floor(Math.random() * pokemons.length);
-                    console.log("COUCOU : " + i + " " + pokemons[random]['name']);
-                    console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
+                    //console.log("COUCOU : " + i + " " + pokemons[random]['name']);
+                    //console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
 
                     let pokemonImage = pokemons[random]['images']['large'];
                     let pokemonName = pokemons[random]['name'];
-                    console.log(pokemonImage);
-                    $('.allPacks').append(`
+                    //console.log(pokemonImage);
+                    $('.allCards').append(`
             <div class = "carte" data-attr="${pokemonName}">
                 <div class = "double-face">
                 <div class = "face">
-                <img src="${pokemonImage}"></div> 
-                <div class = "arriere">
+                <img class="imgPokemon" src="${pokemonImage}"></div> 
+                <div class = "arriere toFlip">
             </div>`);
 
                     pokemonsDrawed.push(pokemons[random]);
-                    console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
+                   // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
+                    //console.log($('.toFlip').length);
                 }
-            }, 1500);
         }
+            }, 3500);
     }
-
-});
-
-
-$(document).mouseover((e) => {
-    // @ts-ignore
-    if (e.target.classList.contains("arriere")) {
-        // @ts-ignore
-        e.target.style.cursor = "pointer";
-    }
-});
+}
 
 
 $(document).click((e) => {
@@ -96,6 +157,8 @@ $(document).click((e) => {
     // @ts-ignore
     if (e.target.classList.contains('arriere')) {
         console.log('coucou')
+        // @ts-ignore
+        e.target.classList.remove('toFlip');
         // @ts-ignore
         e.target.style.display = 'block';
         // Make an effect of rotation and disappear and make appear face
@@ -137,6 +200,7 @@ function numberPage(type) {
         randomPage = Math.ceil(Math.random() * 6);
     }else if (type === 'grass') {
         randomPage = Math.ceil(Math.random() * 8);
+        console.log(randomPage);
     }else if (type === 'lightning') {
         randomPage = Math.ceil(Math.random() * 5);
     }else if (type === 'metal') {
@@ -152,5 +216,31 @@ function numberPage(type) {
     return randomPage
 }
 
+
+function packVisual(packType) {
+
+    // @TODO : Get the length of the file that contains our images for our pack
+    // @TODO : Get random number between 1 and the length of the file
+    // @TODO : Get the image from the random number
+
+    let randomImage = 0
+    if (packType === 'colorless' || packType === 'dragon' || packType === 'lightning') {
+        randomImage = Math.ceil(Math.random() * 4);
+    } else if (packType === 'darkness' || packType === 'fairy' || packType === 'metal' || packType === 'psychic') {
+        randomImage = Math.ceil(Math.random() * 2);
+    } else if (packType === 'fighting') {
+        randomImage = Math.ceil(Math.random() * 3);
+    }else if (packType === 'fire' || packType === 'grass') {
+        randomImage = Math.ceil(Math.random() * 6);
+    } else if (packType === 'random') {
+        randomImage = Math.ceil(Math.random() * 12);
+    } else if (packType === 'water') {
+        randomImage = Math.ceil(Math.random() * 10);
+    }
+
+    return `./img/packart/${packType}/${randomImage}.jpg`
+
+
+}
 
 
