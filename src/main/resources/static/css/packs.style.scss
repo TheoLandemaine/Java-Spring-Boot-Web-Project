@@ -11,8 +11,49 @@
 .allPacks {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 1rem;
+
+  .pack {
+    width: calc(34% - 1rem);
+    margin-bottom: 30px;
+
+     @media (max-width: 768px) {
+      width: 100%;
+    }
+    .packFace {
+      img {
+        width: 280px;
+        height: 400px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+
+      }
+    }
+  }
+}
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+
+
+  .returnToPacks {
+    display: none;
+    width: 40%;
+    min-width:300px;
+    padding: 10px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+
+  }
+.allCards {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   margin-top: 1rem;
+
+
   .carte {
     background-color: transparent;
     width: 30%;
@@ -20,11 +61,13 @@
     min-height: 400px;
     perspective: 1000px;
     margin: 20px;
-    margin-bottom : 50px;
+    margin-bottom: 50px;
+
     .double-face {
       width: 100%;
       height: 100%;
       transition: transform 0.3s;
+
       .face,
       .arriere {
         position: absolute;
@@ -46,7 +89,6 @@
         transform: translateX(-50%);
 
 
-
       }
 
       .arriere {
@@ -60,10 +102,10 @@
         max-width: 280px;
         margin-left: 50%;
         transform: translateX(-50%);
-
       }
 
     }
+
     .active {
       transform: rotateY(270deg);
       // Make a smooth transition between the two sides
@@ -72,8 +114,8 @@
       transform-style: preserve-3d;
 
 
-
     }
   }
+}
 
 }

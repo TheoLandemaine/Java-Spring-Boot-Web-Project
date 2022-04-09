@@ -9,10 +9,45 @@
 .allPacks {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.allPacks .pack {
+  width: calc(34% - 1rem);
+  margin-bottom: 30px;
+}
+@media (max-width: 768px) {
+  .allPacks .pack {
+    width: 100%;
+  }
+}
+.allPacks .pack .packFace img {
+  width: 280px;
+  height: 400px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+}
+.cardContainer .returnToPacks {
+  display: none;
+  width: 40%;
+  min-width: 300px;
+  padding: 10px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+}
+.cardContainer .allCards {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   margin-top: 1rem;
 }
-.allPacks .carte {
+.cardContainer .allCards .carte {
   background-color: transparent;
   width: 30%;
   height: 30%;
@@ -21,13 +56,13 @@
   margin: 20px;
   margin-bottom: 50px;
 }
-.allPacks .carte .double-face {
+.cardContainer .allCards .carte .double-face {
   width: 100%;
   height: 100%;
   transition: transform 0.3s;
 }
-.allPacks .carte .double-face .face,
-.allPacks .carte .double-face .arriere {
+.cardContainer .allCards .carte .double-face .face,
+.cardContainer .allCards .carte .double-face .arriere {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -35,15 +70,15 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
-.allPacks .carte .double-face .face {
+.cardContainer .allCards .carte .double-face .face {
   transform: rotateY(90deg);
 }
-.allPacks .carte .double-face .face img {
+.cardContainer .allCards .carte .double-face .face img {
   width: 250px;
   margin-left: 50%;
   transform: translateX(-50%);
 }
-.allPacks .carte .double-face .arriere {
+.cardContainer .allCards .carte .double-face .arriere {
   background-image: url("./../img/backgroundCard.png");
   background-size: contain;
   background-repeat: no-repeat;
@@ -55,7 +90,7 @@
   margin-left: 50%;
   transform: translateX(-50%);
 }
-.allPacks .carte .active {
+.cardContainer .allCards .carte .active {
   transform: rotateY(270deg);
   transform-style: preserve-3d;
 }
