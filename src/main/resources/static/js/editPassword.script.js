@@ -1,3 +1,24 @@
+var url5 = 'http://localhost:8080/api/getUserInformations';
+// Create XMLHttpRequest request POST
+var data = new FormData();
+// @ts-ignore
+data.append("token", checkCookie());
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log(xhr.responseText);
+        console.log(JSON.parse(xhr.responseText));
+        console.log(JSON.parse(xhr.responseText)[0].username);
+        console.log(JSON.parse(xhr.responseText)[0].email);
+        console.log(JSON.parse(xhr.responseText)[0].userId);
+        // insert username
+        //@ts-ignore
+        document.querySelector("#username").value = JSON.parse(xhr.responseText)[0].username;
+    }
+};
+xhr.open('POST', url5, true);
+xhr.send(data);
+//
 // On submit click
 document.querySelector('#submit').addEventListener('click', function (e) {
     e.preventDefault();
