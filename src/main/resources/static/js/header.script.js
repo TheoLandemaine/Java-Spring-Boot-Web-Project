@@ -25,20 +25,13 @@ if (checkCookie() !== 'false') {
     // @ts-ignore
     $('.navColumn').empty();
     // @ts-ignore
+    $('.firstNav').empty();
+    // @ts-ignore
     console.log($('.navColumn'));
     // @ts-ignore
-    $('.navColumn').append("\n        <li> <a href=\"/profile\">Profile </a> </li>\n        <li> <a href=\"/\">Logout </a> </li>\n       ");
-    // When user log out, delete token from the cookie
+    $('.navColumn').append("\n        <li> <a href=\"/profile\">Profile </a> </li>\n<!--        <li> <a href=\"/\">Logout </a> </li>-->\n       ");
     // @ts-ignore
-    $('.navColumn').on('click', function (e) {
-        // @ts-ignore
-        if (e.target.innerText === 'Logout') {
-            // @ts-ignore
-            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            // @ts-ignore
-            window.location.href = '/';
-        }
-    });
+    $('.firstNav').append("\n        <li><a href=\"./\">Home</a></li>\n        <li><a href=\"./users\">Users</a></li>\n        <li><a href=\"./search\">Catalog</a></li>\n        ");
 }
 else {
     // @ts-ignore
