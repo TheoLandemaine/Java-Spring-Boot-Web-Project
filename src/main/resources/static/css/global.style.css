@@ -7,11 +7,15 @@
 
 header {
   display: flex;
-  background-color: #f5f5f5;
+  background-color: #141414;
   max-height: 80px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+header .firstNav {
+  display: flex;
+  justify-content: space-between;
 }
 header #logo img {
   width: 40%;
@@ -31,26 +35,55 @@ header ul {
   justify-content: space-between;
   align-items: center;
 }
+header ul .navColumn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  margin-right: 1em;
+}
+header ul .navColumn button {
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 8px;
+  color: #000;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+header ul .navColumn button:hover {
+  color: #000;
+  cursor: pointer;
+}
+header ul .navColumn #login {
+  background-color: dodgerblue;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+}
+header ul .navColumn #register {
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+}
 header ul li {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 header ul li a {
-  color: #000;
+  color: white;
   text-decoration: none;
   font-size: 1.2em;
   padding-right: 30px;
   font-weight: bold;
 }
 header ul li a:hover {
-  color: #000;
+  color: dodgerblue;
 }
 
 footer {
   background-color: #f5f5f5;
   align-items: center;
-  width: 100%;
   padding: 1em;
 }
 footer #footer {
@@ -67,23 +100,23 @@ footer #footer .socials {
 }
 footer #footer .socials .logo {
   text-decoration: none;
-  color: rgb(29, 29, 55);
+  color: #1d1d37;
   font-size: 1.4em;
   padding-left: 40px;
 }
 footer #footer .socials .fa-facebook {
-  color: rgb(0, 71, 163);
+  color: #0047a3;
 }
 footer #footer .socials .fa-facebook:hover {
   font-size: 110%;
-  color: rgb(0, 50, 114);
+  color: #003272;
 }
 footer #footer .socials .fa-twitter {
-  color: rgb(118, 174, 210);
+  color: #76aed2;
 }
 footer #footer .socials .fa-twitter:hover {
   font-size: 110%;
-  color: rgb(97, 144, 177);
+  color: #6190b1;
 }
 footer #footer .socials .fa-instagram {
   background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
