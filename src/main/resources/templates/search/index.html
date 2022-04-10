@@ -12,7 +12,7 @@
 
 
 <body>
-<header class="header"></header>
+<!--<header class="header"></header>-->
 
 
 <div class="row">
@@ -25,20 +25,9 @@
                 <input type="text" id="name-input" name="current-search">
 
                 <br><br>
-                <h5>Generation</h5>
-<!--                <select class="browser-default" id="generation-search">-->
-<!--                    <option value="">Choose your option</option>-->
-<!--                    <option value="generation/1">1</option>-->
-<!--                    <option value="generation/2">2</option>-->
-<!--                    <option value="generation/3">3</option>-->
-<!--                    <option value="generation/4">4</option>-->
-<!--                    <option value="generation/5">5</option>-->
-<!--                    <option value="generation/6">6</option>-->
-<!--                    <option value="generation/7">7</option>-->
-<!--                    <option value="generation/8">8</option>-->
-<!--                </select>-->
+                <h5 class="rarityTitle">Pokemon Rarity ˅</h5>
 
-                <div class="rarity-search">
+                <div class="rarity_search">
                     <label><input type="checkbox" value="common"    name="rarity" />Common</label>
                     <label><input type="checkbox" value="uncommon"  name="rarity" />Uncommon</label>
                     <label><input type="checkbox" value="rare"      name="rarity" />Rare</label>
@@ -65,21 +54,23 @@
                 </div>
 
                 <br>
-                <h5>Pokemon Type</h5>
-                <select class="browser-default" id="type-search">
-                    <option value="">Choose your option</option>
-                    <option value="Grass">Grass</option>
-                    <option value="Fire">Fire</option>
-                    <option value="Water">Water</option>
-                    <option value="Lightning">Lightning</option>
-                    <option value="Psychic">Psychic</option>
-                    <option value="Fighting">Fighting</option>
-                    <option value="Darkness">Darkness</option>
-                    <option value="Metal">Metal</option>
-                    <option value="Dragon">Dragon</option>
-                    <option value="Fairy">Fairy</option>
-                    <option value="Colorless">Colorless</option>
-                </select>
+                <h5 id="typeTitle">Pokemon Type</h5>
+
+                <div class="type-search">
+                    <label><input type="checkbox" value="Grass"     name="type" />Grass</label>
+                    <label><input type="checkbox" value="Fire"      name="type" />Fire</label>
+                    <label><input type="checkbox" value="Water"     name="type" />Water</label>
+                    <label><input type="checkbox" value="Lightning" name="type" />Lightning</label>
+                    <label><input type="checkbox" value="Psychic"   name="type" />Psychic</label>
+                    <label><input type="checkbox" value="Fighting"  name="type" />Fighting</label>
+                    <label><input type="checkbox" value="Darkness"  name="type" />Darkness</label>
+                    <label><input type="checkbox" value="Metal"     name="type" />Metal</label>
+                    <label><input type="checkbox" value="Dragon"    name="type" />Dragon</label>
+                    <label><input type="checkbox" value="Fairy"     name="type" />Fairy</label>
+                    <label><input type="checkbox" value="Colorless" name="type" />Colorless</label>
+                </div>
+
+
                 <br><br>
                 <button id="search-button">Search</button>
 
