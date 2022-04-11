@@ -7,6 +7,7 @@
 $(document).ready(() => {
     // drawRandomPokemons();
     //generatePacksFromAPI();
+
     generatePacksArtificially();
 });
 
@@ -43,12 +44,19 @@ function generatePacksFromAPI() {
 
 function generatePacksArtificially() {
     for (let i = 0; i < 3; i++) {
+
         generatePacks('colorless');
         generatePacks('fire');
         generatePacks('grass');
         generatePacks('random');
 
     }
+
+
+
+
+
+    //
 }
 
 $(document).click((e) => {
@@ -72,9 +80,14 @@ $(document).click((e) => {
     })
 
     $('.returnToPacks').click( () => {
+
         clearCards();
+        // Go to the top of the page
         generatePacksArtificially();
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         $('.returnToPacks').css('display', 'none');
+
     })
 });
 

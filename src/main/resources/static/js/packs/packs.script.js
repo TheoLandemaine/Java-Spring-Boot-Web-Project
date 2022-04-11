@@ -75,6 +75,7 @@ $(document).click(function (e) {
     if (e.target.classList.contains('openPack')) {
         clearPacks();
         // @ts-ignore
+        suppressPackFromBDD(e.target.parentElement.parentElement.getAttribute('data-attr'));
         drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'));
     }
     // When all cards are drawn, show the button to return the packs
@@ -87,11 +88,7 @@ $(document).click(function (e) {
             $('.returnToPacks').css('display', 'block');
         }
     });
-    $('.returnToPacks').click(function () {
-        clearCards();
-        generatePacksArtificially();
-        $('.returnToPacks').css('display', 'none');
-    });
+
 });
 $(document).mouseover(function (e) {
     // @ts-ignore
@@ -189,6 +186,14 @@ $(document).click(function (e) {
         console.log(e.target.parentNode.classList);
     }
 });
+
+$('.returnToPacks').click(function () {
+    console.log('return');
+    clearCards();
+    generatePacksArtificially();
+    $('.returnToPacks').css('display', 'none');
+});
+
 // @ts-ignore
 function flip(card) {
     return __awaiter(this, void 0, void 0, function () {
@@ -284,15 +289,37 @@ function saveCards(cards) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             // If response is true, redirect to login page
             if (xhr.responseText !== 'false') {
-                // Create cookie and stock result in him
-                document.cookie = 'token=' + xhr.responseText;
-                window.location.href = './login';
+
             }
             else {
                 // If response is false, show error message
-                alert('Username already exists');
+                alert('An error has occured');
             }
         }
     };
     xhr.send(data);
 }
+
+function suppressPackFromBDD(packType) {
+    var token = localStorage.getItem('token');
+    var xhr = new XMLHttpRequest();
+    var url = 'http://localhost:8080/api/suppressPackFromBDD';
+    xhr.open('POST', url, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // If response is true, redirect to login page
+            if (xhr.responseText !== 'false') {
+            }
+            else {
+                // If response is false, show error message
+                alert('An error has occured');
+            }
+        }
+    };
+    xhr.send(JSON.stringify({
+        token: token,
+        packType: packType
+    }));
+}
+
+
