@@ -11,7 +11,7 @@ $(document).ready(() => {
     generatePacksArtificially();
 });
 
-function generatePacksFromAPI() {
+function generatePacksFromAPI(token) {
     // Create Fetch API request
 // @ts-ignore
     const url:string = 'http://localhost:8080/api/getPacks';
