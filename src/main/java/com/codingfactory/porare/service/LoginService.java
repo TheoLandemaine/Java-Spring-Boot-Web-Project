@@ -23,13 +23,14 @@ import java.security.NoSuchAlgorithmException;
 public class LoginService {
 
     /* Import JdbcTemplate */
-    @Autowired
     private JdbcTemplate jdbcTemplate;
+    public LoginService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public String registerUser(String username, String email, String password, String confirmPassword) {
         try { // Try to get all users from the database
             if (password.equals(confirmPassword)) { // Check if the password and the confirm password are the same
-
                 // Crypt the password
                 try {
                     // Create MessageDigest instance for MD5
