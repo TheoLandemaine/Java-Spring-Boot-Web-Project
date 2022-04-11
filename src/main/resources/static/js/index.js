@@ -347,6 +347,16 @@ function postSavedCards(dataTCG) {
     });
 }
 
+var typeTitle = document.getElementsByClassName("typeTitle")[0];
+
+typeTitle.addEventListener("click", function () {
+    console.log("youre a fucking idiot");
+    let body = document.getElementsByTagName( 'body' )[0];
+
+    body.classList.toggle( 'typeAppear' );
+
+});
+
 var rarityTitle = document.getElementsByClassName("rarityTitle")[0];
 
 rarityTitle.addEventListener("click", function () {

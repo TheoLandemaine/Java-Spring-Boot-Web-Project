@@ -139,7 +139,6 @@ body {
 h3 {
   font-size: 2.52rem;
   line-height: 100%;
-  margin: 0 0 3rem 0;
 }
 
 .col-sm-8:hover {
@@ -1386,15 +1385,19 @@ input[type=text]:not(.browser-default):focus:not([readonly]) {
   transition: clip-path 0.5s;
 }
 
+body.typeAppear .type-search {
+  -webkit-clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
+}
+
 body.rarityAppear .rarity_search {
   -webkit-clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
 }
 
-input[type=checkbox] {
+input[type=radio] {
   float: right;
 }
-
 .col .s12 h5 {
   background-color: lightgray;
   cursor: pointer;
