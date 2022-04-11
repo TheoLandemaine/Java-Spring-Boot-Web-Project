@@ -30,8 +30,12 @@ import com.codingfactory.porare.data.User;
 public class UserService {
 
     /* Import JdbcTemplate */
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
+
+    public UserService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>(); // Create a new list of users
@@ -122,4 +126,76 @@ public class UserService {
             return coins;
         }
     }
+    public List<String> getUserPacks(String token) {
+        List<String> packs = new ArrayList<>();
+
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+
+            String sql = "SELECT p_id FROM pack WHERE u_id = '" + jwt.getClaim("userId") + "'";
+
+            // Fetch element and console log the password
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+
+            for (Map<String, Object> row : rows) {
+                packs.add((String) row.get("p_type"));
+            }
+
+            return packs;
+        } catch (JWTDecodeException exception) {
+            //Invalid token
+            return packs;
+        }
+    }
+
+    public List<String> getUserCards(String token) {
+        List<String> cards = new ArrayList<>();
+
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+
+            String sql = "SELECT c_id FROM card WHERE u_id = '" + jwt.getClaim("userId") + "'";
+
+            // Fetch element and console log the password
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+
+            for (Map<String, Object> row : rows) {
+                cards.add((String) row.get("c_id"));
+            }
+
+            // Get the user password from the users list
+
+
+            return cards;
+        } catch (JWTDecodeException exception) {
+            //Invalid token
+            return cards;
+        }
+    }
+
+        // Manage economy
+
+        // TODO: If the user buys a pack, remove the coins from the user
+        // TODO: If the user sells a card, add the coins from the user
+
+        public void manageEconomy(String token, int price) {
+        // If the user buys a pack, remove the coins from the user
+        // If the user sells a card, add the coins from the user
+
+            // Get the actual coins of the user from sql request
+            int coins = getUserCoins(token);
+
+            // If the user buys a pack, remove the coins from the user
+            if (price < 0) {
+                coins -= price;
+            } else {
+                coins += price;
+            }
+
+            String sql = "UPDATE user SET u_coin = ? WHERE u_id = ?";
+            jdbcTemplate.update(sql, coins, token);
+
+
+        }
+
 }
