@@ -41,6 +41,7 @@ if (checkCookie() !== 'false') {
         <li><a href="./">Home</a></li>
         <li><a href="./users">Users</a></li>
         <li><a href="./search">Catalog</a></li>
+        <li><a href="./shop">Shop</a></li>
         `);
 
 } else {

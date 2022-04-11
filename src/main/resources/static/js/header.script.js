@@ -31,7 +31,7 @@ if (checkCookie() !== 'false') {
     // @ts-ignore
     $('.navColumn').append("\n        <li> <a href=\"/profile\">Profile </a> </li>\n<!--        <li> <a href=\"/\">Logout </a> </li>-->\n       ");
     // @ts-ignore
-    $('.firstNav').append("\n        <li><a href=\"./\">Home</a></li>\n        <li><a href=\"./users\">Users</a></li>\n        <li><a href=\"./search\">Catalog</a></li>\n        ");
+    $('.firstNav').append("\n        <li><a href=\"./\">Home</a></li>\n        <li><a href=\"./users\">Users</a></li>\n        <li><a href=\"./search\">Catalog</a></li>\n        <li><a href=\"./shop\">Shop</a></li>\n        ");
 }
 else {
     // @ts-ignore
