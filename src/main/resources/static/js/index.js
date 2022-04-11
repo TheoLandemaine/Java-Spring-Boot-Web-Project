@@ -23,6 +23,8 @@ var collectionsModal = document.getElementById("collections-modal");
 var collectionResults = document.getElementById("collection-results");
 
 var savedCardsBtn1 = document.getElementById("show-saved");
+var divResult = document.querySelector('#pokeResults');
+
 
 // Saved Cards Array
 var collectedCards = [];
@@ -50,6 +52,15 @@ function searchingPokeData(TheRarity, theType, name) {
                 console.log(data);
 
                 postPokemonCardInfo(data.data);
+
+                if (document.querySelectorAll('.resultsImage').length == 0) {
+                    document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
+                    divResult.style.display = 'flex';
+                    divResult.style.flexDirection = 'column';
+                    divResult.style.justifyContent = 'center';
+                } else {
+                    divResult.style.display = 'block';
+                }
             });
 
         // Sorted
@@ -67,6 +78,15 @@ function searchingPokeData(TheRarity, theType, name) {
                 console.log(data);
 
                 postPokemonCardInfo(data.data);
+
+                if (document.querySelectorAll('.resultsImage').length == 0) {
+                    document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
+                    divResult.style.display = 'flex';
+                    divResult.style.flexDirection = 'column';
+                    divResult.style.justifyContent = 'center';
+                } else {
+                    divResult.style.display = 'block';
+                }
             });
 
         // Sorted
@@ -84,6 +104,15 @@ function searchingPokeData(TheRarity, theType, name) {
                 console.log(data);
 
                 postPokemonCardInfo(data.data);
+
+                if (document.querySelectorAll('.resultsImage').length == 0) {
+                    document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
+                    divResult.style.display = 'flex';
+                    divResult.style.flexDirection = 'column';
+                    divResult.style.justifyContent = 'center';
+                } else {
+                    divResult.style.display = 'block';
+                }
             });
 
         // Sorted
@@ -101,6 +130,15 @@ function searchingPokeData(TheRarity, theType, name) {
                 console.log(data);
 
                 postPokemonCardInfo(data.data);
+
+                if (document.querySelectorAll('.resultsImage').length == 0) {
+                    document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
+                    divResult.style.display = 'flex';
+                    divResult.style.flexDirection = 'column';
+                    divResult.style.justifyContent = 'center';
+                } else {
+                    divResult.style.display = 'block';
+                }
             });
 
         // Sorted
@@ -118,6 +156,14 @@ function searchingPokeData(TheRarity, theType, name) {
                 console.log(data);
 
                 postPokemonCardInfo(data.data);
+                if (document.querySelectorAll('.resultsImage').length == 0) {
+                    document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
+                    divResult.style.display = 'flex';
+                    divResult.style.flexDirection = 'column';
+                    divResult.style.justifyContent = 'center';
+                } else {
+                    divResult.style.display = 'block';
+                }
             });
 
         // Sorted
@@ -135,6 +181,16 @@ function searchingPokeData(TheRarity, theType, name) {
                 console.log(data);
 
                 postPokemonCardInfo(data.data);
+
+                if (document.querySelectorAll('.resultsImage').length == 0) {
+                    document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
+                    divResult.style.display = 'flex';
+                    divResult.style.flexDirection = 'column';
+                    divResult.style.justifyContent = 'center';
+                } else {
+                    divResult.style.display = 'block';
+                }
+
             });
 
         // Non Sorted
@@ -144,18 +200,31 @@ function searchingPokeData(TheRarity, theType, name) {
 
         console.log(nameURL);
 
-        let divResult = document.querySelector('#pokeResults');
-
         console.log("test avant fetch");
 
         fetch(nameURL)
             .then(function (response) {
+
+                console.log(document.querySelectorAll('.resultsImage').length);
+
                 return response.json();
             })
             .then(function (data) {
                 console.log(data);
 
                 postPokemonCardInfo(data.data);
+
+                console.log(document.querySelectorAll('.resultsImage').length);
+
+                if (document.querySelectorAll('.resultsImage').length == 0) {
+                    document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
+                    divResult.style.display = 'flex';
+                    divResult.style.flexDirection = 'column';
+                    divResult.style.justifyContent = 'center';
+                } else {
+                    divResult.style.display = 'block';
+                }
+
             });
 
         // fetch(finalURL)
