@@ -12,11 +12,27 @@
   justify-content: space-between;
   margin-top: 1rem;
 }
+.allPacks .closePack {
+  position: absolute;
+  top: 30px;
+  right: 50%;
+  z-index: 4;
+  border: none;
+  background-color: rgb(190, 190, 190);
+  width: 30px;
+  border-radius: 30px;
+  height: 30px;
+}
+.allPacks .closePack:hover {
+  cursor: pointer;
+  color: red;
+  background-color: rgb(236, 185, 185);
+}
 .allPacks .pack {
   width: calc(34% - 1rem);
   margin-bottom: 30px;
 }
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .allPacks .pack {
     width: 100%;
   }
@@ -26,6 +42,46 @@
   height: 400px;
   margin-left: 50%;
   transform: translateX(-50%);
+}
+.allPacks .pack h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 58%;
+  transform: translateX(-50%);
+}
+
+.packPreview {
+  width: calc(100% - 1rem);
+  margin-bottom: 60px;
+  margin-left: 60%;
+  transform: translateX(-50%);
+}
+.packPreview .packFace {
+  width: 50%;
+  padding: 40px;
+  border-radius: 30px;
+}
+.packPreview .packFace img {
+  width: 300px;
+  height: 500px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+.packPreview h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 45%;
+  transform: translateX(-50%);
+}
+.packPreview .buyPack {
+  width: 40%;
+  min-width: 300px;
+  margin-left: 3%;
+  padding: 10px;
 }
 
 .cardContainer {
