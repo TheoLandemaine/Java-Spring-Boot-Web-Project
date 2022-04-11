@@ -3,7 +3,9 @@ package com.codingfactory.porare.web;
 
 import java.util.List;
 
+import com.codingfactory.porare.service.CardService;
 import com.codingfactory.porare.service.LoginService;
+import com.codingfactory.porare.service.PackService;
 import org.springframework.web.bind.annotation.*;
 
 import com.codingfactory.porare.data.User;
@@ -17,10 +19,14 @@ public class PorareRestController {
 
     private final UserService userService;
     private final LoginService loginService;
+    private final CardService cardService;
+    private final PackService packService;
 
-    public PorareRestController(UserService personService, LoginService loginService) {
+    public PorareRestController(UserService personService, LoginService loginService, CardService cardService, PackService packService) {
         this.userService = personService;
         this.loginService = loginService;
+        this.cardService = cardService;
+        this.packService = packService;
     }
 
 
@@ -83,4 +89,33 @@ public class PorareRestController {
         */
         return loginService.loginUser(email, password); // Return Result
     }
+
+    @PostMapping("getPacks")
+        public List<String> getPacks(@RequestParam String token, // Get username from the request
+                                 HttpServletRequest httpServletRequest) {
+
+        /*
+        * Return @List<String>
+        * List of all packs
+        */
+        return userService.getUserPacks(token); // Return Result
+    }
+
+    @PostMapping ("saveCards")
+        public List<int> saveCards(@RequestParam String token,
+                                   @RequestParam int c_id,// Get username from the request
+                                 HttpServletRequest httpServletRequest) {
+
+        /*
+        * Return @List<int>
+        * List of all cards
+        */
+        return cardService.addCard(token, c_id); // Return Result
+    }
+
+
+
+
+
+
 }
