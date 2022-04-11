@@ -9,29 +9,26 @@ package com.codingfactory.porare.service;
  * @since 05/04/2022
  */
 
-import java.sql.*;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.codingfactory.porare.data.User;
+import com.codingfactory.porare.tools.Global;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.jdbc.core.JdbcTemplate;
-
-import com.codingfactory.porare.data.User;
-
+/**
+ * @param jdbcTemplate Import JdbcTemplate
+ */
 @Service
-public class UserService {
+public record UserService(JdbcTemplate jdbcTemplate) {
 
-    /* Import JdbcTemplate */
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    static Global global = new Global();
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>(); // Create a new list of users
@@ -60,41 +57,24 @@ public class UserService {
         List<User> users = new ArrayList<>(); // Create a new list of users
 
         try {
-            DecodedJWT jwt = JWT.decode(token);
+            Integer userId = global.checkToken(token, jdbcTemplate);
 
-            String sql = "SELECT * FROM user WHERE u_id = '" + jwt.getClaim("userId") + "'";
+            // Get User Informations
+            List<Map<String, Object>> userInformations = jdbcTemplate.queryForList("SELECT * FROM user WHERE u_id = '" + userId + "'");
 
-            // Fetch element and console log the password
-            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
-
-            // Get the user password from the users list
-            String password = (String) rows.get(0).get("u_password");
-
-            // Check if the password correspond to the token
-            try {
-                Algorithm algorithm = Algorithm.HMAC256(password);
-                JWTVerifier verifier = JWT.require(algorithm)
-                        .withIssuer("auth0")
-                        .build(); //Reusable verifier instance
-                DecodedJWT jwtVerifier = verifier.verify(token);
-
-                // Good, if we get here, the token is valid
-                User user = new User(); // Create a new user
-                user.setUserId(String.valueOf((int) rows.get(0).get("u_id"))); // Set the user id
-                user.setUsername((String) rows.get(0).get("u_username")); // Set the username
-                user.setEmail((String) rows.get(0).get("u_email")); // Set the password
-                users.add(user); // Add the user to the list
-
-                return users; // Return the list of users
-            } catch (JWTVerificationException exception) {
-                //Invalid signature/claims
+            // Get User Informations
+            for (Map<String, Object> userInformation : userInformations) {
                 User user = new User();
-                users.add(user);
+                user.setUserId(String.valueOf((int) userInformation.get("u_id")));
+                user.setUsername((String) userInformation.get("u_username"));
+                user.setEmail((String) userInformation.get("u_email"));
 
-                return users;
+                users.add(user);
             }
-        } catch (JWTDecodeException exception) {
-            //Invalid token
+
+            return users; // Return the list of users
+        } catch (JWTVerificationException exception) {
+            //Invalid signature/claims
             User user = new User();
             users.add(user);
 
@@ -103,23 +83,22 @@ public class UserService {
     }
 
     public int getUserCoins(String token) {
-        int coins = 0;
-
         try {
-            DecodedJWT jwt = JWT.decode(token);
+            // Get User Id
+            Integer userId = global.checkToken(token, jdbcTemplate);
 
-            String sql = "SELECT u_coin FROM user WHERE u_id = '" + jwt.getClaim("userId") + "'";
+            String sql = "SELECT u_coin FROM user WHERE u_id = '" + userId + "'";
 
             // Fetch element and console log the password
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 
             // Get the user password from the users list
-            coins = (int) rows.get(0).get("u_coin");
+            int coins = (int) rows.get(0).get("u_coin");
 
             return coins;
         } catch (JWTDecodeException exception) {
             //Invalid token
-            return coins;
+            return 0;
         }
     }
 }
