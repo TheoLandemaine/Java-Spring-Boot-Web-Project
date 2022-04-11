@@ -7,11 +7,17 @@
 
 header {
     display: flex;
-    background-color: #f5f5f5;
+    //background-color: #f5f5f5;
+    background-color: #141414;
     max-height: 80px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    .firstNav{
+        display: flex;
+        justify-content: space-between;
+
+    }
     #logo {
         img {
             width: 40%;
@@ -31,28 +37,82 @@ header {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+
+        .navColumn{
+            display: flex;
+            //flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            margin-right: 1em;
+            button {
+                margin-left: 5px;
+                margin-right: 5px;
+
+                padding: 8px;
+                color: #000;
+                font-size: 1.2em;
+                font-weight: bold;
+                &:hover {
+                    color: #000;
+                    cursor: pointer;
+                }
+            }
+            #login{
+                background-color: dodgerblue;
+                border-radius: 5px;
+                border: none;
+                color: #fff;
+            }
+            #register{
+                background-color: white;
+                border-radius: 5px;
+                border: none;
+            }
+        }
+
         li {
             list-style: none;
             margin: 0;
             padding: 0;
             a {
-                color: #000;
+                color: white;
                 text-decoration: none;
                 font-size: 1.2em;
                 padding-right: 30px;
                 font-weight: bold;
                 &:hover {
-                    color: #000;
+                    color: dodgerblue;
                 }
             }
         }
     }
 }
 
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background:linear-gradient(#141414 10% , dodgerblue);
+    height: 50vh;
+    .infoContent {
+        h1 {
+            font-size: 2.5em;
+            color: #fff;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #fff;
+        }
+    }
+}
+
+
 footer {
     background-color: #f5f5f5;
     align-items: center;
-    width: 100%;
     padding: 1em;
     #footer {
         display: flex;
