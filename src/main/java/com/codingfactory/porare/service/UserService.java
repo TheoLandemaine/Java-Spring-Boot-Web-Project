@@ -101,4 +101,25 @@ public class UserService {
             return users;
         }
     }
+
+    public int getUserCoins(String token) {
+        int coins = 0;
+
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+
+            String sql = "SELECT u_coin FROM user WHERE u_id = '" + jwt.getClaim("userId") + "'";
+
+            // Fetch element and console log the password
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+
+            // Get the user password from the users list
+            coins = (int) rows.get(0).get("u_coin");
+
+            return coins;
+        } catch (JWTDecodeException exception) {
+            //Invalid token
+            return coins;
+        }
+    }
 }

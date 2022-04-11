@@ -76,11 +76,10 @@ Multipart Form : `true`
 - `password` : `String`
 - `confirmPassword` : `String`
 
-#### Returned JSON
+#### Returned Text
 Return a token if the user is registered correctly. Otherwise, return false (`String`).
-- `token` : `String`
 
-#### Get User Information
+### Get User Information
 #### Informations :
 Register a new user
 
@@ -98,3 +97,19 @@ Return user information if token is valid. Otherwise, return null.
 - `userId` : `String`
 - `username` : `String`
 - `email` : `String`
+
+### Get User Coins
+#### Informations :
+Get user coins
+
+URL : `http://localhost:8080/api/getUserCoins`
+
+Method : `POST`
+
+Multipart Form : `true`
+
+#### Required Multipart Form
+- `token` : `String`
+
+#### Returned Text
+Return user coins if token is valid. Otherwise, return 0.

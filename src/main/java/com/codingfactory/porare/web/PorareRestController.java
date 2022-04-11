@@ -44,6 +44,17 @@ public class PorareRestController {
         return userService.getUserInformations(token); // Return Result
     }
 
+    @PostMapping("getUserCoins")
+    public int getUserCoins(@RequestParam String token, // Get username from the request
+                            HttpServletRequest httpServletRequest) {
+
+        /*
+        * Return @int
+        * User coins
+        */
+        return userService.getUserCoins(token); // Return Result
+    }
+
     @PostMapping("register")
     public String register(@RequestParam String username, // Get username from the request
                            @RequestParam String email, // Get email from the request
