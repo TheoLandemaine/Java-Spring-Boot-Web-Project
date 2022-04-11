@@ -101,17 +101,7 @@ public class PorareRestController {
         return userService.getUserPacks(token); // Return Result
     }
 
-    @PostMapping ("saveCards")
-        public List<int> saveCards(@RequestParam String token,
-                                   @RequestParam int c_id,// Get username from the request
-                                 HttpServletRequest httpServletRequest) {
 
-        /*
-        * Return @List<int>
-        * List of all cards
-        */
-        return cardService.addCard(token, c_id); // Return Result
-    }
 
 
 
