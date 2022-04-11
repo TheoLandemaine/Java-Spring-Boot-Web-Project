@@ -24,35 +24,51 @@
                 <label for="current-search">Pokemon Name</label>
                 <input type="text" id="name-input" name="current-search">
 
-                <br><br>
-                <h5>Generation</h5>
-                <select class="browser-default" id="generation-search">
-                    <option value="">Choose your option</option>
-                    <option value="generation/1">1</option>
-                    <option value="generation/2">2</option>
-                    <option value="generation/3">3</option>
-                    <option value="generation/4">4</option>
-                    <option value="generation/5">5</option>
-                    <option value="generation/6">6</option>
-                    <option value="generation/7">7</option>
-                    <option value="generation/8">8</option>
-                </select>
-                <br>
-                <h5>Pokemon Type</h5>
-                <select class="browser-default" id="type-search">
-                    <option value="">Choose your option</option>
-                    <option value="Grass">Grass</option>
-                    <option value="Fire">Fire</option>
-                    <option value="Water">Water</option>
-                    <option value="Lightning">Lightning</option>
-                    <option value="Psychic">Psychic</option>
-                    <option value="Fighting">Fighting</option>
-                    <option value="Darkness">Darkness</option>
-                    <option value="Metal">Metal</option>
-                    <option value="Dragon">Dragon</option>
-                    <option value="Fairy">Fairy</option>
-                    <option value="Colorless">Colorless</option>
-                </select>
+                <h5 class="rarityTitle">Pokemon Rarity <i class="fa-solid fa-angles-down"></i></h5>
+
+                <div class="rarity_search">
+                    <label><input type="radio" value="common"    name="rarity" />Common</label>
+                    <label><input type="radio" value="uncommon"  name="rarity" />Uncommon</label>
+                    <label><input type="radio" value="rare"      name="rarity" />Rare</label>
+                    <label><input type="radio" value="vm"        name="rarity" />VM</label>
+                    <label><input type="radio" value="holo"      name="rarity" />Rare Holo</label>
+                    <label><input type="radio" value="ex"        name="rarity" />Rare Holo EX</label>
+                    <label><input type="radio" value="gx"        name="rarity" />Rare Holo GX</label>
+                    <label><input type="radio" value="lv"        name="rarity" />Rare Holo LV.X</label>
+                    <label><input type="radio" value="star"      name="rarity" />Rare Holo Star</label>
+                    <label><input type="radio" value="v"         name="rarity" />Rare Holo V</label>
+                    <label><input type="radio" value="vmax"      name="rarity" />Rare Holo VMAX</label>
+                    <label><input type="radio" value="vstar"     name="rarity" />Rare Holo VSTAR</label>
+                    <label><input type="radio" value="prime"     name="rarity" />Rare Prime</label>
+                    <label><input type="radio" value="star"      name="rarity" />Rare Prime Star</label>
+                    <label><input type="radio" value="rainbow"   name="rarity" />Rare Rainbow</label>
+                    <label><input type="radio" value="secret"    name="rarity" />Rare Secret</label>
+                    <label><input type="radio" value="shining"   name="rarity" />Rare Shining</label>
+                    <label><input type="radio" value="shiny"     name="rarity" />Rare Shiny</label>
+                    <label><input type="radio" value="ultra"     name="rarity" />Rare Ultra</label>
+                    <label><input type="radio" value="break"     name="rarity" />Rare BREAK</label>
+                    <label><input type="radio" value="amazing"   name="rarity" />Amazing Rare</label>
+                    <label><input type="radio" value="legend"    name="rarity" />LEGEND</label>
+                    <label><input type="radio" value="promo"     name="rarity" />Promo</label>
+                </div>
+
+                <h5 class="typeTitle">Pokemon Type</h5>
+
+                <div class="type-search">
+                    <label><input type="radio" value="Grass"     name="type" />Grass</label>
+                    <label><input type="radio" value="Fire"      name="type" />Fire</label>
+                    <label><input type="radio" value="Water"     name="type" />Water</label>
+                    <label><input type="radio" value="Lightning" name="type" />Lightning</label>
+                    <label><input type="radio" value="Psychic"   name="type" />Psychic</label>
+                    <label><input type="radio" value="Fighting"  name="type" />Fighting</label>
+                    <label><input type="radio" value="Darkness"  name="type" />Darkness</label>
+                    <label><input type="radio" value="Metal"     name="type" />Metal</label>
+                    <label><input type="radio" value="Dragon"    name="type" />Dragon</label>
+                    <label><input type="radio" value="Fairy"     name="type" />Fairy</label>
+                    <label><input type="radio" value="Colorless" name="type" />Colorless</label>
+                </div>
+
+
                 <br><br>
                 <button id="search-button">Search</button>
 
