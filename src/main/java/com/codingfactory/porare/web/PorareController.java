@@ -63,6 +63,9 @@ public class PorareController {
 
 	@GetMapping("myPacks")
 	public String packs() { return "profile/packs"; }
+
+	@GetMapping("shop")
+	public String shop() { return "shop/index";}
 	
 
 }
