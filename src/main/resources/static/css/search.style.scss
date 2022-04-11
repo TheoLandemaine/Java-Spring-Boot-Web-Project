@@ -1421,26 +1421,23 @@ h3 {
   }
 
 .rarity_search, .type-search {
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: stretch;
   line-height: 130%;
   max-height: 7.8125rem;
   overflow-y: scroll;
 
--webkit-clip-path: polygon(0 0, 100% 0%, 100% 0, 0 0);
-clip-path: polygon(0 0, 100% 0%, 100% 0, 0 0);
-transition: clip-path 0.5s;
 }
 
 body.typeAppear .type-search {
-  -webkit-clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
-  clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
+  display: flex;
+
 }
 
 body.rarityAppear .rarity_search {
-  -webkit-clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
-  clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
+  display: flex;
+
 }
 
 input[type="radio"] {
