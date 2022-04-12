@@ -1,35 +1,35 @@
-searchButton1 = document.getElementById("search-button");
-resultsContainer = document.getElementById("pokeResults");
-currentSelect = document.getElementById("pokeSelect");
-selectRarity = document.getElementById("rarity-search");
-selectType = document.getElementById("type-search");
-cardsOnPage = document.getElementsByClassName("resultsImage");
-nameSearch1 = document.getElementById("name-input");
+const searchButton1 = document.getElementById("search-button") as HTMLFormElement;
+const resultsContainer = document.getElementById("pokeResults") as HTMLFormElement;
+const currentSelect = document.getElementById("pokeSelect") as HTMLFormElement;
+const selectRarity = document.getElementById("rarity-search") as HTMLFormElement;
+const selectType = document.getElementById("type-search") as HTMLFormElement;
+const cardsOnPage = document.getElementsByClassName("resultsImage");
+const nameSearch1 = document.getElementById("name-input") as HTMLFormElement;
 
 //Instantiate View Card Modal
-var modal = document.getElementById("myModal");
-var modalCardName = document.getElementById("modal-card-name");
-var normalPrice = document.getElementById("modal-normal-price");
-var modalCardImage = document.getElementById("modal-card-image");
+let modal = document.getElementById("myModal") as HTMLFormElement;
+let modalCardName = document.getElementById("modal-card-name") as HTMLFormElement;
+let normalPrice = document.getElementById("modal-normal-price") as HTMLFormElement;
+let modalCardImage = document.getElementById("modal-card-image") as HTMLFormElement;
 
-var cardSaveBtn = document.getElementById("card-saver");
+let cardSaveBtn = document.getElementById("card-saver") as HTMLFormElement;
 
 // Get the <span> element that closes the modal [This is just w3Schools basic modal setup]
-var cardDisplayClose = document.getElementsByClassName("close")[0];
-var collectionsDisplayClose = document.getElementsByClassName("close")[1];
+let cardDisplayClose = document.getElementsByClassName("close")[0] as HTMLFormElement;
+let collectionsDisplayClose = document.getElementsByClassName("close")[1] as HTMLFormElement;
 
 // Instantiate Collections Modal
-var collectionsModal = document.getElementById("collections-modal");
-var collectionResults = document.getElementById("collection-results");
+let collectionsModal = document.getElementById("collections-modal") as HTMLFormElement;
+let collectionResults = document.getElementById("collection-results") as HTMLFormElement;
 
-var savedCardsBtn1 = document.getElementById("show-saved");
-var divResult = document.querySelector('#pokeResults');
+let savedCardsBtn1 = document.getElementById("show-saved") as HTMLFormElement;
+let divResult = document.querySelector('#pokeResults') as HTMLFormElement;
 
 
 // Saved Cards Array
-var collectedCards = [];
+let collectedCards = [];
 
-var savedCollectedCards = localStorage.getItem("ItemID");
+let savedCollectedCards = localStorage.getItem("ItemID");
 
 if (savedCollectedCards !== null) {
     collectedCards = JSON.parse(savedCollectedCards);
@@ -41,9 +41,7 @@ function searchingPokeData(TheRarity, theType, name) {
     // Check to see if there is a type and rarity being searched
 
     if (TheRarity && theType && name) {
-        fullURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name + "%20rarity:" + TheRarity + "%20types:" + theType;
-
-        console.log(fullURL);
+        const fullURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name + "%20rarity:" + TheRarity + "%20types:" + theType;
 
         fetch(fullURL)
             .then(function(response) {
@@ -58,6 +56,7 @@ function searchingPokeData(TheRarity, theType, name) {
 
                 if (document.querySelectorAll('.resultsImage').length == 0) {
                     document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
+
                     divResult.style.display = 'flex';
                     divResult.style.flexDirection = 'column';
                     divResult.style.justifyContent = 'center';
@@ -69,7 +68,7 @@ function searchingPokeData(TheRarity, theType, name) {
         // Sorted
         // Check to see if there is only a Rarity being searched
     } else if (TheRarity && theType && !name) {
-        rarityTypeURL = "https://api.pokemontcg.io/v2/cards?q=rarity:" + TheRarity + "%20types:" + theType;
+        const rarityTypeURL = "https://api.pokemontcg.io/v2/cards?q=rarity:" + TheRarity + "%20types:" + theType;
 
         console.log(rarityTypeURL);
 
@@ -100,7 +99,7 @@ function searchingPokeData(TheRarity, theType, name) {
         // Sorted
         // Check to see if there is only a Rarity being searched
     } else if (name && TheRarity && !theType) {
-        nameRarityURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name + "%20rarity:" + TheRarity;
+        const nameRarityURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name + "%20rarity:" + TheRarity;
 
         console.log(nameRarityURL);
 
@@ -128,7 +127,7 @@ function searchingPokeData(TheRarity, theType, name) {
         // Sorted
         // Check to see if there is only a type being searched
     } else if (name && theType && !TheRarity) {
-        nameTypeURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name + "%20types:" + theType;
+        const nameTypeURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name + "%20types:" + theType;
 
         console.log(nameTypeURL);
 
@@ -156,7 +155,7 @@ function searchingPokeData(TheRarity, theType, name) {
         // Sorted
         // Check to see if there is only a type being searched
     } else if (TheRarity && !theType && !name) {
-        rarityURL = "https://api.pokemontcg.io/v2/cards?q=rarity:" + TheRarity;
+        const rarityURL = "https://api.pokemontcg.io/v2/cards?q=rarity:" + TheRarity;
 
         console.log(rarityURL);
 
@@ -183,7 +182,7 @@ function searchingPokeData(TheRarity, theType, name) {
         // Sorted
         // Check to see if there is only a type being searched
     } else if (theType && !TheRarity && !name) {
-        typeCardURL = "https://api.pokemontcg.io/v2/cards?q=types:" + theType;
+        const typeCardURL = "https://api.pokemontcg.io/v2/cards?q=types:" + theType;
 
         console.log(typeCardURL);
 
@@ -212,7 +211,7 @@ function searchingPokeData(TheRarity, theType, name) {
         // Non Sorted
         // Check if there was a name inputed
     } else if (name) {
-        nameURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name;
+        const nameURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name;
 
         console.log(nameURL);
 
@@ -251,7 +250,7 @@ function searchingPokeData(TheRarity, theType, name) {
 // Takes the TCG data and pulls individual card data
 // Sets the card id as the actual html item id
 function postPokemonCardInfo(dataTCG) {
-    for (i = 0; i < dataTCG.length; i++) {
+    for (let i = 0; i < dataTCG.length; i++) {
         console.log(dataTCG[i]);
         var cardImage = document.createElement("img");
         resultsContainer.appendChild(cardImage);
@@ -271,10 +270,11 @@ function postPokemonCardInfo(dataTCG) {
 
 // Runs a search query based on the current card you clicked
 function cardClickInformation(cardObject) {
-    clickCardURL = "https://api.pokemontcg.io/v2/cards/" + cardObject;
+    const clickCardURL = "https://api.pokemontcg.io/v2/cards/" + cardObject;
 
     fetch(clickCardURL, {
             method: "GET",
+            // @ts-ignore
             withCredentials: true,
             headers: {
                 "X-API-KEY": "f67d2ff5-723b-4794-bbfb-6b0a4e846179",
@@ -329,11 +329,9 @@ function startPageSearch() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
 
-    parameterType = urlParams.get("type");
-    parameterRarity = urlParams.get("rarity");
-    searchedName = urlParams.get("name");
-    console.log(searchedName);
-    searchedName = searchedName.toLowerCase();
+    const parameterType = urlParams.get("type");
+    const parameterRarity = urlParams.get("rarity");
+    const searchedName = urlParams.get("name").toLowerCase();
 
     console.log(
         "Type: " + parameterType + "  Rarity: " + parameterRarity
@@ -345,12 +343,11 @@ function startPageSearch() {
 
 // Button click event that passes input info
 searchButton1.addEventListener("click", () => {
-    parameterType = recupType(selectType);
+    const parameterType = recupType(selectType);
     // parameterRarity = selectRarity.value;
-    parameterRarity = recupRarity(selectRarity);
+    const parameterRarity = recupRarity(selectRarity);
 
-    searchedName = nameSearch1.value;
-    searchedName = searchedName.toLowerCase();
+    const searchedName = nameSearch1.value.toLowerCase();
 
     console.log(
         "Type: " + parameterType + "  Rarity: " + parameterRarity
@@ -372,11 +369,12 @@ cardSaveBtn.addEventListener("click", function() {
 function getSavedCards(cardObject) {
     collectionResults.innerHTML = "";
 
-    for (i = 0; i < cardObject.length; i++) {
-        clickCardURL = "https://api.pokemontcg.io/v2/cards/" + cardObject[i];
+    for (let i = 0; i < cardObject.length; i++) {
+        const clickCardURL = "https://api.pokemontcg.io/v2/cards/" + cardObject[i];
 
         fetch(clickCardURL, {
                 method: "GET",
+                // @ts-ignore
                 withCredentials: true,
                 headers: {
                     "X-API-KEY": "f67d2ff5-723b-4794-bbfb-6b0a4e846179",
@@ -412,7 +410,7 @@ function postSavedCards(dataTCG) {
 
 function chargement() {
     document.querySelector('#pokeResults').innerHTML = "<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>";
-    let pokeball = document.querySelector('.center-on-page');
+    let pokeball = document.querySelector('.center-on-page') as HTMLElement;
     setTimeout(() => { pokeball.style.display = "none" }, 3700);
 }
 
@@ -449,22 +447,26 @@ collectionsDisplayClose.addEventListener("click", function() {
 
 startPageSearch();
 
-function recupRarity() {
+function recupRarity(selectRarity: HTMLFormElement) {
     let rarity = document.getElementsByName('rarity');
     let resultatRarity = "";
     for (let i = 0; i < rarity.length; i++) {
+        // @ts-ignore
         if (rarity[i].checked) {
+            // @ts-ignore
             resultatRarity += rarity[i].value;
         }
     }
     return resultatRarity;
 }
 
-function recupType() {
+function recupType(selectType: HTMLFormElement) {
     let type = document.getElementsByName('type');
     let resultatType = "";
     for (let i = 0; i < type.length; i++) {
+        // @ts-ignore
         if (type[i].checked) {
+            // @ts-ignore
             resultatType += type[i].value;
         }
     }

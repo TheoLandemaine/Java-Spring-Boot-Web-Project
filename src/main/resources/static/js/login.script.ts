@@ -1,44 +1,35 @@
 // On submit click
-document.querySelector('#submit').addEventListener('click', function(e) {
+document.querySelector('#submit').addEventListener('click', function (e) {
     e.preventDefault();
 
-    console.log("tesst");
+    const email: string = (<HTMLInputElement>document.querySelector('#email')).value; // Get the email value
+    const password: string = (<HTMLInputElement>document.querySelector('#password')).value; // Get the password value
 
-    const email:string = (<HTMLInputElement>document.querySelector('#email')).value; // Get the email value
-    const password:string = (<HTMLInputElement>document.querySelector('#password')).value; // Get the password value
+    const data: Object = {
+        email: email,
+        password: password
+    };
 
-    const data = new FormData();
-    data.append("email", email);
-    data.append("password", password);
-
-    const xhr:XMLHttpRequest = new XMLHttpRequest();
-    if ( password && email ) {
-        console.log(password + " " + email);
+    if (password && email) {
         // Register the account into the api
-        const url: string = 'http://localhost:8080/api/login';
+        const url: string = '/api/login';
 
-        xhr.open('POST', url, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // If response is true, redirect to login page
+        $.post(url, data, function (data) {
+            // If response is true, redirect to login page
+            if (data !== "false") {
+                document.cookie = 'token=' + data;
 
-                if (xhr.responseText !== "false") {
-                    document.cookie = 'token=' + xhr.responseText;
-
-                    window.location.href = '/';
-                } else {
-                    // If response is false, show error message
-                    document.querySelector('#popUpContainer').innerHTML +=
-                        '<div class="popup">' +
-                        '<p class="popupMessage">This account does not exist</p>' +
-                        '<button class="popupButton">OK</button>' +
-                        '</div>';
-
-                }
+                window.location.href = '/';
+            } else {
+                // If response is false, show error message
+                document.querySelector('#popUpContainer').innerHTML +=
+                    '<div class="popup">' +
+                    '<p class="popupMessage">This account does not exist</p>' +
+                    '<button class="popupButton">OK</button>' +
+                    '</div>';
             }
-        };
-        xhr.send(data);
-    } else if ( !password || !email ) {
+        });
+    } else if (!password || !email) {
         document.querySelector('#popUpContainer').innerHTML +=
             '<div class="popup">' +
             '<p class="popupMessage">Please fill in all the fields</p>' +
@@ -53,8 +44,7 @@ document.querySelector('#submit').addEventListener('click', function(e) {
         }
     }
 
-    for (let i = popups.length-1; i < popups.length; i++) {
-        console.log('coucou')
+    for (let i = popups.length - 1; i < popups.length; i++) {
         popups[i].classList.add('coming');
     }
 
@@ -77,10 +67,8 @@ document.querySelector('#submit').addEventListener('click', function(e) {
 });
 
 document.addEventListener('click', (e) => {
-    //@ts-ignore
-    if (e.target.classList.contains('popupButton')) {
-        //@ts-ignore
-        e.target.parentNode.remove();
+    const target: any = e.target as HTMLElement;
+    if (target.classList.contains('popupButton')) {
+        target.parentNode.remove();
     }
-    
 });

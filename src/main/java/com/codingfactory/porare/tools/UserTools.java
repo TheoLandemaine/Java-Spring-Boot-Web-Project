@@ -11,10 +11,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 import java.util.Map;
 
-public class Global {
+public class UserTools {
     /*
      * Here, we are declaring our global variables available to all classes in Project.
      */
+
+    public UserTools() {
+    }
 
     public Integer checkToken(String token, JdbcTemplate jdbcTemplate) {
         try {

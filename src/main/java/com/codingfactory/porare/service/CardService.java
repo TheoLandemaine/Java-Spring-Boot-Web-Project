@@ -6,15 +6,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class CardService {
-    private JdbcTemplate jdbcTemplate;
-
-    public CardService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+public record CardService(JdbcTemplate jdbcTemplate) {
 
     // add card
     public void addCard(String token, int cardId) {

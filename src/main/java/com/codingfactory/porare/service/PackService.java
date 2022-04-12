@@ -4,11 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PackService {
-    private JdbcTemplate jdbcTemplate;
-    public PackService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+public record PackService(JdbcTemplate jdbcTemplate) {
 
     public void addPack(String p_type, int token) {
         String sql = "INSERT INTO pack (p_type, u_id) VALUES (?, ?)";

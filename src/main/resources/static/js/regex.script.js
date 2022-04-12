@@ -4,24 +4,18 @@ var password = false;
 var password_confirm = false;
 var exPassword = false;
 document.addEventListener('change', function (e) {
-    // @ts-ignore
-    if (e.target.getAttribute('id') === "username") {
+    var target = e.target;
+    if (target.getAttribute('id') === "username") {
         // If it corresponds to the format make it valid
-        // @ts-ignore
-        if (e.target.value.match(/^[a-z A-Z]+$/) && e.target.value.length <= 50) {
-            // @ts-ignore
-            e.target.style.borderColor = 'green';
-            // @ts-ignore
-            e.target.style.backgroundColor = '#d4edda';
+        if (target.value.match(/^[a-z A-Z]+$/) && target.value.length <= 50) {
+            target.style.borderColor = 'green';
+            target.style.backgroundColor = '#d4edda';
             username = true;
             // If it doesn't correspond to the format make it invalid
-            // @ts-ignore
         }
-        else if (!e.target.value == "" && !e.target.value.match(/^[a-zA-Z]+$/)) {
-            // @ts-ignore
-            e.target.style.borderColor = 'red';
-            // @ts-ignore
-            e.target.style.backgroundColor = '#f8d7da';
+        else if (target.value != "" && !target.value.match(/^[a-zA-Z]+$/)) {
+            target.style.borderColor = 'red';
+            target.style.backgroundColor = '#f8d7da';
             username = false;
             document.querySelector('#popUpContainer').innerHTML +=
                 '<div class="popup">' +
@@ -31,31 +25,22 @@ document.addEventListener('change', function (e) {
             // If it is empty, make it neutral
         }
         else {
-            // @ts-ignore
-            e.target.style.borderColor = '#ccc';
-            // @ts-ignore
-            e.target.style.backgroundColor = 'rgba(250, 247, 247, 0.406)';
+            target.style.borderColor = '#ccc';
+            target.style.backgroundColor = 'rgba(250, 247, 247, 0.406)';
             username = false;
         }
-        // @ts-ignore
     }
-    else if (e.target.getAttribute('id') === "email") {
+    else if (target.getAttribute('id') === "email") {
         // If it corresponds to the format mail@mailbox.com make it valid with accents and no special characters
-        // @ts-ignore
-        if (e.target.value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
-            // @ts-ignore
-            e.target.style.borderColor = 'green';
-            // @ts-ignore
-            e.target.style.backgroundColor = '#d4edda';
+        if (target.value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
+            target.style.borderColor = 'green';
+            target.style.backgroundColor = '#d4edda';
             email = true;
             // If it doesn't correspond to the format make it invalid
-            // @ts-ignore
         }
-        else if (e.target.value.length > 0 && !e.target.value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/)) {
-            // @ts-ignore
-            e.target.style.borderColor = 'red';
-            // @ts-ignore
-            e.target.style.backgroundColor = '#f8d7da';
+        else if (target.value.length > 0 && !target.value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/)) {
+            target.style.borderColor = 'red';
+            target.style.backgroundColor = '#f8d7da';
             email = false;
             document.querySelector('#popUpContainer').innerHTML +=
                 '<div class="popup">' +
@@ -65,52 +50,37 @@ document.addEventListener('change', function (e) {
             // If it is empty, make it neutral
         }
         else {
-            // @ts-ignore
-            e.target.style.borderColor = '#ccc';
-            // @ts-ignore
-            e.target.style.backgroundColor = 'rgba(250, 247, 247, 0.406)';
+            target.style.borderColor = '#ccc';
+            target.style.backgroundColor = 'rgba(250, 247, 247, 0.406)';
             email = false;
         }
-        // @ts-ignore
     }
-    else if (e.target.getAttribute('id') === "password" || e.target.getAttribute('id') === "confirmPassword" || (e.target.getAttribute('id') === "exPassword" && document.querySelector(exPassword))) {
+    else if (target.getAttribute('id') === "password" || target.getAttribute('id') === "confirmPassword" || (target.getAttribute('id') === "exPassword" && document.querySelector('exPassword'))) {
         // If it corresponds to the format make it valid
-        // @ts-ignore
-        if (e.target.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
-            // @ts-ignore
-            e.target.style.borderColor = 'green';
-            // @ts-ignore
-            e.target.style.backgroundColor = '#d4edda';
-            // @ts-ignore
-            if (e.target.getAttribute('id') === 'password') {
+        if (target.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
+            target.style.borderColor = 'green';
+            target.style.backgroundColor = '#d4edda';
+            if (target.getAttribute('id') === 'password') {
                 password = true;
-                // @ts-ignore
             }
-            else if (e.target.getAttribute('id') === 'confirmPassword') {
+            else if (target.getAttribute('id') === 'confirmPassword') {
                 password_confirm = true;
-                // @ts-ignore
             }
-            else if (document.querySelector('#exPassword') && e.target.getAttribute('id') === 'exPassword') {
+            else if (document.querySelector('#exPassword') && target.getAttribute('id') === 'exPassword') {
                 exPassword = true;
             }
             // If it has not 8 characters make it invalid
-            // @ts-ignore
         }
-        else if (e.target.value.length < 8 && e.target.value.length > 0) {
-            // @ts-ignore
-            e.target.style.borderColor = 'red';
-            // @ts-ignore
-            e.target.style.backgroundColor = '#f8d7da';
-            // @ts-ignore
-            if (e.target.getAttribute('id') === 'password') {
+        else if (target.value.length < 8 && target.value.length > 0) {
+            target.style.borderColor = 'red';
+            target.style.backgroundColor = '#f8d7da';
+            if (target.getAttribute('id') === 'password') {
                 password = false;
-                // @ts-ignore
             }
-            else if (e.target.getAttribute('id') === 'confirmPassword') {
+            else if (target.getAttribute('id') === 'confirmPassword') {
                 password_confirm = false;
-                // @ts-ignore
             }
-            else if (document.querySelector('#exPassword') && e.target.getAttribute('id') === 'exPassword') {
+            else if (document.querySelector('#exPassword') && target.getAttribute('id') === 'exPassword') {
                 exPassword = false;
             }
             document.querySelector('#popUpContainer').innerHTML +=
@@ -123,13 +93,10 @@ document.addEventListener('change', function (e) {
                 document.querySelector('.popup').remove();
             }, 1500);
             // If it doesn't correspond to the format make it invalid
-            // @ts-ignore
         }
-        else if (!e.target.value == "" && !e.target.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
-            // @ts-ignore
-            e.target.style.borderColor = 'red';
-            // @ts-ignore
-            e.target.style.backgroundColor = '#f8d7da';
+        else if (target.value != "" && !target.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
+            target.style.borderColor = 'red';
+            target.style.backgroundColor = '#f8d7da';
             var popup = document.createElement('div');
             document.querySelector('#popUpContainer').innerHTML +=
                 '<div class="popup">' +
@@ -139,20 +106,15 @@ document.addEventListener('change', function (e) {
             // If it is empty, make it neutral
         }
         else {
-            // @ts-ignore
-            e.target.style.borderColor = '#ccc';
-            // @ts-ignore
-            e.target.style.backgroundColor = 'rgba(250, 247, 247, 0.406)';
-            // @ts-ignore
-            if (e.target.getAttribute('id') === 'password') {
+            target.style.borderColor = '#ccc';
+            target.style.backgroundColor = 'rgba(250, 247, 247, 0.406)';
+            if (target.getAttribute('id') === 'password') {
                 password = false;
-                // @ts-ignore
             }
-            else if (e.target.getAttribute('id') === 'confirmPassword') {
+            else if (target.getAttribute('id') === 'confirmPassword') {
                 password_confirm = false;
-                // @ts-ignore
             }
-            else if (document.querySelector('#exPassword') && e.target.getAttribute('id') === 'exPassword') {
+            else if (document.querySelector('#exPassword') && target.getAttribute('id') === 'exPassword') {
                 exPassword = false;
             }
         }

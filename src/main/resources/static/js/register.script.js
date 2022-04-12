@@ -5,31 +5,33 @@ document.querySelector('#submit').addEventListener('click', function (e) {
     var password = document.querySelector('#password').value; // Get the password value
     var confirmPassword = document.querySelector('#confirmPassword').value; // Get the confirm password value
     var email = document.querySelector('#email').value; // Get the email value
-    var data = new FormData();
-    data.append("username", username);
-    data.append("email", email);
-    data.append("password", password);
-    data.append("confirmPassword", confirmPassword);
-    var xhr = new XMLHttpRequest();
+    var data = {
+        username: username,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword
+    };
     if (username && password && email && confirmPassword && (password === confirmPassword)) {
         // Register the account into the api
-        var url_1 = 'http://localhost:8080/api/register';
-        xhr.open('POST', url_1, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // If response is true, redirect to login page
-                if (xhr.responseText !== 'false') {
-                    // Create cookie and stock result in him
-                    document.cookie = 'token=' + xhr.responseText;
-                    window.location.href = './login';
-                }
-                else {
-                    // If response is false, show error message
-                    alert('Username already exists');
-                }
+        var url_1 = '/api/register';
+        $.post(url_1, data, function (data) {
+            // If response is true, redirect to login page
+            if (data !== 'false') {
+                // Create cookie and stock result in him
+                document.cookie = 'token=' + data;
+                window.location.href = './login';
             }
-        };
-        xhr.send(data);
+            else {
+                // If response is false, show error message
+                alert('Username already exists');
+            }
+        }).fail(function () {
+            document.querySelector('#popUpContainer').innerHTML +=
+                '<div class="popup">' +
+                    '<p class="popupMessage">Server Error</p>' +
+                    '<button class="popupButton">OK</button>' +
+                    '</div>';
+        });
     }
     else if (!username || !password || !email || !confirmPassword) {
         document.querySelector('#popUpContainer').innerHTML +=
@@ -67,18 +69,10 @@ document.querySelector('#submit').addEventListener('click', function (e) {
     setTimeout(function () {
         document.querySelector('.popup').remove();
     }, 3500);
-    // @ts-ignore
-    if (checkValues()) {
-        document.querySelector('#submit').removeAttribute('disabled');
-    }
-    else {
-        document.querySelector('#submit').setAttribute('disabled', 'disabled');
-    }
 });
 document.addEventListener('click', function (e) {
-    //@ts-ignore
-    if (e.target.classList.contains('popupButton')) {
-        //@ts-ignore
-        e.target.parentNode.remove();
+    var target = e.target;
+    if (target.classList.contains('popupButton')) {
+        target.parentNode.remove();
     }
 });

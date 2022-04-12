@@ -9,12 +9,10 @@ package com.codingfactory.porare.service;
  * @since 05/04/2022
  */
 
-import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.codingfactory.porare.data.User;
-import com.codingfactory.porare.tools.Global;
+import com.codingfactory.porare.tools.UserTools;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +26,7 @@ import java.util.Map;
 @Service
 public record UserService(JdbcTemplate jdbcTemplate) {
 
-    static Global global = new Global();
+    static UserTools userTools = new UserTools();
 
     public UserService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -61,7 +59,7 @@ public record UserService(JdbcTemplate jdbcTemplate) {
         List<User> users = new ArrayList<>(); // Create a new list of users
 
         try {
-            Integer userId = global.checkToken(token, jdbcTemplate);
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
 
             // Get User Informations
             List<Map<String, Object>> userInformations = jdbcTemplate.queryForList("SELECT * FROM user WHERE u_id = '" + userId + "'");
@@ -89,7 +87,7 @@ public record UserService(JdbcTemplate jdbcTemplate) {
     public int getUserCoins(String token) {
         try {
             // Get User Id
-            Integer userId = global.checkToken(token, jdbcTemplate);
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
 
             String sql = "SELECT u_coin FROM user WHERE u_id = '" + userId + "'";
 
@@ -105,13 +103,12 @@ public record UserService(JdbcTemplate jdbcTemplate) {
             return 0;
         }
     }
+
     public List<String> getUserPacks(String token) {
         List<String> packs = new ArrayList<>();
 
         try {
-            DecodedJWT jwt = JWT.decode(token);
-
-            String sql = "SELECT p_id FROM pack WHERE u_id = '" + jwt.getClaim("userId") + "'";
+            String sql = "SELECT p_id FROM pack WHERE u_id = '" + userTools.checkToken(token, jdbcTemplate) + "'";
 
             // Fetch element and console log the password
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
@@ -131,9 +128,7 @@ public record UserService(JdbcTemplate jdbcTemplate) {
         List<String> cards = new ArrayList<>();
 
         try {
-            DecodedJWT jwt = JWT.decode(token);
-
-            String sql = "SELECT c_id FROM card WHERE u_id = '" + jwt.getClaim("userId") + "'";
+            String sql = "SELECT c_id FROM card WHERE u_id = '" + userTools.checkToken(token, jdbcTemplate) + "'";
 
             // Fetch element and console log the password
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
@@ -142,9 +137,7 @@ public record UserService(JdbcTemplate jdbcTemplate) {
                 cards.add((String) row.get("c_id"));
             }
 
-            // Get the user password from the users list
-
-
+            // Return the list of cards
             return cards;
         } catch (JWTDecodeException exception) {
             //Invalid token
@@ -152,29 +145,29 @@ public record UserService(JdbcTemplate jdbcTemplate) {
         }
     }
 
-        // Manage economy
+    // Manage economy
 
-        // TODO: If the user buys a pack, remove the coins from the user
-        // TODO: If the user sells a card, add the coins from the user
+    // TODO: If the user buys a pack, remove the coins from the user
+    // TODO: If the user sells a card, add the coins from the user
 
-        public void manageEconomy(String token, int price) {
+    public void manageEconomy(String token, int price) {
         // If the user buys a pack, remove the coins from the user
         // If the user sells a card, add the coins from the user
 
-            // Get the actual coins of the user from sql request
-            int coins = getUserCoins(token);
+        // Get the actual coins of the user from sql request
+        int coins = getUserCoins(token);
 
-            // If the user buys a pack, remove the coins from the user
-            if (price < 0) {
-                coins -= price;
-            } else {
-                coins += price;
-            }
-
-            String sql = "UPDATE user SET u_coin = ? WHERE u_id = ?";
-            jdbcTemplate.update(sql, coins, token);
-
-
+        // If the user buys a pack, remove the coins from the user
+        if (price < 0) {
+            coins -= price;
+        } else {
+            coins += price;
         }
+
+        String sql = "UPDATE user SET u_coin = ? WHERE u_id = ?";
+        jdbcTemplate.update(sql, coins, token);
+
+
+    }
 
 }
