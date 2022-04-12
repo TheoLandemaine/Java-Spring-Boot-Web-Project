@@ -130,6 +130,19 @@ public class PorareRestController {
         return packService.deletePack(packType, token); // Return Result
     }
 
+    @PostMapping ("saveCards")
+    public String saveCards(@RequestParam String token,
+                            @RequestParam String cardId,
+                            HttpServletRequest httpServletRequest) {
+        System.out.println("cardId: " + cardId);
+        return cardService.addCard(token, cardId);
+    }
+
+    @PostMapping("getCards")
+    public List<String> getCards(@RequestParam String token,
+                                 HttpServletRequest httpServletRequest) {
+        return userService.getUserCards(token);
+    }
 
 
 }
