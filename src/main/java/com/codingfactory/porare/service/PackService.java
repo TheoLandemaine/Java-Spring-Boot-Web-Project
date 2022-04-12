@@ -27,9 +27,17 @@ public record PackService(JdbcTemplate jdbcTemplate) {
         }
     }
 
-    public void deletePack(String p_type, String token) {
-        String sql = "DELETE FROM pack WHERE p_fk_user_id = ? AND p_type = ? LIMIT 1";
-        jdbcTemplate.update(sql, token, p_type);
+    public String deletePack(String p_type, String token) {
+        try {
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
+
+            String sql = "DELETE FROM pack WHERE p_fk_user_id = ? AND p_type = ? LIMIT 1";
+            jdbcTemplate.update(sql, userId, p_type);
+            System.out.println("delete pack");
+            return "true";
+        } catch (Exception e) {
+            return "false";
+        }
     }
 
 }
