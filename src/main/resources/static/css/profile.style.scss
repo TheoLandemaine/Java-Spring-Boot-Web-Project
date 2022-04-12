@@ -1,43 +1,39 @@
 .cadre {
-  display: flex;
-  justify-content: flex-start;
-  margin: 5.3% 0;
-
-  .profileContainer {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 15%;
-    padding: 50px;
-    margin: 50px;
-    border-radius: 15px;
-    background: rgba(255, 255, 255);
-    box-shadow: 0 5px 10px 0 rgb(0 0 0 / 40%);
-  }
-
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
-    margin: 10% 0;
-    width: 100%;
-    height: 50px;
-    font-size: 15px;
-    color: dodgerblue;
-    text-transform: uppercase;
-    cursor: pointer;
-    outline: none;
-    border: solid 2px dodgerblue;
-    border-radius: 20px;
-    background: none;
-    transition: all 0.5s;
-
-    &:hover {
-      background: linear-gradient(to bottom right, dodgerblue, #4eadff);
-      color: #fff;
+    justify-content: flex-start;
+    margin: 3.7% 0;
+    .profileContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 15%;
+        padding: 50px;
+        margin: 50px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255);
+        box-shadow: 0 5px 10px 0 rgb(0 0 0 / 40%);
     }
-  }
-
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 20px;
+        margin: 10% 0;
+        width: 100%;
+        height: 50px;
+        font-size: 15px;
+        color: dodgerblue;
+        text-transform: uppercase;
+        cursor: pointer;
+        outline: none;
+        border: solid 2px dodgerblue;
+        border-radius: 20px;
+        background: none;
+        transition: all 0.5s;
+        &:hover {
+            background: linear-gradient(to bottom right, dodgerblue, #4eadff);
+            color: #fff;
+        }
+    }
 }
