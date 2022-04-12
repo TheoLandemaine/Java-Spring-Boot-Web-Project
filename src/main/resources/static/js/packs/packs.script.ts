@@ -114,6 +114,23 @@ function generatePacks(packType) {
 
 }
 
+function generateCards(pokemonsDrawed) {
+    console.log(pokemonsDrawed);
+    // @ts-ignore
+    for (let i = 0; i < pokemonsDrawed.length; i++) {
+        let pokemonImage = pokemonsDrawed[i]['images']['large'];
+        let pokemonName = pokemonsDrawed[i]['name'];
+
+        $('.allCards').append(`
+            <div class = "carte" data-attr="${pokemonName}">
+                <div class = "double-face">
+                <div class = "face">
+                <img class="imgPokemon" src="${pokemonImage}"></div> 
+                <div class = "arriere toFlip">
+            </div>`);
+    }
+}
+
 //  Vider la div allPacks
 function clearPacks() {
     $('.allPacks').empty();
@@ -126,75 +143,75 @@ function clearCards() {
 function drawPokemons(type) {
     type = type.toLowerCase();
 
-        let pokemonsDrawed = [];
+    let pokemonsDrawed = [];
 
-        for (let i = 0; i < 5; i++) {
-            // If type = Colorless, randomPage could go only to page 7
+    for (let i = 0; i < 5; i++) {
+        // If type = Colorless, randomPage could go only to page 7
 
-            let pokemons = [];
-            let pokeCardURL = '';
-            let randomPage = numberPage(type);
-            if (type !== 'random') {
-                pokeCardURL = `https://api.pokemontcg.io/v2/cards?q=types:${type}&page=${randomPage}`;
-                //console.log(" page : " + randomPage);
-            } else {
+        let pokemons = [];
+        let pokeCardURL = '';
+        let randomPage = numberPage(type);
+        if (type !== 'random') {
+            pokeCardURL = `https://api.pokemontcg.io/v2/cards?q=types:${type}&page=${randomPage}`;
+            //console.log(" page : " + randomPage);
+        } else {
 
-                pokeCardURL = `https://api.pokemontcg.io/v2/cards?page=${randomPage}`;
-            }
+            pokeCardURL = `https://api.pokemontcg.io/v2/cards?page=${randomPage}`;
+        }
 
-            fetch(pokeCardURL, {
-                method: "GET",
-                // @ts-ignore
-                withCredentials: true,
-                headers: {
-                    "X-API-KEY": "f67d2ff5-723b-4794-bbfb-6b0a4e846179",
-                    "Content-Type": "application/json",
-                },
+        fetch(pokeCardURL, {
+            method: "GET",
+            // @ts-ignore
+            withCredentials: true,
+            headers: {
+                "X-API-KEY": "f67d2ff5-723b-4794-bbfb-6b0a4e846179",
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (response) {
+                return response.json();
             })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    // Sort through per card per pokemon name
+            .then(function (data) {
+                // Sort through per card per pokemon name
+                // @ts-ignore
+                for (x = 0; x < data.data.length; x++) {
                     // @ts-ignore
-                    for (x = 0; x < data.data.length; x++) {
-                        // @ts-ignore
 
-                        // @ts-ignore
-                        pokemons.push(data.data[x]);
-                    }
-                });
+                    // @ts-ignore
+                    pokemons.push(data.data[x]);
+                }
+            });
+
+        let interval = setInterval(() => {
 
 
-            setInterval(() => {
-                if ($('.carte').length != 5 && $('.pack').length === 0) {
+            if ($('.carte').length != 5 && $('.pack').length === 0) {
                 //console.log(randomPage);
                 if (pokemonsDrawed.length < 5) {
-                    console.log("Page " + randomPage + " " + pokemons[0]['name']);
+
                     let random = Math.floor(Math.random() * pokemons.length);
                     //console.log("COUCOU : " + i + " " + pokemons[random]['name']);
                     //console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
+                    if (pokemons[random] != undefined) {
+                        pokemonsDrawed.push(pokemons[random]);
+                    }
 
-                    let pokemonImage = pokemons[random]['images']['large'];
-                    let pokemonName = pokemons[random]['name'];
-                    //console.log(pokemonImage);
-                    $('.allCards').append(`
-            <div class = "carte" data-attr="${pokemonName}">
-                <div class = "double-face">
-                <div class = "face">
-                <img class="imgPokemon" src="${pokemonImage}"></div> 
-                <div class = "arriere toFlip">
-            </div>`);
-
-                    pokemonsDrawed.push(pokemons[random]);
-                   // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
+                    // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
                     //console.log($('.toFlip').length);
                 }
-        }
-            }, 3500);
+            }
+
+            if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
+                generateCards(pokemonsDrawed);
+                // Get out of the interval
+            }
+
+            if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0) {
+                clearInterval(interval);
+                // saveCards(pokemonsDrawed);
+            }
+        }, 1000);
     }
-        saveCards(pokemonsDrawed);
-        console.log(pokemonsDrawed);
 }
 
 

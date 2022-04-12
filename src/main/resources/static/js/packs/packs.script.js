@@ -42,7 +42,7 @@ $(document).ready(function () {
     //generatePacksFromAPI();
     generatePacksArtificially();
 });
-function generatePacksFromAPI() {
+function generatePacksFromAPI(token) {
     // Create Fetch API request
     // @ts-ignore
     var url = 'http://localhost:8080/api/getPacks';
@@ -69,13 +69,13 @@ function generatePacksArtificially() {
         generatePacks('grass');
         generatePacks('random');
     }
+    //
 }
 $(document).click(function (e) {
     // @ts-ignore
     if (e.target.classList.contains('openPack')) {
         clearPacks();
         // @ts-ignore
-        suppressPackFromBDD(e.target.parentElement.parentElement.getAttribute('data-attr'));
         drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'));
     }
     // When all cards are drawn, show the button to return the packs
@@ -88,7 +88,14 @@ $(document).click(function (e) {
             $('.returnToPacks').css('display', 'block');
         }
     });
-
+    $('.returnToPacks').click(function () {
+        clearCards();
+        // Go to the top of the page
+        generatePacksArtificially();
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        $('.returnToPacks').css('display', 'none');
+    });
 });
 $(document).mouseover(function (e) {
     // @ts-ignore
@@ -100,6 +107,15 @@ $(document).mouseover(function (e) {
 function generatePacks(packType) {
     packType = packType.toLowerCase();
     $('.allPacks').append("\n            <div class = \"pack\" data-attr=\"".concat(packType, "\">\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n            </div>"));
+}
+function generateCards(pokemonsDrawed) {
+    console.log(pokemonsDrawed);
+    // @ts-ignore
+    for (var i = 0; i < pokemonsDrawed.length; i++) {
+        var pokemonImage = pokemonsDrawed[i]['images']['large'];
+        var pokemonName = pokemonsDrawed[i]['name'];
+        $('.allCards').append("\n            <div class = \"carte\" data-attr=\"".concat(pokemonName, "\">\n                <div class = \"double-face\">\n                <div class = \"face\">\n                <img class=\"imgPokemon\" src=\"").concat(pokemonImage, "\"></div> \n                <div class = \"arriere toFlip\">\n            </div>"));
+    }
 }
 //  Vider la div allPacks
 function clearPacks() {
@@ -144,30 +160,33 @@ function drawPokemons(type) {
                 pokemons.push(data.data[x]);
             }
         });
-        setInterval(function () {
+        var interval = setInterval(function () {
             if ($('.carte').length != 5 && $('.pack').length === 0) {
                 //console.log(randomPage);
                 if (pokemonsDrawed.length < 5) {
-                    console.log("Page " + randomPage + " " + pokemons[0]['name']);
                     var random = Math.floor(Math.random() * pokemons.length);
                     //console.log("COUCOU : " + i + " " + pokemons[random]['name']);
                     //console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
-                    var pokemonImage = pokemons[random]['images']['large'];
-                    var pokemonName = pokemons[random]['name'];
-                    //console.log(pokemonImage);
-                    $('.allCards').append("\n            <div class = \"carte\" data-attr=\"".concat(pokemonName, "\">\n                <div class = \"double-face\">\n                <div class = \"face\">\n                <img class=\"imgPokemon\" src=\"").concat(pokemonImage, "\"></div> \n                <div class = \"arriere toFlip\">\n            </div>"));
-                    pokemonsDrawed.push(pokemons[random]);
+                    if (pokemons[random] != undefined) {
+                        pokemonsDrawed.push(pokemons[random]);
+                    }
                     // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
                     //console.log($('.toFlip').length);
                 }
             }
-        }, 3500);
+            if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
+                generateCards(pokemonsDrawed);
+                // Get out of the interval
+            }
+            if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0) {
+                clearInterval(interval);
+                // saveCards(pokemonsDrawed);
+            }
+        }, 1000);
     };
     for (var i = 0; i < 5; i++) {
         _loop_1(i);
     }
-    saveCards(pokemonsDrawed);
-    console.log(pokemonsDrawed);
 }
 $(document).click(function (e) {
     // If the card is backward and that no card has been turned yet
@@ -186,14 +205,6 @@ $(document).click(function (e) {
         console.log(e.target.parentNode.classList);
     }
 });
-
-$('.returnToPacks').click(function () {
-    console.log('return');
-    clearCards();
-    generatePacksArtificially();
-    $('.returnToPacks').css('display', 'none');
-});
-
 // @ts-ignore
 function flip(card) {
     return __awaiter(this, void 0, void 0, function () {
@@ -289,37 +300,15 @@ function saveCards(cards) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             // If response is true, redirect to login page
             if (xhr.responseText !== 'false') {
-
+                // Create cookie and stock result in him
+                document.cookie = 'token=' + xhr.responseText;
+                window.location.href = './login';
             }
             else {
                 // If response is false, show error message
-                alert('An error has occured');
+                alert('Username already exists');
             }
         }
     };
     xhr.send(data);
 }
-
-function suppressPackFromBDD(packType) {
-    var token = localStorage.getItem('token');
-    var xhr = new XMLHttpRequest();
-    var url = 'http://localhost:8080/api/suppressPackFromBDD';
-    xhr.open('POST', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // If response is true, redirect to login page
-            if (xhr.responseText !== 'false') {
-            }
-            else {
-                // If response is false, show error message
-                alert('An error has occured');
-            }
-        }
-    };
-    xhr.send(JSON.stringify({
-        token: token,
-        packType: packType
-    }));
-}
-
-
