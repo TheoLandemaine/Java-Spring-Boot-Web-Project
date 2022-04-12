@@ -18,7 +18,7 @@ header .firstNav {
   justify-content: space-between;
 }
 header #logo img {
-  width: 40%;
+  width: 70%;
   margin-left: 30px;
   max-width: 120px;
   height: auto;
@@ -86,16 +86,143 @@ header ul li a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   background: linear-gradient(#141414 10%, dodgerblue);
-  height: 50vh;
+  height: 100%;
 }
 .infoContainer .infoContent h1 {
   font-size: 2.5em;
   color: #fff;
 }
-.infoContainer .infoContent p {
+.infoContainer .infoContent h3 {
+  margin-top: 1em;
   font-size: 1.2em;
-  color: #fff;
+  color: #ffffff;
+}
+.infoContainer .container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 7vh 0 3vh;
+}
+.infoContainer .container .carousel {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow-x: scroll;
+  padding: 10px;
+  margin: 0;
+  white-space: nowrap;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
+}
+.infoContainer .container .carousel::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+  /* Chrome/Safari/Webkit */
+}
+.infoContainer .container .item {
+  display: inline-block;
+  width: 180px;
+  margin: 0 10px;
+  height: 300px;
+  background: rgba(0, 0, 0, 0.05) no-repeat center center;
+  background-size: cover;
+  position: relative;
+  box-shadow: 0 0 10px #dfdfdf;
+}
+.infoContainer .container .item div {
+  width: 100%;
+  top: 10%;
+  position: absolute;
+  text-align: center;
+  font-size: 1em;
+  color: white;
+}
+.infoContainer .container .item h1 {
+  top: 50%;
+  position: absolute;
+  color: white;
+  text-align: center;
+  width: 100%;
+  font-size: 1em;
+}
+.infoContainer .container #img1 {
+  background-image: url("../img/packart/colorless/1.jpg");
+}
+.infoContainer .container #img2 {
+  background-image: url("../img/packart/colorless/2.jpg");
+}
+.infoContainer .container #img3 {
+  background-image: url("../img/packart/colorless/3.jpg");
+}
+.infoContainer .container #img4 {
+  background-image: url("../img/packart/colorless/4.jpg");
+}
+.infoContainer .container #img5 {
+  background-image: url("../img/packart/darkness/1.jpg");
+}
+.infoContainer .container #img6 {
+  background-image: url("../img/packart/darkness/2.jpg");
+}
+.infoContainer .container #img7 {
+  background-image: url("../img/packart/dragon/1.jpg");
+}
+.infoContainer .container #img8 {
+  background-image: url("../img/packart/dragon/2.jpg");
+}
+.infoContainer .container #img9 {
+  background-image: url("../img/packart/dragon/3.jpg");
+}
+.infoContainer .container #img10 {
+  background-image: url("../img/packart/dragon/4.jpg");
+}
+
+.collectContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(#cee2ff 10%, #ffffff);
+  padding: 7vh 0 3vh;
+  height: 100%;
+}
+.collectContainer .collect {
+  width: 100%;
+}
+.collectContainer .collect h1 {
+  margin: 0 0 1em 1em;
+  font-size: 2.5em;
+  color: #141414;
+}
+.collectContainer .collect p {
+  font-size: 1.2em;
+  color: #141414;
+}
+.collectContainer .collect .imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.collectContainer .collect .imageContainer .item {
+  display: inline-block;
+  width: 250px;
+  margin: 0 10px;
+  height: 350px;
+  background: rgba(0, 0, 0, 0.05) no-repeat center center;
+  background-size: cover;
+  position: relative;
+  box-shadow: 0 0 10px #141414;
+  border-radius: 10px;
+}
+.collectContainer .collect .imageContainer #img11 {
+  background-image: url(https://images.pokemontcg.io/sma/SV59.png);
+}
+.collectContainer .collect .imageContainer #img12 {
+  background-image: url(https://images.pokemontcg.io/swsh45sv/SV107.png);
 }
 
 footer {
@@ -157,5 +284,3 @@ footer #footer h4 {
 footer #footer a {
   text-decoration: none;
 }
-
-/*# sourceMappingURL=global.style.css.map */
