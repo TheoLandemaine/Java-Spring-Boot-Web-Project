@@ -7,41 +7,44 @@
 $(document).ready(() => {
     // drawRandomPokemons();
     //generatePacksFromAPI();
-
-    generatePacksArtificially();
+    // @ts-ignore
+    generatePacksFromAPI(checkCookie());
 });
 
 function generatePacksFromAPI(token) {
     // Create Fetch API request
 // @ts-ignore
-    const url:string = 'http://localhost:8080/api/getPacks';
+    const url:string = '/api/getPacks/';
         // Create XMLHttpRequest request GET
-        var xhr: XMLHttpRequest = new XMLHttpRequest();
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Clear div
-                let div: HTMLDivElement = document.querySelector(`.allPacks`)[0] as HTMLDivElement;
-                div.innerHTML = '';
-
-                for (var i: number = 0; i < JSON.parse(xhr.responseText).length; i++) {
-                    var pack: any = JSON.parse(xhr.responseText)[i];
-                    div.innerHTML += `
-                    <div class = "pack" data-attr="${pack.p_type}">
-                        <div class = "packFace">
-                        <img  class="openPack" src="${packVisual(pack.p_type)}">
-                    </div> 
-                    </tr>
-                `;
-                }
-            }
+        const data:Object = {
+            // @ts-ignore
+            token: token
         };
 
-        xhr.open('GET', url, true);
-        xhr.send();
+
+       $.post(url, data , (response) => {
+
+           if (response !== false) {
+
+
+               for (let i: number = 0; i < response.length; i++) {
+                   let pack: any = response[i];
+                   $('.allPacks').append(`
+                    <div class = "pack" data-attr="${pack}">
+                        <div class = "packFace">
+                        <img  class="openPack" src="${packVisual(pack)}">
+                    </div> 
+                    </tr>
+                `);
+               }
+               } else {
+               alert('Vous n\'avez pas de pack, veuillez en acheter');
+               window.location.href = '/shop';
+           }
+       });
 
 }
-
+/*
 function generatePacksArtificially() {
     for (let i = 0; i < 3; i++) {
 
@@ -57,7 +60,7 @@ function generatePacksArtificially() {
 
 
     //
-}
+}*/
 
 $(document).click((e) => {
     // @ts-ignore
@@ -65,8 +68,12 @@ $(document).click((e) => {
 
         console.log("azertyuiop");
 
+        // @ts-ignore
+        deletePackFromDB(e.target.parentNode.parentNode.getAttribute('data-attr'));
+
         clearPacks();
 
+        // @ts-ignore
         animationBoosters(e.target.parentNode.parentNode.getAttribute('data-attr'));
 
         // @ts-ignore
@@ -102,6 +109,7 @@ function animationBoosters(packType) {
     console.log("animationBoosters");
 
     let div = document.querySelector('.allPacks');
+    // @ts-ignore
     div.style.height = "100vh";
 
     $('.allPacks').append( `
@@ -130,7 +138,7 @@ function animationBoosters(packType) {
                             </div>
                         </div>
                     </div>`);
-
+    // @ts-ignore
     setTimeout(() => {div.style.height = null;}, 2700);
 
     setTimeout(clearPacks, 2700);
@@ -278,7 +286,8 @@ $('.returnToPacks').click( () => {
 
     clearCards();
     // Go to the top of the page
-    generatePacksArtificially();
+    // @ts-ignore
+    generatePacksFromAPI(checkCookie());
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     $('.returnToPacks').css('display', 'none');
@@ -357,28 +366,26 @@ function packVisual(packType) {
 }
 
 function deletePackFromDB(packType) {
-    let token = localStorage.getItem('token');
+    console.log('delete this pack');
+    // @ts-ignore
+    let token = checkCookie();
     const url = 'http://localhost:8080/api/deletePack';
-    const xhr = new XMLHttpRequest();
+    const data = {
+        token: token,
+        packType: packType
+    }
 
-    let data = new FormData();
-    data.append('packType', packType);
-    data.append('token', token);
-
-
-    xhr.open('POST', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+    $.post(url, data, (response) => {
+        if (response == 4 && response == 200) {
             // If response is true, redirect to login page
-            if (xhr.responseText !== 'false') {
+            if (response !== 'false') {
+
             } else {
                 // If response is false, show error message
-                alert('Username already exists');
+                alert("This pack doesn't exist in this databse");
             }
         }
-    };
-    xhr.send(data);
-
+    });
 }
 
 
