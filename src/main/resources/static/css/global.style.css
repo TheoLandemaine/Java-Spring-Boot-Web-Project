@@ -104,7 +104,7 @@ header ul li a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 7vh 0 3vh 0;
+  margin: 7vh 0 3vh;
 }
 .infoContainer .container .carousel {
   display: block;
@@ -187,7 +187,7 @@ header ul li a:hover {
   justify-content: center;
   align-items: center;
   background: linear-gradient(#cee2ff 10%, #ffffff);
-  padding: 7vh 0 3vh 0;
+  padding: 7vh 0 3vh;
   height: 100%;
 }
 .collectContainer .collect {
@@ -284,5 +284,3 @@ footer #footer h4 {
 footer #footer a {
   text-decoration: none;
 }
-
-/*# sourceMappingURL=global.style.css.map */
