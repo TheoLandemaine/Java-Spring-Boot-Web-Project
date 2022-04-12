@@ -101,11 +101,23 @@ public class PorareRestController {
         return userService.getUserPacks(token); // Return Result
     }
 
+    @PostMapping("buyPack")
+    public String buyPack( // Get username from the request
+                           @RequestParam String token,// Get pack price from the request
+                           @RequestParam String packType,// Get pack type from the request
+                           @RequestParam int packPrice,
+                           HttpServletRequest httpServletRequest) {
 
-
-
-
+        /*
+        * Return @Boolean
+        * true if the buying is successful
+        * false if the buying is not successful
+        */
+        return packService.addPack(token, packType, packPrice); // Return Result
+    }
 
 
 
 }
+
+
