@@ -52,10 +52,6 @@ function generatePacksArtificially() {
 
     }
 
-
-
-
-
     //
 }
 

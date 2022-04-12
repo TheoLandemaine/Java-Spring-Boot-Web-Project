@@ -24,3 +24,24 @@ myPacks.addEventListener("click", function (e) {
 logout.addEventListener("click", function (e) {
     window.location.href = '/';
 });
+generatePacksFromAPI(token);
+function generatePacksFromAPI(token) {
+    // Create Fetch API request
+    // @ts-ignore
+    var url = 'https://api.pokemontcg.io/v2/cards?q=';
+    // Create XMLHttpRequest request GET
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Clear div
+            var div = document.querySelector(".myCardsContainers")[0];
+            div.innerHTML = '';
+            for (var i = 0; i < JSON.parse(xhr.responseText).length; i++) {
+                var pack = JSON.parse(xhr.responseText)[i];
+                div.innerHTML += "\n                    <div class = \"myCardCards\" data-attr=\"".concat(pack.p_type, "\">\n                        <div class = \"packFace\">\n                            <img  class=\"openPack\" src=\"").concat(packVisual(pack.p_type), "\">\n                        </div> \n                    </div>\n                ");
+            }
+        }
+    };
+    xhr.open('GET', url, true);
+    xhr.send();
+}
