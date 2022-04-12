@@ -5,13 +5,15 @@ $('#logout').on('click', () => {
 
 })
 
-var edit = document.querySelector('#edit');
-var modifyPassword = document.querySelector('#modifyPassword');
-var supp = document.querySelector('#delete');
-var logout = document.querySelector('#logout');
+let edit = document.querySelector('#edit');
+let modifyPassword = document.querySelector('#modifyPassword');
+let supp = document.querySelector('#delete');
+let myPacks = document.querySelector('#myPacks');
+let logout = document.querySelector('#logout');
 
 edit.addEventListener("click", function (e) {
         window.location.href = '/edit';
+        console.log("test");
 })
 
 modifyPassword.addEventListener("click", function (e) {
@@ -20,6 +22,10 @@ modifyPassword.addEventListener("click", function (e) {
 
 supp.addEventListener("click", function (e) {
         window.location.href = '/delete';
+})
+
+myPacks.addEventListener("click", function (e) {
+        window.location.href = '/myPacks';
 })
 
 logout.addEventListener("click", function (e) {
