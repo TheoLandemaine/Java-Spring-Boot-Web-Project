@@ -77,7 +77,7 @@ $(document).click((e) => {
         animationBoosters(e.target.parentNode.parentNode.getAttribute('data-attr'));
 
         // @ts-ignore
-       drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'))
+        drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'))
     }
 
 
@@ -186,6 +186,7 @@ function clearCards() {
 }
 
 function drawPokemons(type) {
+    let saved = false;
     type = type.toLowerCase();
 
     let pokemonsDrawed = [];
@@ -227,38 +228,47 @@ function drawPokemons(type) {
                 }
             });
 
-        let interval = setInterval(() => {
+            let interval = setInterval(() => {
 
 
-            if ($('.carte').length != 5 && $('.pack').length === 0) {
-                //console.log(randomPage);
-                if (pokemonsDrawed.length < 5) {
+                if ($('.carte').length != 5 && $('.pack').length === 0) {
+                    //console.log(randomPage);
+                    if (pokemonsDrawed.length < 5) {
 
-                    let random = Math.floor(Math.random() * pokemons.length);
-                    //console.log("COUCOU : " + i + " " + pokemons[random]['name']);
-                    //console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
-                    if (pokemons[random] != undefined) {
-                        pokemonsDrawed.push(pokemons[random]);
+                        let random = Math.floor(Math.random() * pokemons.length);
+                        //console.log("COUCOU : " + i + " " + pokemons[random]['name']);
+                        //console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
+                        if (pokemons[random] != undefined) {
+                            pokemonsDrawed.push(pokemons[random]);
+                        }
+
+                        // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
+                        //console.log($('.toFlip').length);
                     }
-
-                    // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
-                    //console.log($('.toFlip').length);
                 }
-            }
 
-            if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
-                console.log("test dans div generate")
-                generateCards(pokemonsDrawed);
-                // Get out of the interval
-            }
+                if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
+                    console.log("test dans div generate")
+                    generateCards(pokemonsDrawed);
+                    // Get out of the interval
+                }
+                console.log(pokemonsDrawed.length + " " + pokemonsDrawed);
+                if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0 || !saved) {
+                    clearInterval(interval);
+                    saved = true;
+                }
+            }, 1000);
+            let saveInterval = setInterval(() => {
+                if (saved && pokemonsDrawed.length === 5) {
+                    saveCards(pokemonsDrawed);
+                    saved=false;
+                    clearInterval(saveInterval);
 
-            if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0) {
-                clearInterval(interval);
-                // saveCards(pokemonsDrawed);
-            }
-        }, 1000);
+                }
+            }, 5000);
+
+        }
     }
-}
 
 
 $(document).click((e) => {
@@ -391,31 +401,33 @@ function deletePackFromDB(packType) {
 
 function saveCards(cards) {
     // Get the token of the user
-    let token = localStorage.getItem('token');
-    // For each card in the array
+
+    setTimeout(() => {
     // @ts-ignore
-        const data = new FormData();
-    for (let card = 0; card < cards.length; card++) {
-        data.append("card", cards[card]);
-        data.append("token", token);
+        let token = checkCookie();
+        // For each card in the array
+        // @ts-ignore
+        let url = 'api/saveCards';
+        for (let card = 0; card < cards.length; card++) {
+            console.log(cards[card].id);
 
-    }
+            const data: Object = {
 
+                cardId: cards[card].id,
+                token: token
+            };
+            $.post(url, data , (response) => {
 
-    const xhr:XMLHttpRequest = new XMLHttpRequest();
-    const url: string = 'http://localhost:8080/api/saveCards';
-
-    xhr.open('POST', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // If response is true, redirect to login page
-            if (xhr.responseText !== 'false') {
-
-            } else {
-                // If response is false, show error message
-                alert('Username already exists');
-            }
+                if (response !== false) {
+                    console.log('card saved' + cards[card].id);
+                } else {
+                    alert('Problem while saving cards');
+                }
+            });
         }
-    };
-    xhr.send(data);
+    }, 10000);
+
+
+
+
 }
