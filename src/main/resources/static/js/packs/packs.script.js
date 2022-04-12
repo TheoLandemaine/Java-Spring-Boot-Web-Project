@@ -88,14 +88,6 @@ $(document).click(function (e) {
             $('.returnToPacks').css('display', 'block');
         }
     });
-    $('.returnToPacks').click(function () {
-        clearCards();
-        // Go to the top of the page
-        generatePacksArtificially();
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-        $('.returnToPacks').css('display', 'none');
-    });
 });
 $(document).mouseover(function (e) {
     // @ts-ignore
@@ -204,6 +196,14 @@ $(document).click(function (e) {
         // @ts-ignore
         console.log(e.target.parentNode.classList);
     }
+});
+$('.returnToPacks').click(function () {
+    clearCards();
+    // Go to the top of the page
+    generatePacksArtificially();
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    $('.returnToPacks').css('display', 'none');
 });
 // @ts-ignore
 function flip(card) {

@@ -79,16 +79,7 @@ $(document).click((e) => {
     }
     })
 
-    $('.returnToPacks').click( () => {
 
-        clearCards();
-        // Go to the top of the page
-        generatePacksArtificially();
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-        $('.returnToPacks').css('display', 'none');
-
-    })
 });
 
 
@@ -235,6 +226,17 @@ $(document).click((e) => {
         console.log(e.target.parentNode.classList);
     }
 });
+
+$('.returnToPacks').click( () => {
+
+    clearCards();
+    // Go to the top of the page
+    generatePacksArtificially();
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    $('.returnToPacks').css('display', 'none');
+
+})
 
 // @ts-ignore
 async function flip(card) {
