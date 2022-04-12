@@ -283,6 +283,27 @@ function packVisual(packType) {
     }
     return "./img/packart/".concat(packType, "/").concat(randomImage, ".jpg");
 }
+function deletePackFromDB(packType) {
+    var token = localStorage.getItem('token');
+    var url = 'http://localhost:8080/api/deletePack';
+    var xhr = new XMLHttpRequest();
+    var data = new FormData();
+    data.append('packType', packType);
+    data.append('token', token);
+    xhr.open('POST', url, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // If response is true, redirect to login page
+            if (xhr.responseText !== 'false') {
+            }
+            else {
+                // If response is false, show error message
+                alert('Username already exists');
+            }
+        }
+    };
+    xhr.send(data);
+}
 function saveCards(cards) {
     // Get the token of the user
     var token = localStorage.getItem('token');
@@ -300,9 +321,6 @@ function saveCards(cards) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             // If response is true, redirect to login page
             if (xhr.responseText !== 'false') {
-                // Create cookie and stock result in him
-                document.cookie = 'token=' + xhr.responseText;
-                window.location.href = './login';
             }
             else {
                 // If response is false, show error message
