@@ -1,24 +1,13 @@
 var url5 = 'http://localhost:8080/api/getUserInformations';
-// Create XMLHttpRequest request POST
-var data = new FormData();
 // @ts-ignore
-data.append("token", checkCookie());
-var xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log(xhr.responseText);
-        console.log(JSON.parse(xhr.responseText));
-        console.log(JSON.parse(xhr.responseText)[0].username);
-        console.log(JSON.parse(xhr.responseText)[0].email);
-        console.log(JSON.parse(xhr.responseText)[0].userId);
-        // insert username
-        //@ts-ignore
-        document.querySelector("#username").value = JSON.parse(xhr.responseText)[0].username;
-    }
-};
-xhr.open('POST', url5, true);
-xhr.send(data);
-//
+$.post(url5, { 'token': checkCookie() }, function (data) {
+    console.log(data[0].username);
+    console.log(data[0].email);
+    console.log(data[0].userId);
+    // Change document.querySelector("#username") input value to data[0].username
+    var username = document.querySelector("#username");
+    username.value = data[0].username;
+});
 // On submit click
 document.querySelector('#submit').addEventListener('click', function (e) {
     e.preventDefault();
@@ -26,34 +15,29 @@ document.querySelector('#submit').addEventListener('click', function (e) {
     var exPassword = document.querySelector('#exPassword').value; // Get the password value
     var password = document.querySelector('#password').value; // Get the password value
     var confirmPassword = document.querySelector('#confirmPassword').value; // Get the confirm password value
-    var data = new FormData();
-    data.append("username", username);
-    data.append("exPassword", exPassword);
-    data.append("password", password);
-    data.append("editPassword", confirmPassword);
-    var xhr = new XMLHttpRequest();
+    var data = {
+        'username': username,
+        'exPassword': exPassword,
+        'password': password,
+        'editPassword': confirmPassword
+    };
     if (password && username && exPassword && confirmPassword && password === confirmPassword) {
-        console.log(password + " " + username);
         // Register the account into the api
         var url_1 = './api/editPassword';
-        xhr.open('POST', url_1, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // If response is true, redirect to login page
-                if (xhr.responseText === 'true') {
-                    window.location.href = './profile';
-                }
-                else {
-                    // If response is false, show error message
-                    document.querySelector('#popUpContainer').innerHTML +=
-                        '<div class="popup">';
-                    '<p class="popupMessage">Your previous password do not correspond to your account</p>' +
-                        '<button class="popupButton">OK</button>' +
-                        '</div>';
-                }
+        $.post(url_1, data, function (data) {
+            // If response is true, redirect to login page
+            if (data === 'true') {
+                window.location.href = './profile';
             }
-        };
-        xhr.send(data);
+            else {
+                // If response is false, show error message
+                document.querySelector('#popUpContainer').innerHTML +=
+                    '<div class="popup">';
+                '<p class="popupMessage">Your previous password do not correspond to your account</p>' +
+                    '<button class="popupButton">OK</button>' +
+                    '</div>';
+            }
+        });
     }
     else if (!password || !password || !confirmPassword) {
         document.querySelector('#popUpContainer').innerHTML +=
@@ -92,9 +76,9 @@ document.querySelector('#submit').addEventListener('click', function (e) {
     }, 3500);
 });
 document.addEventListener('click', function (e) {
-    //@ts-ignore
-    if (e.target.classList.contains('popupButton')) {
+    var target = e.target;
+    if (target.classList.contains('popupButton')) {
         //@ts-ignore
-        e.target.parentNode.remove();
+        target.parentNode.remove();
     }
 });
