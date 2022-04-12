@@ -21,7 +21,7 @@ function generatePacksFromAPI(token) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 // Clear div
-                var div: HTMLDivElement = document.querySelector(`.allPacks`)[0] as HTMLDivElement;
+                let div: HTMLDivElement = document.querySelector(`.allPacks`)[0] as HTMLDivElement;
                 div.innerHTML = '';
 
                 for (var i: number = 0; i < JSON.parse(xhr.responseText).length; i++) {
@@ -62,7 +62,13 @@ function generatePacksArtificially() {
 $(document).click((e) => {
     // @ts-ignore
     if (e.target.classList.contains('openPack')) {
+
+        console.log("azertyuiop");
+
         clearPacks();
+
+        animationBoosters(e.target.parentNode.parentNode.getAttribute('data-attr'));
+
         // @ts-ignore
        drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'))
     }
@@ -92,6 +98,45 @@ $(document).mouseover((e) => {
 });
 
 
+function animationBoosters(packType) {
+    console.log("animationBoosters");
+
+    let div = document.querySelector('.allPacks');
+    div.style.height = "100vh";
+
+    $('.allPacks').append( `
+                    <div id="pack-opened" class="col-xs-12 open">
+                        <div class="pack-content" style="display: block !important; visibility: visible !important;" >
+                            <div class="pack-flash">
+                                <div class="pack-flash-pack" >
+                                    <img class="front" src="` + packVisual(packType) + ` " > 
+                                    <div class="top">
+                                        <img src="https://i.imgur.com/b1qmOW6.png">
+                                        <div class="cut"> 
+                                            <img src="https://i.imgur.com/k55nnYY.png">
+                                        </div>
+                                        <span> 
+                                            <img src="https://i.imgur.com/JqedAsJ.png">
+                                               <span>
+                                                <img src="https://i.imgur.com/WWRXjri.png">
+                                                    <span>
+                                                        <img src="https://i.imgur.com/DzEYvSP.png" style="width: 81px"> 
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`);
+
+    setTimeout(() => {div.style.height = null;}, 2700);
+
+    setTimeout(clearPacks, 2700);
+}
+
+
 function generatePacks(packType) {
     packType = packType.toLowerCase();
 
@@ -106,6 +151,7 @@ function generatePacks(packType) {
 }
 
 function generateCards(pokemonsDrawed) {
+    console.log("test");
     console.log(pokemonsDrawed);
     // @ts-ignore
     for (let i = 0; i < pokemonsDrawed.length; i++) {
@@ -193,6 +239,7 @@ function drawPokemons(type) {
             }
 
             if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
+                console.log("test dans div generate")
                 generateCards(pokemonsDrawed);
                 // Get out of the interval
             }
