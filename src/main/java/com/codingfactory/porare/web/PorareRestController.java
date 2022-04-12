@@ -116,6 +116,20 @@ public class PorareRestController {
         return packService.addPack(token, packType, packPrice); // Return Result
     }
 
+    @PostMapping("deletePack")
+    public String deletePack( // Get username from the request
+                           @RequestParam String token,// Get pack price from the request
+                           @RequestParam String packType,// Get pack type from the request
+                           HttpServletRequest httpServletRequest) {
+
+        /*
+        * Return @Boolean
+        * true if the buying is successful
+        * false if the buying is not successful
+        */
+        return packService.deletePack(packType, token); // Return Result
+    }
+
 
 
 }
