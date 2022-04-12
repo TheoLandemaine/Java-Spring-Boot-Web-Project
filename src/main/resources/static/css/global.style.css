@@ -18,7 +18,7 @@ header .firstNav {
   justify-content: space-between;
 }
 header #logo img {
-  width: 40%;
+  width: 70%;
   margin-left: 30px;
   max-width: 120px;
   height: auto;
@@ -86,23 +86,25 @@ header ul li a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   background: linear-gradient(#141414 10%, dodgerblue);
-  height: 50vh;
+  height: 100%;
 }
 .infoContainer .infoContent h1 {
   font-size: 2.5em;
   color: #fff;
 }
-.infoContainer .infoContent p {
+.infoContainer .infoContent h3 {
+  margin-top: 1em;
   font-size: 1.2em;
-  color: #fff;
+  color: #ffffff;
 }
 .infoContainer .container {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 7vh;
+  margin: 7vh 0 3vh 0;
 }
 .infoContainer .container .carousel {
   display: block;
@@ -124,9 +126,9 @@ header ul li a:hover {
 }
 .infoContainer .container .item {
   display: inline-block;
-  width: 120px;
+  width: 180px;
   margin: 0 10px;
-  height: 200px;
+  height: 300px;
   background: rgba(0, 0, 0, 0.05) no-repeat center center;
   background-size: cover;
   position: relative;
@@ -177,6 +179,50 @@ header ul li a:hover {
 }
 .infoContainer .container #img10 {
   background-image: url("../img/packart/dragon/4.jpg");
+}
+
+.collectContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(#cee2ff 10%, #ffffff);
+  padding: 7vh 0 3vh 0;
+  height: 100%;
+}
+.collectContainer .collect {
+  width: 100%;
+}
+.collectContainer .collect h1 {
+  margin: 0 0 1em 1em;
+  font-size: 2.5em;
+  color: #141414;
+}
+.collectContainer .collect p {
+  font-size: 1.2em;
+  color: #141414;
+}
+.collectContainer .collect .imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.collectContainer .collect .imageContainer .item {
+  display: inline-block;
+  width: 250px;
+  margin: 0 10px;
+  height: 350px;
+  background: rgba(0, 0, 0, 0.05) no-repeat center center;
+  background-size: cover;
+  position: relative;
+  box-shadow: 0 0 10px #141414;
+  border-radius: 10px;
+}
+.collectContainer .collect .imageContainer #img11 {
+  background-image: url(https://images.pokemontcg.io/sma/SV59.png);
+}
+.collectContainer .collect .imageContainer #img12 {
+  background-image: url(https://images.pokemontcg.io/swsh45sv/SV107.png);
 }
 
 footer {
