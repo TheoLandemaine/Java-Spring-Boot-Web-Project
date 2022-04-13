@@ -48,7 +48,7 @@ function generatePacks(packType) {
         packType: packType
     };
     $.post(url, data, function (response) {
-        $('.allPacks').append("\n            <div class = \"pack\" data-attr=\"".concat(packType, "\">\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n             <h2>Pack : ").concat(packType[0].toUpperCase(), "</h2>\n             <h2>").concat(response, " \u20BD</h2>\n\n            </div>"));
+        $('.allPacks').append("\n            <div class = \"pack\" data-attr=\"".concat(packType, "\">\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n             <h2>Pack : ").concat(packName(packType), "</h2>\n             <h2>").concat(response, " \u20BD</h2>\n\n            </div>"));
     });
 }
 function generateBigPreview(packType) {
@@ -58,7 +58,7 @@ function generateBigPreview(packType) {
         packType: packType
     };
     $.post(url, data, function (response) {
-        $('.allPacks').append("\n            <div class = \"packPreview\" data-attr=\"".concat(packType, "\" data-price=\"").concat(response, "\">\n            <button class=\"closePack\">X</button>\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n             <h2>Pack : ").concat(packType[0].toUpperCase(), "</h2>\n             <h2>").concat(response, " \u20BD</h2>\n             <button class=\"buyPack\" data-attr=\"").concat(packType, "\">Buy</button>\n            </div>"));
+        $('.allPacks').append("\n            <div class = \"packPreview\" data-attr=\"".concat(packType, "\" data-price=\"").concat(response, "\">\n            <button class=\"closePack\">X</button>\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n             <h2>Pack : ").concat(packName(packType), "</h2>\n             <h2>").concat(response, " \u20BD</h2>\n             <button class=\"buyPack\" data-attr=\"").concat(packType, "\">Buy</button>\n            </div>"));
     });
 }
 function buyPack(packType) {
@@ -124,4 +124,16 @@ function packVisual(packType) {
         randomImage = Math.ceil(Math.random() * 10);
     }
     return "./img/packart/".concat(packType, "/").concat(randomImage, ".jpg");
+}
+function packName(packType) {
+    var packName = "";
+    for (var i = 0; i < packType.length; i++) {
+        if (i === 0) {
+            packName += packType[i].toUpperCase();
+        }
+        else {
+            packName += packType[i].toLowerCase();
+        }
+    }
+    return packName;
 }

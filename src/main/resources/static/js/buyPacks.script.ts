@@ -62,7 +62,7 @@ function generatePacks(packType) {
                 <div class = "packFace">
                 <img  class="openPack" src="${packVisual(packType)}">
                 </div> 
-             <h2>Pack : ${packType[0].toUpperCase()}</h2>
+             <h2>Pack : ${packName(packType)}</h2>
              <h2>${response} ₽</h2>
 
             </div>`);
@@ -79,13 +79,14 @@ function generateBigPreview(packType) {
     }
 
     $.post(url, data, (response) => {
+
         $('.allPacks').append(`
             <div class = "packPreview" data-attr="${packType}" data-price="${response}">
             <button class="closePack">X</button>
                 <div class = "packFace">
                 <img  class="openPack" src="${packVisual(packType)}">
                 </div> 
-             <h2>Pack : ${packType[0].toUpperCase()}</h2>
+             <h2>Pack : ${packName(packType)}</h2>
              <h2>${response} ₽</h2>
              <button class="buyPack" data-attr="${packType}">Buy</button>
             </div>`);
@@ -162,6 +163,17 @@ function packVisual(packType: string) {
 }
 
 
+function packName(packType:String) {
+    let packName = "";
+    for (let i = 0; i < packType.length; i++) {
+        if (i === 0) {
+            packName += packType[i].toUpperCase();
+        } else {
+            packName += packType[i].toLowerCase();
+        }
+    }
+        return packName;
+}
 
 
 
