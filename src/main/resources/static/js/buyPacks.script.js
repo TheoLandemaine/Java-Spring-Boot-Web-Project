@@ -43,29 +43,47 @@ function generateAllPacks() {
 }
 function generatePacks(packType) {
     packType = packType.toLowerCase();
-    $('.allPacks').append("\n            <div class = \"pack\" data-attr=\"".concat(packType, "\">\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n             <h2>Pack : ").concat(packName(packType), "</h2>\n             <h2>").concat(packPrice(packType), " \u20BD</h2>\n\n            </div>"));
+    var url = '/api/getPackPrice';
+    var data = {
+        packType: packType
+    };
+    $.post(url, data, function (response) {
+        $('.allPacks').append("\n            <div class = \"pack\" data-attr=\"".concat(packType, "\">\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n             <h2>Pack : ").concat(packType[0].toUpperCase(), "</h2>\n             <h2>").concat(response, " \u20BD</h2>\n\n            </div>"));
+    });
 }
 function generateBigPreview(packType) {
     packType = packType.toLowerCase();
-    $('.allPacks').append("\n            <div class = \"packPreview\" data-attr=\"".concat(packType, "\" data-price=\"").concat(packPrice(packType), "\">\n            <button class=\"closePack\">X</button>\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n             <h2>Pack : ").concat(packName(packType), "</h2>\n             <h2>").concat(packPrice(packType), " \u20BD</h2>\n             <button class=\"buyPack\" data-attr=\"").concat(packType, "\">Buy</button>\n            </div>"));
-}
-function buyPack(packType, packPrice) {
-    var url = '/api/buyPack';
+    var url = '/api/getPackPrice';
     var data = {
-        packType: packType,
-        packPrice: packPrice,
-        // @ts-ignore
-        token: checkCookie()
+        packType: packType
     };
     $.post(url, data, function (response) {
-        // If response is true, redirect to login page
-        if (response !== false) {
-            window.location.href = '/shop';
-        }
-        else {
-            // If response is false, show error message
-            alert('An error has occured, please try again');
-        }
+        $('.allPacks').append("\n            <div class = \"packPreview\" data-attr=\"".concat(packType, "\" data-price=\"").concat(response, "\">\n            <button class=\"closePack\">X</button>\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n             <h2>Pack : ").concat(packType[0].toUpperCase(), "</h2>\n             <h2>").concat(response, " \u20BD</h2>\n             <button class=\"buyPack\" data-attr=\"").concat(packType, "\">Buy</button>\n            </div>"));
+    });
+}
+function buyPack(packType) {
+    var url = '/api/buyPack';
+    var url2 = '/api/getPackPrice';
+    var data2 = {
+        packType: packType
+    };
+    $.post(url2, data2, function (response2) {
+        var data = {
+            packType: packType,
+            packPrice: response2,
+            // @ts-ignore
+            token: checkCookie()
+        };
+        $.post(url, data, function (response) {
+            // If response is true, redirect to login page
+            if (response !== false) {
+                window.location.href = '/shop';
+            }
+            else {
+                // If response is false, show error message
+                alert('An error has occured, please try again');
+            }
+        });
     });
 }
 function packVisual(packType) {
@@ -92,80 +110,4 @@ function packVisual(packType) {
         randomImage = Math.ceil(Math.random() * 10);
     }
     return "./img/packart/".concat(packType, "/").concat(randomImage, ".jpg");
-}
-function packName(packType) {
-    if (packType === 'colorless') {
-        return 'Colorless';
-    }
-    else if (packType === 'dragon') {
-        return 'Dragon';
-    }
-    else if (packType === 'lightning') {
-        return 'Lightning';
-    }
-    else if (packType === 'darkness') {
-        return 'Darkness';
-    }
-    else if (packType === 'fairy') {
-        return 'Fairy';
-    }
-    else if (packType === 'metal') {
-        return 'Metal';
-    }
-    else if (packType === 'psychic') {
-        return 'Psychic';
-    }
-    else if (packType === 'fighting') {
-        return 'Fighting';
-    }
-    else if (packType === 'fire') {
-        return 'Fire';
-    }
-    else if (packType === 'grass') {
-        return 'Grass';
-    }
-    else if (packType === 'random') {
-        return 'Random';
-    }
-    else if (packType === 'water') {
-        return 'Water';
-    }
-}
-function packPrice(packType) {
-    if (packType === 'colorless') {
-        return '14';
-    }
-    else if (packType === 'dragon') {
-        return '20';
-    }
-    else if (packType === 'lightning') {
-        return '14';
-    }
-    else if (packType === 'darkness') {
-        return '16';
-    }
-    else if (packType === 'fairy') {
-        return '25';
-    }
-    else if (packType === 'metal') {
-        return '18';
-    }
-    else if (packType === 'psychic') {
-        return '13';
-    }
-    else if (packType === 'fighting') {
-        return '12';
-    }
-    else if (packType === 'fire') {
-        return '10';
-    }
-    else if (packType === 'grass') {
-        return '10';
-    }
-    else if (packType === 'random') {
-        return '4';
-    }
-    else if (packType === 'water') {
-        return '10';
-    }
 }

@@ -51,44 +51,62 @@ function generatePacks(packType) {
     packType = packType.toLowerCase();
 
 
-    $('.allPacks').append(`
+    let url = '/api/getPackPrice';
+    let data = {
+        packType: packType
+    }
+
+    $.post(url, data, (response) => {
+        $('.allPacks').append(`
             <div class = "pack" data-attr="${packType}">
                 <div class = "packFace">
                 <img  class="openPack" src="${packVisual(packType)}">
                 </div> 
-             <h2>Pack : ${packName(packType)}</h2>
-             <h2>${packPrice(packType)} ₽</h2>
+             <h2>Pack : ${packType[0].toUpperCase()}</h2>
+             <h2>${response} ₽</h2>
 
             </div>`);
+    });
 
 }
 
 function generateBigPreview(packType) {
     packType = packType.toLowerCase();
 
+    let url = '/api/getPackPrice';
+    let data = {
+        packType: packType
+    }
 
-    $('.allPacks').append(`
-            <div class = "packPreview" data-attr="${packType}" data-price="${packPrice(packType)}">
+    $.post(url, data, (response) => {
+        $('.allPacks').append(`
+            <div class = "packPreview" data-attr="${packType}" data-price="${response}">
             <button class="closePack">X</button>
                 <div class = "packFace">
                 <img  class="openPack" src="${packVisual(packType)}">
                 </div> 
-             <h2>Pack : ${packName(packType)}</h2>
-             <h2>${packPrice(packType)} ₽</h2>
+             <h2>Pack : ${packType[0].toUpperCase()}</h2>
+             <h2>${response} ₽</h2>
              <button class="buyPack" data-attr="${packType}">Buy</button>
             </div>`);
+    });
 
 }
 
-function buyPack(packType, packPrice: Number) {
+function buyPack(packType) {
     const url: string = '/api/buyPack';
-
+    let url2 = '/api/getPackPrice';
+    let data2 = {
+        packType: packType
+    }
+    $.post(url2, data2, (response2) => {
     const data: Object = {
         packType: packType,
-        packPrice: packPrice,
+        packPrice: response2,
         // @ts-ignore
         token: checkCookie()
     }
+
 
     $.post(url, data, (response) => {
         // If response is true, redirect to login page
@@ -98,6 +116,7 @@ function buyPack(packType, packPrice: Number) {
             // If response is false, show error message
             alert('An error has occured, please try again');
         }
+    });
     });
 }
 
@@ -127,59 +146,7 @@ function packVisual(packType: string) {
 
 }
 
-function packName(packType: string) {
-    if (packType === 'colorless') {
-        return 'Colorless';
-    } else if (packType === 'dragon') {
-        return 'Dragon';
-    } else if (packType === 'lightning') {
-        return 'Lightning';
-    } else if (packType === 'darkness') {
-        return 'Darkness';
-    } else if (packType === 'fairy') {
-        return 'Fairy';
-    } else if (packType === 'metal') {
-        return 'Metal';
-    } else if (packType === 'psychic') {
-        return 'Psychic';
-    } else if (packType === 'fighting') {
-        return 'Fighting';
-    } else if (packType === 'fire') {
-        return 'Fire';
-    } else if (packType === 'grass') {
-        return 'Grass';
-    } else if (packType === 'random') {
-        return 'Random';
-    } else if (packType === 'water') {
-        return 'Water';
-    }
-}
 
-function packPrice(packType) {
-    if (packType === 'colorless') {
-        return '14';
-    } else if (packType === 'dragon') {
-        return '20';
-    } else if (packType === 'lightning') {
-        return '14';
-    } else if (packType === 'darkness') {
-        return '16';
-    } else if (packType === 'fairy') {
-        return '25';
-    } else if (packType === 'metal') {
-        return '18';
-    } else if (packType === 'psychic') {
-        return '13';
-    } else if (packType === 'fighting') {
-        return '12';
-    } else if (packType === 'fire') {
-        return '10';
-    } else if (packType === 'grass') {
-        return '10';
-    } else if (packType === 'random') {
-        return '4';
-    } else if (packType === 'water') {
-        return '10';
-    }
-}
+
+
 
