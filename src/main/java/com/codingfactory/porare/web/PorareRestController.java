@@ -166,6 +166,26 @@ public class PorareRestController {
     }
 
 
+    @PostMapping("randomGift")
+    public int randomGift(@RequestParam String token,
+                             HttpServletRequest httpServletRequest) {
+
+        return userService.randomGiftToken(token);
+    }
+
+    @PostMapping("giveGift")
+    public boolean giveGift(@RequestParam String token,
+                            @RequestParam int gift,
+                            HttpServletRequest httpServletRequest) {
+
+        return userService.giveGift(token, gift);
+    }
+
+    @PostMapping("getGiftAccess")
+    public boolean getGiftAccess(@RequestParam String token,
+                                 HttpServletRequest httpServletRequest) {
+        return userService.getDailyAccess(token);
+    }
 }
 
 

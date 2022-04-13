@@ -71,7 +71,7 @@ header {
             list-style: none;
             margin: 0;
             padding: 0;
-            a {
+            .nav {
                 color: white;
                 text-decoration: none;
                 font-size: 1.2em;
@@ -227,13 +227,13 @@ footer {
             }
             .fa-instagram {
                 background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-                background-clip: text;
+                //background-clip: text;
                 -webkit-background-clip: text;
                 color: transparent;
                 &:hover {
                     font-size: 110%;
                     background: -webkit-linear-gradient(45deg, #3551de, #4039c9, #7e2fb3, #ad1f6f, #b11d4e, #ce1313);
-                    background-clip: text;
+                    //background-clip: text;
                     -webkit-background-clip: text;
                     color: transparent;
                 }
