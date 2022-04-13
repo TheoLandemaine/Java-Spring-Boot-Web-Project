@@ -1,21 +1,33 @@
-.cadre {
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.div1 {
+  grid-area: 1/1/6/3;
+  border-right: 1px solid rgba(0, 0, 0, 0.8);
+}
+.div1 .cadre {
   display: flex;
   justify-content: flex-start;
-  margin: 3.7% 0;
+  margin: 9% 0;
 }
-.cadre .profileContainer {
+.div1 .cadre .profileContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 15%;
-  padding: 50px;
+  width: 54%;
+  padding: 50px 40px;
   margin: 50px;
   border-radius: 15px;
   background: rgb(255, 255, 255);
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
 }
-.cadre button {
+.div1 .cadre #edit, .div1 .cadre #modifyPassword, .div1 .cadre #delete, .div1 .cadre #logout, .div1 .cadre #myPacks {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,9 +45,18 @@
   background: none;
   transition: all 0.5s;
 }
-.cadre button:hover {
+.div1 .cadre #edit:hover, .div1 .cadre #modifyPassword:hover, .div1 .cadre #delete:hover, .div1 .cadre #logout:hover, .div1 .cadre #myPacks:hover {
   background: linear-gradient(to bottom right, dodgerblue, #4eadff);
   color: #fff;
+}
+
+.div2 {
+  grid-area: 1/3/6/6;
+  text-align: center;
+}
+.div2 #myCardsTitle {
+  padding: 20px;
+  font-size: 30px;
 }
 
 /*# sourceMappingURL=profile.style.css.map */

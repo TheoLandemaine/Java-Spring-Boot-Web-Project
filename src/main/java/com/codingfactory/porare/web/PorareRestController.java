@@ -107,7 +107,6 @@ public class PorareRestController {
                            @RequestParam String packType,// Get pack type from the request
                            @RequestParam int packPrice,
                            HttpServletRequest httpServletRequest) {
-
         /*
         * Return @Boolean
         * true if the buying is successful

@@ -11,6 +11,9 @@ $(document).ready(() => {
     generatePacksFromAPI(checkCookie());
 });
 
+let div = document.querySelector('.allPacks');
+
+
 function generatePacksFromAPI(token) {
     // Create Fetch API request
 // @ts-ignore
@@ -54,10 +57,6 @@ function generatePacksArtificially() {
         generatePacks('random');
 
     }
-
-
-
-
 
     //
 }*/
@@ -107,9 +106,6 @@ $(document).mouseover((e) => {
 
 function animationBoosters(packType) {
     console.log("animationBoosters");
-
-    let div = document.querySelector('.allPacks');
-    // @ts-ignore
     div.style.height = "100vh";
 
     $('.allPacks').append( `
@@ -138,8 +134,6 @@ function animationBoosters(packType) {
                             </div>
                         </div>
                     </div>`);
-    // @ts-ignore
-    setTimeout(() => {div.style.height = null;}, 2700);
 
     setTimeout(clearPacks, 2700);
 }
@@ -159,10 +153,12 @@ function generatePacks(packType) {
 }
 
 function generateCards(pokemonsDrawed) {
+    console.log("test");
+    console.log(pokemonsDrawed);
+    $('.allCards').empty();
     for (let i = 0; i < pokemonsDrawed.length; i++) {
         let pokemonImage = pokemonsDrawed[i]['images']['large'];
         let pokemonName = pokemonsDrawed[i]['name'];
-
         console.log(pokemonsDrawed[i]);
 
         // Add card to database
@@ -209,6 +205,12 @@ function drawPokemons(type) {
     type = type.toLowerCase();
 
     let pokemonsDrawed = [];
+
+    if (pokemonsDrawed.length !== 5 && $('.carte').length === 0) {
+        setTimeout(() => {$('.allPacks').append(`<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>`)},2700);
+        // Get out of the interval
+    }
+
 
     for (let i = 0; i < 5; i++) {
         // If type = Colorless, randomPage could go only to page 7
@@ -275,7 +277,13 @@ function drawPokemons(type) {
                     saved = true;
                 }
             }, 1000);
-
+            if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
+                console.log("test dans div generate")
+                div.style.height = null;
+                clearPacks();
+                generateCards(pokemonsDrawed);
+                // Get out of the interval
+            }
 
         }
     }

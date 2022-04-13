@@ -43,6 +43,7 @@ $(document).ready(function () {
     // @ts-ignore
     generatePacksFromAPI(checkCookie());
 });
+var div = document.querySelector('.allPacks');
 function generatePacksFromAPI(token) {
     // Create Fetch API request
     // @ts-ignore
@@ -114,12 +115,8 @@ $(document).mouseover(function (e) {
 });
 function animationBoosters(packType) {
     console.log("animationBoosters");
-    var div = document.querySelector('.allPacks');
-    // @ts-ignore
     div.style.height = "100vh";
     $('.allPacks').append("\n                    <div id=\"pack-opened\" class=\"col-xs-12 open\">\n                        <div class=\"pack-content\" style=\"display: block !important; visibility: visible !important;\" >\n                            <div class=\"pack-flash\">\n                                <div class=\"pack-flash-pack\" >\n                                    <img class=\"front\" src=\"" + packVisual(packType) + " \" > \n                                    <div class=\"top\">\n                                        <img src=\"https://i.imgur.com/b1qmOW6.png\">\n                                        <div class=\"cut\"> \n                                            <img src=\"https://i.imgur.com/k55nnYY.png\">\n                                        </div>\n                                        <span> \n                                            <img src=\"https://i.imgur.com/JqedAsJ.png\">\n                                               <span>\n                                                <img src=\"https://i.imgur.com/WWRXjri.png\">\n                                                    <span>\n                                                        <img src=\"https://i.imgur.com/DzEYvSP.png\" style=\"width: 81px\"> \n                                                    </span>\n                                                </span>\n                                            </span>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>");
-    // @ts-ignore
-    setTimeout(function () { div.style.height = null; }, 2700);
     setTimeout(clearPacks, 2700);
 }
 function generatePacks(packType) {
@@ -127,7 +124,11 @@ function generatePacks(packType) {
     $('.allPacks').append("\n            <div class = \"pack\" data-attr=\"".concat(packType, "\">\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n            </div>"));
 }
 function generateCards(pokemonsDrawed) {
-    var _loop_1 = function (i) {
+    console.log("test");
+    console.log(pokemonsDrawed);
+    $('.allCards').empty();
+    // @ts-ignore
+    for (var i = 0; i < pokemonsDrawed.length; i++) {
         var pokemonImage = pokemonsDrawed[i]['images']['large'];
         var pokemonName = pokemonsDrawed[i]['name'];
         console.log(pokemonsDrawed[i]);
@@ -167,7 +168,11 @@ function drawPokemons(type) {
     var saved = false;
     type = type.toLowerCase();
     var pokemonsDrawed = [];
-    var _loop_2 = function (i) {
+    if (pokemonsDrawed.length !== 5 && $('.carte').length === 0) {
+        setTimeout(function () { $('.allPacks').append("<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>"); }, 2700);
+        // Get out of the interval
+    }
+    var _loop_1 = function (i) {
         // If type = Colorless, randomPage could go only to page 7
         var pokemons = [];
         var pokeCardURL = '';
@@ -217,6 +222,8 @@ function drawPokemons(type) {
             }
             if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
                 console.log("test dans div generate");
+                div.style.height = null;
+                clearPacks();
                 generateCards(pokemonsDrawed);
             }
             console.log(pokemonsDrawed.length + " " + pokemonsDrawed);

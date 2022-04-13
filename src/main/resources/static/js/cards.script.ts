@@ -6,13 +6,6 @@ $(document).ready(() => {
 function generateCardsFromAPI(token) {
     // Create Fetch API request
 // @ts-ignore
-
-
-
-
-
-
-
         const url: string = '/api/getCards';
         // Create XMLHttpRequest request GET
         const data: Object = {
@@ -32,8 +25,6 @@ function generateCardsFromAPI(token) {
                     $.get(urlAPI, (response2) => {
                     let card:any = response2;
 
-
-
                     $('.allCards').append(`
                     <div class = "card" data-attr="${card}">
                     <img src="${response2.data[0].images['large']}" alt="${card.name}">
@@ -47,6 +38,4 @@ function generateCardsFromAPI(token) {
                 window.location.href = '/shop';
             }
         });
-
-
 }
