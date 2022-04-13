@@ -41,7 +41,6 @@ public record CardService(JdbcTemplate jdbcTemplate) {
         jdbcTemplate.update(sql, coins, userId);
         return true;
         } catch (Exception e) {
-            System.out.println(e);
             return false;
         }
     }
@@ -50,7 +49,7 @@ public record CardService(JdbcTemplate jdbcTemplate) {
         try {
             return jdbcTemplate.queryForObject("SELECT r_price FROM rarity WHERE r_rarity = ?", Integer.class, cardType);
         } catch (Exception e) {
-            return 0;
+            return -1;
         }
     }
 
