@@ -23,7 +23,6 @@ function generateCardsFromAPI(token) {
             }
         }
         else {
-            alert('Vous n\'avez pas de pack, veuillez en acheter');
             window.location.href = '/shop';
         }
     });

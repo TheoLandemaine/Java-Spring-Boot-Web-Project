@@ -1,5 +1,4 @@
 function load(url) {
-    console.log("Loading " + url);
     const req: XMLHttpRequest = new XMLHttpRequest();
     req.open("GET", url, false);
     req.send(null);

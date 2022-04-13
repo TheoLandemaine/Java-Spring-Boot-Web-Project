@@ -1,4 +1,3 @@
-// @ts-ignore
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -38,8 +37,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 // Récupérer tous les pokemons à partir de l'api https://api.pokemontcg.io/v2/cards et les stocker dans un tableau
 // Au chargement du document en jquery
 $(document).ready(function () {
-    // drawRandomPokemons();
-    //generatePacksFromAPI();
     // @ts-ignore
     generatePacksFromAPI(checkCookie());
 });
@@ -60,29 +57,14 @@ function generatePacksFromAPI(token) {
                 $('.allPacks').append("\n                    <div class = \"pack\" data-attr=\"".concat(pack, "\">\n                        <div class = \"packFace\">\n                        <img class=\"openPack\" src=\"").concat(packVisual(pack), "\">\n                    </div> \n                    </tr>\n                "));
             }
             if (response.length === 0) {
-                alert('Please buy some packs to play');
                 window.location.href = '/shop';
             }
         }
         else {
-            alert('Error in the loading');
             window.location.href = '/profile';
         }
     });
 }
-/*
-function generatePacksArtificially() {
-    for (let i = 0; i < 3; i++) {
-
-        generatePacks('colorless');
-        generatePacks('fire');
-        generatePacks('grass');
-        generatePacks('random');
-
-    }
-
-    //
-}*/
 $(document).click(function (e) {
     // @ts-ignore
     if (e.target.classList.contains('openPack')) {
@@ -153,13 +135,15 @@ function drawPokemons(type) {
     type = type.toLowerCase();
     var pokemonsDrawed = [];
     if (pokemonsDrawed.length !== 5 && $('.carte').length === 0) {
-        setTimeout(function () { $('.allPacks').append("<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>"); }, 2700);
+        setTimeout(function () {
+            $('.allPacks').append("<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>");
+        }, 2700);
         // Get out of the interval
     }
     var _loop_1 = function (i) {
         // If type = Colorless, randomPage could go only to page 7
         var pokemons = [];
-        var pokeCardURL = '';
+        var pokeCardURL = void 0;
         var randomPage = numberPage(type);
         if (type !== 'random') {
             pokeCardURL = "https://api.pokemontcg.io/v2/cards?q=types:".concat(type, "&page=").concat(randomPage);
@@ -167,50 +151,34 @@ function drawPokemons(type) {
         else {
             pokeCardURL = "https://api.pokemontcg.io/v2/cards?page=".concat(randomPage);
         }
-        fetch(pokeCardURL, {
-            method: "GET",
-            // @ts-ignore
-            withCredentials: true,
-            headers: {
-                "X-API-KEY": "f67d2ff5-723b-4794-bbfb-6b0a4e846179",
-                "Content-Type": "application/json"
-            }
-        })
-            .then(function (response) {
-            return response.json();
-        })
-            .then(function (data) {
+        $.get(pokeCardURL, function (data) {
             // Sort through per card per pokemon name
             // @ts-ignore
             for (var x = 0; x < data.data.length; x++) {
                 pokemons.push(data.data[x]);
             }
-        });
-        var interval = setInterval(function () {
-            if ($('.carte').length != 5 && $('.pack').length === 0) {
-                if (pokemonsDrawed.length < 5) {
-                    var random = Math.floor(Math.random() * pokemons.length);
-                    if (pokemons[random] != undefined) {
-                        pokemonsDrawed.push(pokemons[random]);
-                        setTimeout(function () {
-                        }, 3000);
-                    }
-                }
-            }
             if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
                 div.style.height = null;
                 clearPacks();
                 generateCards(pokemonsDrawed);
-                // Get out of the interval
             }
-            if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0 || !saved) {
-                clearInterval(interval);
-                saved = true;
+            else {
+                var randomPokemon = Math.floor(Math.random() * pokemons.length);
+                // @ts-ignore
+                if (pokemonsDrawed.includes(pokemons[randomPokemon])) {
+                    i--;
+                }
+                else if (pokemons[randomPokemon] != undefined) {
+                    pokemonsDrawed.push(pokemons[randomPokemon]);
+                }
             }
-        }, 1000);
+        });
+        out_i_1 = i;
     };
-    for (var i = 0; i < 5; i++) {
+    var out_i_1;
+    for (var i = -1; i < 5; i++) {
         _loop_1(i);
+        i = out_i_1;
     }
 }
 $(document).click(function (e) {
