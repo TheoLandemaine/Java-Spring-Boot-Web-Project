@@ -31,6 +31,8 @@ $(document).on('click', function (e) {
     if (target.classList.contains('btn_sell')) {
         var cardType = target.parentNode.parentNode.getAttribute('data-type');
         var cardId = target.parentNode.parentNode.getAttribute('data-id');
+        /*        console.log(cardType);
+                console.log(cardId);*/
         sellCards(cardId, cardType);
     }
 });

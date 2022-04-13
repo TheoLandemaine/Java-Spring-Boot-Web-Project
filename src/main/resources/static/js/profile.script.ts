@@ -36,8 +36,12 @@ $(document).on('click', (e) => {
     // @ts-ignore
     const target: any = e.target as HTMLElement;
     if (target.classList.contains('btn_sell')) {
+
+
         let cardType = target.parentNode.parentNode.getAttribute('data-type');
         let cardId = target.parentNode.parentNode.getAttribute('data-id');
+/*        console.log(cardType);
+        console.log(cardId);*/
         sellCards(cardId, cardType);
     }
 })
