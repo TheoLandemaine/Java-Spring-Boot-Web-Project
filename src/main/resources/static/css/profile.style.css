@@ -90,4 +90,52 @@
   color: #fff;
 }
 
+.confirmSellContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.confirmSellContainer .confirmSell {
+  width: 50%;
+  height: 50%;
+  background: white;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.confirmSellContainer .confirmSell h1 {
+  font-size: 30px;
+  margin: 0;
+}
+.confirmSellContainer .confirmSell p {
+  font-size: 20px;
+  margin: 0;
+}
+.confirmSellContainer .confirmSell button {
+  width: 7vh;
+  height: 4vh;
+  font-size: 20px;
+  margin: 10px;
+  border-radius: 15px;
+  border: none;
+  background: linear-gradient(to bottom right, dodgerblue, #4eadff);
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.5s;
+}
+.confirmSellContainer .confirmSell button:hover {
+  background: linear-gradient(to bottom right, #4eadff, dodgerblue);
+  color: #fff;
+}
+
 /*# sourceMappingURL=profile.style.css.map */
