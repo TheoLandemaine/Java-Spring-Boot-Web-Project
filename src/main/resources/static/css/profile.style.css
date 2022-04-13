@@ -61,6 +61,7 @@
 .div2 .card {
   display: inline-block;
   margin: 10px;
+  width: 20%;
 }
 .div2 .card .cardsBtn {
   display: flex;
