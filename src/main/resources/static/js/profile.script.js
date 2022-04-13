@@ -24,12 +24,36 @@ $(document).ready(function () {
     generateCardsFromAPI(checkCookie());
 });
 //When we click on the page
-$(document).on('click', '.btn_sell', function () {
+$(document).on('click', function (e) {
     //Start the function
-    sellCards();
+    // @ts-ignore
+    var target = e.target;
+    if (target.classList.contains('btn_sell')) {
+        var cardType = target.parentNode.parentNode.getAttribute('data-type');
+        var cardId = target.parentNode.parentNode.getAttribute('data-id');
+        sellCards(cardId, cardType);
+    }
 });
-function sellCards() {
-    console.log("test delete card");
+function sellCards(cardId, cardType) {
+    //@ts-ignore
+    var token = checkCookie();
+    var url = 'api/deleteCard';
+    var data = {
+        token: token,
+        cardId: cardId,
+        cardType: cardType
+    };
+    $.post(url, data, function (response) {
+        console.log(response);
+        if (response !== false) {
+            //@ts-ignore
+            // Refresh the page
+            window.location.href = '/profile';
+        }
+        else {
+            alert('Error while deleting the card');
+        }
+    });
 }
 function generateCardsFromAPI(token) {
     // Create Fetch API request
@@ -42,13 +66,16 @@ function generateCardsFromAPI(token) {
     };
     $.post(url, data, function (response) {
         if (response !== false) {
-            for (var i = 0; i < response.length; i++) {
+            var _loop_1 = function (i) {
                 var cardId = response[i];
                 var urlAPI = 'https://api.pokemontcg.io/v2/cards/?q=id:' + cardId;
                 $.get(urlAPI, function (response2) {
                     var card = response2;
-                    $('.allCards').append("\n                    <div class = \"card\" data-attr=\"".concat(card, "\">\n                        <div class=\"cardsBtn\">\n                            <img src=\"").concat(response2.data[0].images['small'], "\" alt=\"").concat(card.name, "\">\n                            <button class=\"btn_sell\">Sell card</button>\n                        </div>\n                    </div>\n                    "));
+                    $('.allCards').append("\n                    <div class = \"card\" data-type=\"".concat(card.data[0].rarity, "\" data-id=\"").concat(cardId, "\">\n                        <div class=\"cardsBtn\">\n                            <img src=\"").concat(card.data[0].images['small'], "\" alt=\"").concat(card.name, "\">\n                            <button class=\"btn_sell\">Sell card</button>\n                        </div>\n                    </div>\n                    "));
                 });
+            };
+            for (var i = 0; i < response.length; i++) {
+                _loop_1(i);
             }
         }
         else {

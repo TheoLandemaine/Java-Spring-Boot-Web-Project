@@ -30,15 +30,39 @@ $(document).ready(() => {
 });
 
 //When we click on the page
-$(document).on('click', '.btn_sell', function() {
+$(document).on('click', (e) => {
 
     //Start the function
-    sellCards();
+    // @ts-ignore
+    const target: any = e.target as HTMLElement;
+    if (target.classList.contains('btn_sell')) {
+        let cardType = target.parentNode.parentNode.getAttribute('data-type');
+        let cardId = target.parentNode.parentNode.getAttribute('data-id');
+        sellCards(cardId, cardType);
+    }
 })
 
 
-function sellCards() {
-    console.log("test delete card");
+function sellCards(cardId, cardType) {
+    //@ts-ignore
+    let token = checkCookie();
+    let url:string = 'api/deleteCard';
+    let data = {
+        token: token,
+        cardId: cardId,
+        cardType: cardType
+   };
+
+    $.post(url, data, function(response) {
+        console.log(response);
+        if (response !== false) {
+            //@ts-ignore
+            // Refresh the page
+            window.location.href = '/profile';
+        } else {
+            alert('Error while deleting the card');
+        }
+    });
 }
 
 function generateCardsFromAPI(token) {
@@ -64,9 +88,9 @@ function generateCardsFromAPI(token) {
                     let card:any = response2;
 
                     $('.allCards').append(`
-                    <div class = "card" data-attr="${card}">
+                    <div class = "card" data-type="${card.data[0].rarity}" data-id="${cardId}">
                         <div class="cardsBtn">
-                            <img src="${response2.data[0].images['small']}" alt="${card.name}">
+                            <img src="${card.data[0].images['small']}" alt="${card.name}">
                             <button class="btn_sell">Sell card</button>
                         </div>
                     </div>
