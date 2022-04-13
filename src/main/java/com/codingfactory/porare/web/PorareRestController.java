@@ -102,11 +102,11 @@ public class PorareRestController {
     }
 
     @PostMapping("buyPack")
-    public String buyPack( // Get username from the request
-                           @RequestParam String token,// Get pack price from the request
-                           @RequestParam String packType,// Get pack type from the request
-                           @RequestParam int packPrice,
-                           HttpServletRequest httpServletRequest) {
+    public boolean buyPack( // Get username from the request
+                            @RequestParam String token,// Get pack price from the request
+                            @RequestParam String packType,// Get pack type from the request
+                            @RequestParam int packPrice,
+                            HttpServletRequest httpServletRequest) {
         /*
         * Return @Boolean
         * true if the buying is successful
@@ -116,10 +116,10 @@ public class PorareRestController {
     }
 
     @PostMapping("deletePack")
-    public String deletePack( // Get username from the request
-                           @RequestParam String token,// Get pack price from the request
-                           @RequestParam String packType,// Get pack type from the request
-                           HttpServletRequest httpServletRequest) {
+    public boolean deletePack( // Get username from the request
+                               @RequestParam String token,// Get pack price from the request
+                               @RequestParam String packType,// Get pack type from the request
+                               HttpServletRequest httpServletRequest) {
 
         /*
         * Return @Boolean
@@ -130,9 +130,9 @@ public class PorareRestController {
     }
 
     @PostMapping ("saveCards")
-    public String saveCards(@RequestParam String token,
-                            @RequestParam String cardId,
-                            HttpServletRequest httpServletRequest) {
+    public boolean saveCards(@RequestParam String token,
+                             @RequestParam String cardId,
+                             HttpServletRequest httpServletRequest) {
         System.out.println("cardId: " + cardId);
         return cardService.addCard(token, cardId);
     }
