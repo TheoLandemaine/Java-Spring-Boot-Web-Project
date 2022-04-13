@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @param jdbcTemplate Import JdbcTemplate
@@ -186,6 +187,58 @@ public record UserService(JdbcTemplate jdbcTemplate) {
         } catch (JWTDecodeException exception) {
             //Invalid token
             return cards;
+        }
+    }
+
+    public int randomGiftToken(String token) {
+        try {
+            int randomGift = new Random().nextInt(9)+1;
+            return randomGift;
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
+    public boolean giveGift(String token, int randomGift) {
+        try {
+            int userId = userTools.checkToken(token, jdbcTemplate);
+        int coins = getUserCoins(token);
+        coins += randomGift;
+        jdbcTemplate.update("UPDATE user SET u_coin = '" + coins + "' WHERE u_id = '" + userId + "'");
+
+        jdbcTemplate.update( "UPDATE user SET u_gift = 0 WHERE u_id = '" + userId + "'");
+        return true;
+        } catch (JWTDecodeException exception) {
+            //Invalid token
+            return false;
+        }
+    }
+
+    public boolean getDailyAccess(String token) {
+        try {
+            int userId = userTools.checkToken(token, jdbcTemplate);
+            // Get the current value of the boolean value u_gift then if it's equal to false
+            // then we can give the user a gift
+            String sql = "SELECT u_gift FROM user WHERE u_id = '" + userId + "'";
+
+            List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+
+            boolean gift = (boolean) rows.get(0).get("u_gift");
+
+            if(gift) {
+                return true;
+            } else {
+                return false;
+            }
+
+
+
+
+
+
+        } catch (JWTDecodeException exception) {
+            //Invalid token
+            return false;
         }
     }
 
