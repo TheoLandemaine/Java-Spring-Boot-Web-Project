@@ -18,11 +18,11 @@ $('#logout').on('click', function () {
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     window.location.href = '/';
 });
-
-const myCards = document.querySelector('#myCards');
-myCards.addEventListener("click", function (e) {
-    window.location.href = '/myCards';
-});
+//
+// const myCards = document.querySelector('#myCards');
+// myCards.addEventListener("click", function (e) {
+//     window.location.href = '/myCards';
+// });
 
 $(document).ready(() => {
     //@ts-ignore
@@ -30,19 +30,15 @@ $(document).ready(() => {
 });
 
 //When we click on the page
-$(document).click((e) => {
+$(document).on('click', '.btn_sell', function() {
 
-    //If contains the class "btn_sell"
-    if (e.target.classList.contains('btn_sell')) {
-        //Start the function
-        sellCards();
-    }
-
+    //Start the function
+    sellCards();
 })
 
 
 function sellCards() {
-
+    console.log("test delete card");
 }
 
 function generateCardsFromAPI(token) {

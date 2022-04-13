@@ -19,12 +19,12 @@ if (checkCookie() !== 'false') {
     $('.navColumn').empty();
     $('.firstNav').empty();
     $('.navColumn').append("<li><a href=\"/profile\">Profile</a></li>");
-    $('.firstNav').append("\n        <li><a href=\"./\">Home</a></li>\n        <li><a href=\"./users\">Users</a></li>\n        <li><a href=\"./search\">Catalog</a></li>\n        <li><a href=\"./shop\">Shop</a></li>\n    ");
+    $('.firstNav').append("\n        <li><a href=\"./\">Home</a></li>\n<!--        <li><a href=\"./users\">Users</a></li>-->\n        <li><a href=\"./search\">Catalog</a></li>\n        <li><a href=\"./shop\">Shop</a></li>\n    ");
 }
 // @ts-ignore
 $.post('/api/getCards', { 'token': checkCookie() }, function (data) {
     if (data.length > 0) {
-        $('.firstNav').append("<li><a href=\"./myCards\">My Cards</a></li>");
+        // $('.firstNav').append(`<li><a href="./myCards">My Cards</a></li>`);
     }
 });
 // @ts-ignore

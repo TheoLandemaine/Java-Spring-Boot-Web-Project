@@ -26,7 +26,7 @@ if (checkCookie() !== 'false') {
 
     $('.firstNav').append(`
         <li><a href="./">Home</a></li>
-        <li><a href="./users">Users</a></li>
+<!--        <li><a href="./users">Users</a></li>-->
         <li><a href="./search">Catalog</a></li>
         <li><a href="./shop">Shop</a></li>
     `);
@@ -35,7 +35,7 @@ if (checkCookie() !== 'false') {
 // @ts-ignore
 $.post('/api/getCards', {'token': checkCookie()}, (data) => {
     if(data.length > 0) {
-        $('.firstNav').append(`<li><a href="./myCards">My Cards</a></li>`);
+        // $('.firstNav').append(`<li><a href="./myCards">My Cards</a></li>`);
     }
 });
 
