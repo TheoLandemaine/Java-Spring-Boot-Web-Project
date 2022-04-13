@@ -143,6 +143,14 @@ public class PorareRestController {
         return userService.getUserCards(token);
     }
 
+    @PostMapping("deleteCard")
+    public boolean deleteCard(@RequestParam String token,
+                             @RequestParam String cardId,
+                             @RequestParam String cardType,
+                             HttpServletRequest httpServletRequest) {
+        return cardService.deleteCard(token, cardId, cardType);
+    }
+
 
 }
 
