@@ -127,13 +127,33 @@ function generatePacks(packType) {
     $('.allPacks').append("\n            <div class = \"pack\" data-attr=\"".concat(packType, "\">\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n            </div>"));
 }
 function generateCards(pokemonsDrawed) {
-    console.log("test");
-    console.log(pokemonsDrawed);
-    // @ts-ignore
-    for (var i = 0; i < pokemonsDrawed.length; i++) {
+    var _loop_1 = function (i) {
         var pokemonImage = pokemonsDrawed[i]['images']['large'];
         var pokemonName = pokemonsDrawed[i]['name'];
+        console.log(pokemonsDrawed[i]);
+        // Add card to database
+        // @ts-ignore
+        var token = checkCookie();
+        // For each card in the array
+        // @ts-ignore
+        var url = 'api/saveCards';
+        console.log(pokemonsDrawed[i].id);
+        var data = {
+            cardId: pokemonsDrawed[i].id,
+            token: token
+        };
+        $.post(url, data, function (response) {
+            if (response !== false) {
+                console.log('card saved' + pokemonsDrawed[i].id);
+            }
+            else {
+                alert('Problem while saving cards');
+            }
+        });
         $('.allCards').append("\n            <div class = \"carte\" data-attr=\"".concat(pokemonName, "\">\n                <div class = \"double-face\">\n                <div class = \"face\">\n                <img class=\"imgPokemon\" src=\"").concat(pokemonImage, "\"></div> \n                <div class = \"arriere toFlip\">\n            </div>"));
+    };
+    for (var i = 0; i < pokemonsDrawed.length; i++) {
+        _loop_1(i);
     }
 }
 //  Vider la div allPacks
@@ -147,7 +167,7 @@ function drawPokemons(type) {
     var saved = false;
     type = type.toLowerCase();
     var pokemonsDrawed = [];
-    var _loop_1 = function (i) {
+    var _loop_2 = function (i) {
         // If type = Colorless, randomPage could go only to page 7
         var pokemons = [];
         var pokeCardURL = '';
@@ -174,12 +194,11 @@ function drawPokemons(type) {
             .then(function (data) {
             // Sort through per card per pokemon name
             // @ts-ignore
-            for (x = 0; x < data.data.length; x++) {
-                // @ts-ignore
-                // @ts-ignore
+            for (var x = 0; x < data.data.length; x++) {
                 pokemons.push(data.data[x]);
             }
         });
+        console.log(pokemons);
         var interval = setInterval(function () {
             if ($('.carte').length != 5 && $('.pack').length === 0) {
                 //console.log(randomPage);
@@ -189,6 +208,8 @@ function drawPokemons(type) {
                     //console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
                     if (pokemons[random] != undefined) {
                         pokemonsDrawed.push(pokemons[random]);
+                        setTimeout(function () {
+                        }, 3000);
                     }
                     // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
                     //console.log($('.toFlip').length);
@@ -197,7 +218,6 @@ function drawPokemons(type) {
             if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
                 console.log("test dans div generate");
                 generateCards(pokemonsDrawed);
-                // Get out of the interval
             }
             console.log(pokemonsDrawed.length + " " + pokemonsDrawed);
             if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0 || !saved) {
@@ -205,16 +225,9 @@ function drawPokemons(type) {
                 saved = true;
             }
         }, 1000);
-        var saveInterval = setInterval(function () {
-            if (saved && pokemonsDrawed.length === 5) {
-                saveCards(pokemonsDrawed);
-                saved = false;
-                clearInterval(saveInterval);
-            }
-        }, 5000);
     };
     for (var i = 0; i < 5; i++) {
-        _loop_1(i);
+        _loop_2(i);
     }
 }
 $(document).click(function (e) {
@@ -341,32 +354,4 @@ function deletePackFromDB(packType) {
             }
         }
     });
-}
-function saveCards(cards) {
-    // Get the token of the user
-    setTimeout(function () {
-        // @ts-ignore
-        var token = checkCookie();
-        // For each card in the array
-        // @ts-ignore
-        var url = 'api/saveCards';
-        var _loop_2 = function (card) {
-            console.log(cards[card].id);
-            var data = {
-                cardId: cards[card].id,
-                token: token
-            };
-            $.post(url, data, function (response) {
-                if (response !== false) {
-                    console.log('card saved' + cards[card].id);
-                }
-                else {
-                    alert('Problem while saving cards');
-                }
-            });
-        };
-        for (var card = 0; card < cards.length; card++) {
-            _loop_2(card);
-        }
-    }, 10000);
 }

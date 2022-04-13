@@ -159,12 +159,31 @@ function generatePacks(packType) {
 }
 
 function generateCards(pokemonsDrawed) {
-    console.log("test");
-    console.log(pokemonsDrawed);
-    // @ts-ignore
     for (let i = 0; i < pokemonsDrawed.length; i++) {
         let pokemonImage = pokemonsDrawed[i]['images']['large'];
         let pokemonName = pokemonsDrawed[i]['name'];
+
+        console.log(pokemonsDrawed[i]);
+
+        // Add card to database
+        // @ts-ignore
+        let token = checkCookie();
+        // For each card in the array
+        // @ts-ignore
+        let url = 'api/saveCards';
+        console.log(pokemonsDrawed[i].id);
+
+        const data: Object = {
+            cardId: pokemonsDrawed[i].id,
+            token: token
+        };
+        $.post(url, data , (response) => {
+            if (response !== false) {
+                console.log('card saved' + pokemonsDrawed[i].id);
+            } else {
+                alert('Problem while saving cards');
+            }
+        });
 
         $('.allCards').append(`
             <div class = "carte" data-attr="${pokemonName}">
@@ -220,17 +239,14 @@ function drawPokemons(type) {
             .then(function (data) {
                 // Sort through per card per pokemon name
                 // @ts-ignore
-                for (x = 0; x < data.data.length; x++) {
-                    // @ts-ignore
-
-                    // @ts-ignore
+                for (let x = 0; x < data.data.length; x++) {
                     pokemons.push(data.data[x]);
                 }
             });
 
+        console.log(pokemons);
+
             let interval = setInterval(() => {
-
-
                 if ($('.carte').length != 5 && $('.pack').length === 0) {
                     //console.log(randomPage);
                     if (pokemonsDrawed.length < 5) {
@@ -240,6 +256,8 @@ function drawPokemons(type) {
                         //console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
                         if (pokemons[random] != undefined) {
                             pokemonsDrawed.push(pokemons[random]);
+                            setTimeout(() => {
+                            }, 3000);
                         }
 
                         // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
@@ -250,7 +268,6 @@ function drawPokemons(type) {
                 if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
                     console.log("test dans div generate")
                     generateCards(pokemonsDrawed);
-                    // Get out of the interval
                 }
                 console.log(pokemonsDrawed.length + " " + pokemonsDrawed);
                 if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0 || !saved) {
@@ -258,14 +275,7 @@ function drawPokemons(type) {
                     saved = true;
                 }
             }, 1000);
-            let saveInterval = setInterval(() => {
-                if (saved && pokemonsDrawed.length === 5) {
-                    saveCards(pokemonsDrawed);
-                    saved=false;
-                    clearInterval(saveInterval);
 
-                }
-            }, 5000);
 
         }
     }
@@ -396,38 +406,4 @@ function deletePackFromDB(packType) {
             }
         }
     });
-}
-
-
-function saveCards(cards) {
-    // Get the token of the user
-
-    setTimeout(() => {
-    // @ts-ignore
-        let token = checkCookie();
-        // For each card in the array
-        // @ts-ignore
-        let url = 'api/saveCards';
-        for (let card = 0; card < cards.length; card++) {
-            console.log(cards[card].id);
-
-            const data: Object = {
-
-                cardId: cards[card].id,
-                token: token
-            };
-            $.post(url, data , (response) => {
-
-                if (response !== false) {
-                    console.log('card saved' + cards[card].id);
-                } else {
-                    alert('Problem while saving cards');
-                }
-            });
-        }
-    }, 10000);
-
-
-
-
 }
