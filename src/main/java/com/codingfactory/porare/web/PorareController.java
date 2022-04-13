@@ -66,6 +66,8 @@ public class PorareController {
 
 	@GetMapping("shop")
 	public String shop() { return "shop/index";}
+
+
 	
 
 }

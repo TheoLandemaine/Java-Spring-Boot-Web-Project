@@ -3,7 +3,8 @@ $(document).ready(function () {
 });
 $(document).click(function (e) {
     // @ts-ignore
-    if (e.target.classList.contains('openPack')) {
+    var target = e.target;
+    if (target.classList.contains('openPack')) {
         $('.allPacks').empty();
         // @ts-ignore
         console.log(e.target.parentNode.parentNode.getAttribute('data-attr'));
@@ -11,14 +12,15 @@ $(document).click(function (e) {
         generateBigPreview(e.target.parentNode.parentNode.getAttribute('data-attr'));
     }
     // @ts-ignore
-    if (e.target.classList.contains('closePack')) {
+    if (target.classList.contains('closePack')) {
         $('.allPacks').empty();
         generateAllPacks();
     }
     // @ts-ignore
-    if (e.target.classList.contains('buyPack')) {
+    if (target.classList.contains('buyPack')) {
+        console.log('coucou');
         // @ts-ignore
-        buyPack(e.target.parentNode.parentNode.getAttribute('data-attr'), e.target.parentNode.parentNode.getAttribute('data-price'));
+        buyPack(e.target.parentNode.getAttribute('data-attr'), parseInt(e.target.parentNode.getAttribute('data-price')));
     }
 });
 // When we mouseover on a pack
@@ -53,26 +55,27 @@ function generateBigPreview(packType) {
     $('.allPacks').append("\n            <div class = \"packPreview\" data-attr=\"".concat(packType, "\" data-price=\"").concat(packPrice(packType), "\">\n            <button class=\"closePack\">X</button>\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n             <h2>Pack : ").concat(packName(packType), "</h2>\n             <h2>").concat(packPrice(packType), " \u20BD</h2>\n             <button class=\"buyPack\" data-attr=\"").concat(packType, "\">Buy</button>\n            </div>"));
 }
 function buyPack(packType, packPrice) {
-    var xhr = new XMLHttpRequest();
-    var data = new FormData();
-    data.append('packType', packType);
-    data.append('packPrice', packPrice);
-    data.append('token', localStorage.getItem('token'));
-    var url = 'http://localhost:8080/api/buyPack';
-    xhr.open('POST', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // If response is true, redirect to login page
-            if (xhr.responseText !== 'false') {
-                window.location.href = './shop/index.html';
-            }
-            else {
-                // If response is false, show error message
-                alert('An error has occured, please try again');
-            }
-        }
+    console.log(packType);
+    console.log(packPrice);
+    // @ts-ignore
+    console.log(checkCookie());
+    var url = '/api/buyPack';
+    var data = {
+        packType: packType,
+        packPrice: packPrice,
+        // @ts-ignore
+        token: checkCookie()
     };
-    xhr.send(data);
+    $.post(url, data, function (response) {
+        // If response is true, redirect to login page
+        if (response !== false) {
+            window.location.href = '/shop';
+        }
+        else {
+            // If response is false, show error message
+            alert('An error has occured, please try again');
+        }
+    });
 }
 function packVisual(packType) {
     // @TODO : Get the length of the file that contains our images for our pack

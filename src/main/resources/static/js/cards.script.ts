@@ -1,5 +1,4 @@
 $(document).ready(() => {
-    console.log("test");
     //@ts-ignore
     generateCardsFromAPI(checkCookie());
 });
@@ -7,22 +6,23 @@ $(document).ready(() => {
 function generateCardsFromAPI(token) {
     // Create Fetch API request
 // @ts-ignore
+        const url: string = '/api/getCards';
+        // Create XMLHttpRequest request GET
+        const data: Object = {
+            // @ts-ignore
+            token: token
+        };
 
-    const url: string = '/api/getCards';
-    // Create XMLHttpRequest request GET
-    const data: Object = {
-        // @ts-ignore
-        token: token
-    };
 
-    $.post(url, data, (response) => {
+        $.post(url, data, (response) => {
 
-        if (response !== false) {
 
-            for (let i: number = 0; i < response.length; i++) {
-                let cardId: any = response[i];
-                let urlAPI = 'https://api.pokemontcg.io/v2/cards/?q=id:' + cardId;
-                $.get(urlAPI, (response2) => {
+            if (response !== false) {
+
+                for (let i: number = 0; i < response.length; i++) {
+                    let cardId: any = response[i];
+                    let urlAPI = 'https://api.pokemontcg.io/v2/cards/?q=id:' + cardId;
+                    $.get(urlAPI, (response2) => {
                     let card:any = response2;
 
                     $('.allCards').append(`
@@ -30,11 +30,12 @@ function generateCardsFromAPI(token) {
                     <img src="${response2.data[0].images['large']}" alt="${card.name}">
                     </div>
                     `);
-                });
+                    });
+                }
+
+            } else {
+                alert('Vous n\'avez pas de pack, veuillez en acheter');
+                window.location.href = '/shop';
             }
-        } else {
-            alert('Vous n\'avez pas de pack, veuillez en acheter');
-            window.location.href = '/shop';
-        }
-    });
+        });
 }

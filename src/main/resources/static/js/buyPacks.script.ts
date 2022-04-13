@@ -4,7 +4,8 @@ generateAllPacks();
 
 $(document).click((e) => {
     // @ts-ignore
-    if (e.target.classList.contains('openPack')) {
+    let target = e.target as HTMLElement;
+    if (target.classList.contains('openPack')) {
         $('.allPacks').empty();
         // @ts-ignore
         console.log(e.target.parentNode.parentNode.getAttribute('data-attr'))
@@ -12,14 +13,16 @@ $(document).click((e) => {
         generateBigPreview(e.target.parentNode.parentNode.getAttribute('data-attr'));
     }
     // @ts-ignore
-    if (e.target.classList.contains('closePack')) {
+    if (target.classList.contains('closePack')) {
         $('.allPacks').empty();
         generateAllPacks();
     }
     // @ts-ignore
-    if (e.target.classList.contains('buyPack')){
+    if (target.classList.contains('buyPack')){
+        console.log('coucou');
         // @ts-ignore
-        buyPack(e.target.parentNode.parentNode.getAttribute('data-attr'), e.target.parentNode.parentNode.getAttribute('data-price'));
+
+        buyPack(e.target.parentNode.getAttribute('data-attr'), parseInt(e.target.parentNode.getAttribute('data-price')));
     }
 })
 
@@ -82,27 +85,29 @@ function generateBigPreview(packType) {
 
 }
 
-function buyPack(packType, packPrice) {
-    const xhr = new XMLHttpRequest();
-    const data = new FormData();
-    data.append('packType', packType);
-    data.append('packPrice', packPrice);
-    data.append('token', localStorage.getItem('token'));
-    const url: string = 'http://localhost:8080/api/buyPack';
+function buyPack(packType, packPrice:Number) {
+    console.log(packType);
+    console.log(packPrice);
+    // @ts-ignore
+    console.log(checkCookie())
+    const url:string = '/api/buyPack';
 
-    xhr.open('POST', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // If response is true, redirect to login page
-            if (xhr.responseText !== 'false') {
-                window.location.href = './shop/index.html';
-            } else {
-                // If response is false, show error message
-                alert('An error has occured, please try again');
-            }
+    const data:Object = {
+        packType: packType,
+        packPrice: packPrice,
+        // @ts-ignore
+        token: checkCookie()
+    }
+
+    $.post(url, data, (response) => {
+        // If response is true, redirect to login page
+        if (response !== false) {
+            window.location.href = '/shop';
+        } else {
+            // If response is false, show error message
+            alert('An error has occured, please try again');
         }
-    };
-    xhr.send(data);
+    });
 }
 
 function packVisual(packType:string) {

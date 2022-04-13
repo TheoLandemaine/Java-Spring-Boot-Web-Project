@@ -84,6 +84,48 @@ public record UserService(JdbcTemplate jdbcTemplate) {
         }
     }
 
+    public Boolean editUsername(String token, String newusername) {
+        try {
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
+
+            // Update the username
+            jdbcTemplate.update("UPDATE user SET u_username = '" + newusername + "' WHERE u_id = '" + userId + "'");
+
+            return true;
+        } catch (JWTVerificationException exception) {
+            //Invalid signature/claims
+            return false;
+        }
+    }
+
+    public Boolean editPassword(String token, String actualPassword, String newPassword, String newPasswordConfirmation) {
+        try {
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
+
+            // Check if the actual password is correct
+            List<Map<String, Object>> userInformations = jdbcTemplate.queryForList("SELECT * FROM user WHERE u_id = '" + userId + "'");
+
+            for (Map<String, Object> userInformation : userInformations) {
+                if (!((String) userInformation.get("u_password")).equals(actualPassword)) {
+                    return false;
+                }
+            }
+
+            // Check if the new password and the new password confirmation are the same
+            if (!newPassword.equals(newPasswordConfirmation)) {
+                return false;
+            }
+
+            // Update the password
+            jdbcTemplate.update("UPDATE user SET u_password = '" + newPassword + "' WHERE u_id = '" + userId + "'");
+
+            return true;
+        } catch (JWTVerificationException exception) {
+            //Invalid signature/claims
+            return false;
+        }
+    }
+
     public int getUserCoins(String token) {
         try {
             // Get User Id
@@ -108,7 +150,9 @@ public record UserService(JdbcTemplate jdbcTemplate) {
         List<String> packs = new ArrayList<>();
 
         try {
-            String sql = "SELECT p_id FROM pack WHERE u_id = '" + userTools.checkToken(token, jdbcTemplate) + "'";
+            System.out.println("Get User Packs");
+            int userId = userTools.checkToken(token, jdbcTemplate);
+            String sql = "SELECT * FROM pack WHERE p_fk_user_id = '" + userId + "'";
 
             // Fetch element and console log the password
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
@@ -128,7 +172,7 @@ public record UserService(JdbcTemplate jdbcTemplate) {
         List<String> cards = new ArrayList<>();
 
         try {
-            String sql = "SELECT c_id FROM card WHERE u_id = '" + userTools.checkToken(token, jdbcTemplate) + "'";
+            String sql = "SELECT c_id FROM card WHERE c_fk_user_id = '" + userTools.checkToken(token, jdbcTemplate) + "'";
 
             // Fetch element and console log the password
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
@@ -143,31 +187,6 @@ public record UserService(JdbcTemplate jdbcTemplate) {
             //Invalid token
             return cards;
         }
-    }
-
-    // Manage economy
-
-    // TODO: If the user buys a pack, remove the coins from the user
-    // TODO: If the user sells a card, add the coins from the user
-
-    public void manageEconomy(String token, int price) {
-        // If the user buys a pack, remove the coins from the user
-        // If the user sells a card, add the coins from the user
-
-        // Get the actual coins of the user from sql request
-        int coins = getUserCoins(token);
-
-        // If the user buys a pack, remove the coins from the user
-        if (price < 0) {
-            coins -= price;
-        } else {
-            coins += price;
-        }
-
-        String sql = "UPDATE user SET u_coin = ? WHERE u_id = ?";
-        jdbcTemplate.update(sql, coins, token);
-
-
     }
 
 }

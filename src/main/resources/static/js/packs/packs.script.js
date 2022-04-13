@@ -40,43 +40,57 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 $(document).ready(function () {
     // drawRandomPokemons();
     //generatePacksFromAPI();
-    generatePacksArtificially();
+    // @ts-ignore
+    generatePacksFromAPI(checkCookie());
 });
 var div = document.querySelector('.allPacks');
 function generatePacksFromAPI(token) {
     // Create Fetch API request
     // @ts-ignore
-    var url = 'http://localhost:8080/api/getPacks';
+    var url = '/api/getPacks/';
     // Create XMLHttpRequest request GET
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            // Clear div
-            var div_1 = document.querySelector(".allPacks")[0];
-            div_1.innerHTML = '';
-            for (var i = 0; i < JSON.parse(xhr.responseText).length; i++) {
-                var pack = JSON.parse(xhr.responseText)[i];
-                div_1.innerHTML += "\n                    <div class = \"pack\" data-attr=\"".concat(pack.p_type, "\">\n                        <div class = \"packFace\">\n                        <img  class=\"openPack\" src=\"").concat(packVisual(pack.p_type), "\">\n                    </div> \n                    </tr>\n                ");
+    var data = {
+        // @ts-ignore
+        token: token
+    };
+    $.post(url, data, function (response) {
+        if (response !== false) {
+            for (var i = 0; i < response.length; i++) {
+                var pack = response[i];
+                $('.allPacks').append("\n                    <div class = \"pack\" data-attr=\"".concat(pack, "\">\n                        <div class = \"packFace\">\n                        <img  class=\"openPack\" src=\"").concat(packVisual(pack), "\">\n                    </div> \n                    </tr>\n                "));
             }
         }
-    };
-    xhr.open('GET', url, true);
-    xhr.send();
+        else {
+            alert('Vous n\'avez pas de pack, veuillez en acheter');
+            window.location.href = '/shop';
+        }
+    });
 }
+/*
 function generatePacksArtificially() {
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
+
         generatePacks('colorless');
         generatePacks('fire');
         generatePacks('grass');
         generatePacks('random');
+
     }
+
+
+
+
+
     //
-}
+}*/
 $(document).click(function (e) {
     // @ts-ignore
     if (e.target.classList.contains('openPack')) {
         console.log("azertyuiop");
+        // @ts-ignore
+        deletePackFromDB(e.target.parentNode.parentNode.getAttribute('data-attr'));
         clearPacks();
+        // @ts-ignore
         animationBoosters(e.target.parentNode.parentNode.getAttribute('data-attr'));
         // @ts-ignore
         drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'));
@@ -103,7 +117,6 @@ function animationBoosters(packType) {
     console.log("animationBoosters");
     div.style.height = "100vh";
     $('.allPacks').append("\n                    <div id=\"pack-opened\" class=\"col-xs-12 open\">\n                        <div class=\"pack-content\" style=\"display: block !important; visibility: visible !important;\" >\n                            <div class=\"pack-flash\">\n                                <div class=\"pack-flash-pack\" >\n                                    <img class=\"front\" src=\"" + packVisual(packType) + " \" > \n                                    <div class=\"top\">\n                                        <img src=\"https://i.imgur.com/b1qmOW6.png\">\n                                        <div class=\"cut\"> \n                                            <img src=\"https://i.imgur.com/k55nnYY.png\">\n                                        </div>\n                                        <span> \n                                            <img src=\"https://i.imgur.com/JqedAsJ.png\">\n                                               <span>\n                                                <img src=\"https://i.imgur.com/WWRXjri.png\">\n                                                    <span>\n                                                        <img src=\"https://i.imgur.com/DzEYvSP.png\" style=\"width: 81px\"> \n                                                    </span>\n                                                </span>\n                                            </span>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>");
-    // setTimeout(() => {div.style.height = null;}, 2700);
     setTimeout(clearPacks, 2700);
 }
 function generatePacks(packType) {
@@ -118,7 +131,30 @@ function generateCards(pokemonsDrawed) {
     for (var i = 0; i < pokemonsDrawed.length; i++) {
         var pokemonImage = pokemonsDrawed[i]['images']['large'];
         var pokemonName = pokemonsDrawed[i]['name'];
+        console.log(pokemonsDrawed[i]);
+        // Add card to database
+        // @ts-ignore
+        var token = checkCookie();
+        // For each card in the array
+        // @ts-ignore
+        var url = 'api/saveCards';
+        console.log(pokemonsDrawed[i].id);
+        var data = {
+            cardId: pokemonsDrawed[i].id,
+            token: token
+        };
+        $.post(url, data, function (response) {
+            if (response !== false) {
+                console.log('card saved' + pokemonsDrawed[i].id);
+            }
+            else {
+                alert('Problem while saving cards');
+            }
+        });
         $('.allCards').append("\n            <div class = \"carte\" data-attr=\"".concat(pokemonName, "\">\n                <div class = \"double-face\">\n                <div class = \"face\">\n                <img class=\"imgPokemon\" src=\"").concat(pokemonImage, "\"></div> \n                <div class = \"arriere toFlip\">\n            </div>"));
+    };
+    for (var i = 0; i < pokemonsDrawed.length; i++) {
+        _loop_1(i);
     }
 }
 //  Vider la div allPacks
@@ -129,6 +165,7 @@ function clearCards() {
     $('.allCards').empty();
 }
 function drawPokemons(type) {
+    var saved = false;
     type = type.toLowerCase();
     var pokemonsDrawed = [];
     if (pokemonsDrawed.length !== 5 && $('.carte').length === 0) {
@@ -162,12 +199,11 @@ function drawPokemons(type) {
             .then(function (data) {
             // Sort through per card per pokemon name
             // @ts-ignore
-            for (x = 0; x < data.data.length; x++) {
-                // @ts-ignore
-                // @ts-ignore
+            for (var x = 0; x < data.data.length; x++) {
                 pokemons.push(data.data[x]);
             }
         });
+        console.log(pokemons);
         var interval = setInterval(function () {
             if ($('.carte').length != 5 && $('.pack').length === 0) {
                 //console.log(randomPage);
@@ -177,6 +213,8 @@ function drawPokemons(type) {
                     //console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
                     if (pokemons[random] != undefined) {
                         pokemonsDrawed.push(pokemons[random]);
+                        setTimeout(function () {
+                        }, 3000);
                     }
                     // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
                     //console.log($('.toFlip').length);
@@ -187,16 +225,16 @@ function drawPokemons(type) {
                 div.style.height = null;
                 clearPacks();
                 generateCards(pokemonsDrawed);
-                // Get out of the interval
             }
-            if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0) {
+            console.log(pokemonsDrawed.length + " " + pokemonsDrawed);
+            if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0 || !saved) {
                 clearInterval(interval);
-                // saveCards(pokemonsDrawed);
+                saved = true;
             }
         }, 1000);
     };
     for (var i = 0; i < 5; i++) {
-        _loop_1(i);
+        _loop_2(i);
     }
 }
 $(document).click(function (e) {
@@ -219,7 +257,8 @@ $(document).click(function (e) {
 $('.returnToPacks').click(function () {
     clearCards();
     // Go to the top of the page
-    generatePacksArtificially();
+    // @ts-ignore
+    generatePacksFromAPI(checkCookie());
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     $('.returnToPacks').css('display', 'none');
@@ -302,32 +341,24 @@ function packVisual(packType) {
     }
     return "./img/packart/".concat(packType, "/").concat(randomImage, ".jpg");
 }
-function saveCards(cards) {
-    // Get the token of the user
-    var token = localStorage.getItem('token');
-    // For each card in the array
+function deletePackFromDB(packType) {
+    console.log('delete this pack');
     // @ts-ignore
-    var data = new FormData();
-    for (var card = 0; card < cards.length; card++) {
-        data.append("card", cards[card]);
-        data.append("token", token);
-    }
-    var xhr = new XMLHttpRequest();
-    var url = 'http://localhost:8080/api/saveCards';
-    xhr.open('POST', url, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+    var token = checkCookie();
+    var url = 'http://localhost:8080/api/deletePack';
+    var data = {
+        token: token,
+        packType: packType
+    };
+    $.post(url, data, function (response) {
+        if (response == 4 && response == 200) {
             // If response is true, redirect to login page
-            if (xhr.responseText !== 'false') {
-                // Create cookie and stock result in him
-                document.cookie = 'token=' + xhr.responseText;
-                window.location.href = './login';
+            if (response !== 'false') {
             }
             else {
                 // If response is false, show error message
-                alert('Username already exists');
+                alert("This pack doesn't exist in this databse");
             }
         }
-    };
-    xhr.send(data);
+    });
 }
