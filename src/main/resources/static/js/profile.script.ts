@@ -42,6 +42,7 @@ function sellCard(cardType: string, cardId: string) {
     $.post(url, data, function (response) {
         if (response === true) {
             $(`#${cardId}`).remove();
+            $(`#actualCoins`).text("Updating...");
 
             // @ts-ignore
             Swal.fire(
@@ -108,8 +109,6 @@ function generateCardsFromAPI(token) {
 
                 $.get(urlAPI, (response) => {
                     let card: any = JSON.parse(response);
-
-                    console.log(card);
 
                     // Check if the card (with id) is in the card Object
                     for (let i = 0; i < card.length; i++) {

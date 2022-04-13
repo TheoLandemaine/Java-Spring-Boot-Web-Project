@@ -163,14 +163,12 @@ function drawPokemons(type) {
                 generateCards(pokemonsDrawed);
             }
             else {
-                console.log('Get ' + i + ' pokemon');
                 var randomPokemon = Math.floor(Math.random() * pokemons.length);
                 // @ts-ignore
                 if (pokemonsDrawed.includes(pokemons[randomPokemon])) {
                     i--;
                 }
                 else if (pokemons[randomPokemon] != undefined) {
-                    console.log('Add ' + pokemons[randomPokemon].name + ' to the array');
                     pokemonsDrawed.push(pokemons[randomPokemon]);
                 }
             }

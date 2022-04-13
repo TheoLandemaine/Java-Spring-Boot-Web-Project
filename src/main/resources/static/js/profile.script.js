@@ -35,6 +35,7 @@ function sellCard(cardType, cardId) {
     $.post(url, data, function (response) {
         if (response === true) {
             $("#".concat(cardId)).remove();
+            $("#actualCoins").text("Updating...");
             // @ts-ignore
             Swal.fire('Sold!', 'Your card has been sold.', 'success');
         }
@@ -84,7 +85,6 @@ function generateCardsFromAPI(token) {
                 var urlAPI = "https://raw.githubusercontent.com/PokemonTCG/pokemon-tcg-data/master/cards/en/".concat(cardId.split('-')[0], ".json");
                 $.get(urlAPI, function (response) {
                     var card = JSON.parse(response);
-                    console.log(card);
                     // Check if the card (with id) is in the card Object
                     for (var i_1 = 0; i_1 < card.length; i_1++) {
                         if (card[i_1].id === cardId) {

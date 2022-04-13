@@ -18,7 +18,7 @@ $(document).click((e) => {
     // @ts-ignore
     if (target.classList.contains('buyPack')) {
         // @ts-ignore
-        buyPack(e.target.parentNode.getAttribute('data-attr'), parseInt(e.target.parentNode.getAttribute('data-price')));
+        buyPack(e.target.parentNode.getAttribute('data-attr'));
     }
 })
 
@@ -95,45 +95,87 @@ function generateBigPreview(packType) {
 }
 
 function buyPack(packType) {
-    const url: string = '/api/buyPack';
-    let url2 = '/api/getPackPrice';
-    let data2 = {
-        packType: packType
-    }
-    $.post(url2, data2, (response2) => {
+    // @ts-ignore
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, buy!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url: string = '/api/buyPack';
+            let url2 = '/api/getPackPrice';
+            let data2 = {
+                packType: packType
+            }
+            $.post(url2, data2, (response2) => {
 
-        let urlCoins = '/api/getUserCoins';
-        let dataCoins = {
-            // @ts-ignore
-            token: checkCookie()
-        }
-        $.post(urlCoins, dataCoins, (responseCoins) => {
-
-            if (responseCoins >= response2) {
-                const data: Object = {
-                    packType: packType,
-                    packPrice: response2,
+                let urlCoins = '/api/getUserCoins';
+                let dataCoins = {
                     // @ts-ignore
-                    token: checkCookie()
+                    "token": checkCookie()
                 }
+                $.post(urlCoins, dataCoins, (responseCoins) => {
+
+                    if (responseCoins >= response2) {
+                        const data: Object = {
+                            packType: packType,
+                            packPrice: response2,
+                            // @ts-ignore
+                            token: checkCookie()
+                        }
 
 
-                $.post(url, data, (response) => {
-                    // If response is true, redirect to login page
-                    if (response !== false) {
-                        window.location.href = '/shop';
+                        $.post(url, data, (response) => {
+                            // If response is true, redirect to login page
+                            if (response !== false) {
+                                // @ts-ignore
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Your pack as been successfully bought!',
+                                    buttons: ['Buy another pack', 'Go to my packs']
+
+                                }).then(function (result) {
+                                    if (result.value === 'Buy another pack') {
+                                        window.location.href = '/shop';
+                                    }
+                                    else {
+                                        window.location.href = '/myPacks';
+                                    }
+                                });
+                            } else {
+                                // @ts-ignore
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'An error has occured, please try again',
+                                    confirmButtonText: 'Reload',
+                                }).then((result) => {
+                                    /* Read more about isConfirmed, isDenied below */
+                                    if (result.isConfirmed) {
+                                        window.location.reload();
+                                    }
+                                })
+                            }
+                        });
                     } else {
-                        // If response is false, show error message
-                        alert('An error has occured, please try again');
+                        // @ts-ignore
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'You do not have enough coins',
+                            confirmButtonText: 'Back to shop',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/shop';
+                            }
+                        })
                     }
                 });
-            } else {
-                alert('You do not have enough coins');
-                // Redirect to shop
-                window.location.href = '/profile';
-            }
-    });
-    });
+            });
+        }
+    })
 }
 
 function packVisual(packType: string) {

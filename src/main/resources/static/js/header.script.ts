@@ -13,10 +13,6 @@ document.addEventListener('mouseover', (e) => {
 });
 // @ts-ignore
 $.post('api/getGiftAccess', {'token': checkCookie()}, (data) => {
-    console.log(data)
-
-
-
     if (data) {
 // @ts-ignore
         $.post('/api/randomGift', {'token': checkCookie()}, (data) => {
@@ -64,11 +60,10 @@ $.post('/api/getPacks', {'token': checkCookie()}, (data) => {
 });
 
 $(document).click((e)=> {
-    const target: any = e.target as HTMLElement;
+    const target: any = e.target as unknown as HTMLElement;
     if (target.classList.contains('applyGift') || target.parentNode.classList.contains('applyGift')) {
         // Get the value of .giftValue
         const giftValue = $('.giftValue').text();
-        console.log(giftValue)
     $('.navColumn').empty();
         // @ts-ignore
         $.post('api/giveGift', {'token': checkCookie(), 'gift': parseInt(giftValue)}, (response) => {
@@ -82,7 +77,7 @@ $(document).click((e)=> {
             // @ts-ignore
 
                 $.post('/api/getUserCoins', {'token': checkCookie()}, (data) => {
-                    $('.navColumn').append(`<li><a class="nav" href="./shop">${data} <i class="fas fa-coins"></i></a></li>`);
+                    $('.navColumn').append(`<li><a class="nav" href="./shop"><span id="actualCoins">${data}</span> <i class="fas fa-coins"></i></a></li>`);
                 });
 
         });
@@ -91,7 +86,7 @@ $(document).click((e)=> {
 
 
 $(document).mouseover((e) => {
-    const target: any = e.target as HTMLElement;
+    const target: any = e.target as unknown as HTMLElement;
     if (target.classList.contains('applyGift')) {
         target.style.cursor = 'pointer';
     }
