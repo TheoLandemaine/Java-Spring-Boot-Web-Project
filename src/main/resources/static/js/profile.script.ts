@@ -29,6 +29,37 @@ $(document).ready(() => {
     generateCardsFromAPI(checkCookie());
 });
 
+function sellCard(cardType: string, cardId: string) {
+    //@ts-ignore
+    let token = checkCookie();
+    let url: string = 'api/deleteCard';
+    let data = {
+        token: token,
+        cardId: cardId,
+        cardType: cardType
+    };
+
+    $.post(url, data, function (response) {
+        if (response === true) {
+            $(`#${cardId}`).remove();
+
+            // @ts-ignore
+            Swal.fire(
+                'Sold!',
+                'Your card has been sold.',
+                'success'
+            )
+        } else {
+            // @ts-ignore
+            Swal.fire(
+                'Error!',
+                'Something went wrong.',
+                'error'
+            )
+        }
+    });
+}
+
 //When we click on the page
 $(document).on('click', (e) => {
 
@@ -43,46 +74,22 @@ $(document).on('click', (e) => {
         // console.log(cardType);
         // console.log(cardId);
 
-        $('#popupConfirmSell').addClass('confirmSellContainer');
-        $('#popupConfirmSell').append(`
-            <div class="confirmSell">
-                <h2>Are you sure you want to sell this card?</h2>
-                <button type="button" class="yes">Yes</button>
-                <button type="button" class="no">No</button>
-            </div>
-        `);
-        $('.yes').on('click', function () {
-            sellCards(cardId, cardType);
-        });
-        $('.no').on('click', function () {
-            $('#popupConfirmSell').removeClass('confirmSellContainer');
-            $('#popupConfirmSell').empty();
-        });
+        // @ts-ignore
+        Swal.fire({
+            title: 'Are you sure to sell this card?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, sell it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sellCard(cardType, cardId);
+            }
+        })
     }
 })
-
-
-function sellCards(cardId, cardType) {
-    //@ts-ignore
-    let token = checkCookie();
-    let url:string = 'api/deleteCard';
-    let data = {
-        token: token,
-        cardId: cardId,
-        cardType: cardType
-   };
-
-    $.post(url, data, function(response) {
-        console.log(response);
-        if (response !== false) {
-            //@ts-ignore
-            // Refresh the page
-            window.location.href = '/profile';
-        } else {
-            alert('Error while deleting the card');
-        }
-    });
-}
 
 function generateCardsFromAPI(token) {
     // Create Fetch API request
@@ -111,7 +118,7 @@ function generateCardsFromAPI(token) {
                             const image = card[i].images['small'];
 
                             $('.allCards').append(`
-                                <div class = "card" data-type="${rarity.toLowerCase()}" data-id="${cardId}">
+                                <div class="card" id="${cardId}" data-type="${rarity.toLowerCase()}" data-id="${cardId}">
                                     <div class="cardsBtn">
                                         <img src="${image}" alt="${cardId}">
                                         <button class="btn_sell">Sell card</button>
