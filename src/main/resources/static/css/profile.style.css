@@ -58,5 +58,9 @@
   padding: 20px;
   font-size: 30px;
 }
+.div2 .card {
+  display: inline-block;
+  margin: 10px;
+}
 
 /*# sourceMappingURL=profile.style.css.map */
