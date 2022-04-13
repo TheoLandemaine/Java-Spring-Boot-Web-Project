@@ -57,7 +57,7 @@ function generatePacksFromAPI(token) {
         if (response !== false) {
             for (var i = 0; i < response.length; i++) {
                 var pack = response[i];
-                $('.allPacks').append("\n                    <div class = \"pack\" data-attr=\"".concat(pack, "\">\n                        <div class = \"packFace\">\n                        <img  class=\"openPack\" src=\"").concat(packVisual(pack), "\">\n                    </div> \n                    </tr>\n                "));
+                $('.allPacks').append("\n                    <div class = \"pack\" data-attr=\"".concat(pack, "\">\n                        <div class = \"packFace\">\n                        <img class=\"openPack\" src=\"").concat(packVisual(pack), "\">\n                    </div> \n                    </tr>\n                "));
             }
         }
         else {
@@ -76,10 +76,6 @@ function generatePacksArtificially() {
         generatePacks('random');
 
     }
-
-
-
-
 
     //
 }*/
@@ -127,8 +123,7 @@ function generateCards(pokemonsDrawed) {
     console.log("test");
     console.log(pokemonsDrawed);
     $('.allCards').empty();
-    // @ts-ignore
-    for (var i = 0; i < pokemonsDrawed.length; i++) {
+    var _loop_1 = function (i) {
         var pokemonImage = pokemonsDrawed[i]['images']['large'];
         var pokemonName = pokemonsDrawed[i]['name'];
         console.log(pokemonsDrawed[i]);
@@ -172,7 +167,7 @@ function drawPokemons(type) {
         setTimeout(function () { $('.allPacks').append("<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>"); }, 2700);
         // Get out of the interval
     }
-    var _loop_1 = function (i) {
+    var _loop_2 = function (i) {
         // If type = Colorless, randomPage could go only to page 7
         var pokemons = [];
         var pokeCardURL = '';
@@ -225,6 +220,7 @@ function drawPokemons(type) {
                 div.style.height = null;
                 clearPacks();
                 generateCards(pokemonsDrawed);
+                // Get out of the interval
             }
             console.log(pokemonsDrawed.length + " " + pokemonsDrawed);
             if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0 || !saved) {

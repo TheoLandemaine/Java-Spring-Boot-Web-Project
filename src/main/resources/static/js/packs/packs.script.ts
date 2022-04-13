@@ -11,7 +11,7 @@ $(document).ready(() => {
     generatePacksFromAPI(checkCookie());
 });
 
-let div = document.querySelector('.allPacks');
+let div: HTMLElement = document.querySelector('.allPacks');
 
 
 function generatePacksFromAPI(token) {
@@ -35,7 +35,7 @@ function generatePacksFromAPI(token) {
                    $('.allPacks').append(`
                     <div class = "pack" data-attr="${pack}">
                         <div class = "packFace">
-                        <img  class="openPack" src="${packVisual(pack)}">
+                        <img class="openPack" src="${packVisual(pack)}">
                     </div> 
                     </tr>
                 `);
@@ -268,22 +268,19 @@ function drawPokemons(type) {
                 }
 
                 if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
-                    console.log("test dans div generate")
-                    generateCards(pokemonsDrawed);
-                }
-                console.log(pokemonsDrawed.length + " " + pokemonsDrawed);
-                if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0 || !saved) {
-                    clearInterval(interval);
-                    saved = true;
-                }
-            }, 1000);
-            if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
                 console.log("test dans div generate")
                 div.style.height = null;
                 clearPacks();
                 generateCards(pokemonsDrawed);
                 // Get out of the interval
             }
+                console.log(pokemonsDrawed.length + " " + pokemonsDrawed);
+                if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0 || !saved) {
+                    clearInterval(interval);
+                    saved = true;
+                }
+            }, 1000);
+
 
         }
     }
