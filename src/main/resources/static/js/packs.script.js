@@ -136,13 +136,13 @@ function generateCards(pokemonsDrawed) {
         var token = checkCookie();
         // For each card in the array
         // @ts-ignore
-        var url = 'api/saveCards';
+        var url_1 = 'api/saveCards';
         console.log(pokemonsDrawed[i].id);
-        var data = {
+        var data_1 = {
             cardId: pokemonsDrawed[i].id,
             token: token
         };
-        $.post(url, data, function (response) {
+        $.post(url_1, data_1, function (response) {
             if (response !== false) {
                 console.log('card saved' + pokemonsDrawed[i].id);
             }
