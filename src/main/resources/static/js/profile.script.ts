@@ -29,6 +29,22 @@ $(document).ready(() => {
     generateCardsFromAPI(checkCookie());
 });
 
+//When we click on the page
+$(document).click((e) => {
+
+    //If contains the class "btn_sell"
+    if (e.target.classList.contains('btn_sell')) {
+        //Start the function
+        sellCards();
+    }
+
+})
+
+
+function sellCards() {
+
+}
+
 function generateCardsFromAPI(token) {
     // Create Fetch API request
 // @ts-ignore
@@ -53,7 +69,10 @@ function generateCardsFromAPI(token) {
 
                     $('.allCards').append(`
                     <div class = "card" data-attr="${card}">
-                    <img src="${response2.data[0].images['small']}" alt="${card.name}">
+                        <div class="cardsBtn">
+                            <img src="${response2.data[0].images['small']}" alt="${card.name}">
+                            <button class="btn_sell">Sell card</button>
+                        </div>
                     </div>
                     `);
                 });

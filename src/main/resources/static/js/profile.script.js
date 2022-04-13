@@ -22,6 +22,16 @@ $(document).ready(function () {
     //@ts-ignore
     generateCardsFromAPI(checkCookie());
 });
+//When we click on the page
+$(document).click(function (e) {
+    //If contains the class "btn_sell"
+    if (e.target.classList.contains('btn_sell')) {
+        //Start the function
+        sellCards();
+    }
+});
+function sellCards() {
+}
 function generateCardsFromAPI(token) {
     // Create Fetch API request
     // @ts-ignore
@@ -38,7 +48,7 @@ function generateCardsFromAPI(token) {
                 var urlAPI = 'https://api.pokemontcg.io/v2/cards/?q=id:' + cardId;
                 $.get(urlAPI, function (response2) {
                     var card = response2;
-                    $('.allCards').append("\n                    <div class = \"card\" data-attr=\"".concat(card, "\">\n                    <img src=\"").concat(response2.data[0].images['small'], "\" alt=\"").concat(card.name, "\">\n                    </div>\n                    "));
+                    $('.allCards').append("\n                    <div class = \"card\" data-attr=\"".concat(card, "\">\n                        <div class=\"cardsBtn\">\n                            <img src=\"").concat(response2.data[0].images['small'], "\" alt=\"").concat(card.name, "\">\n                            <button class=\"btn_sell\">Sell card</button>\n                        </div>\n                    </div>\n                    "));
                 });
             }
         }

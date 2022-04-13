@@ -22,10 +22,9 @@ $(document).click(function (e) {
 });
 // When we mouseover on a pack
 $(document).mouseover(function (e) {
-    // @ts-ignore
-    if (e.target.classList.contains('openPack')) {
-        // @ts-ignore
-        e.target.style.cursor = 'pointer';
+    var target = e.target;
+    if (target.classList.contains('openPack')) {
+        target.style.cursor = 'pointer';
     }
 });
 function generateAllPacks() {
