@@ -13,10 +13,9 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    .firstNav{
+    .firstNav {
         display: flex;
         justify-content: space-between;
-
     }
     #logo {
         img {
@@ -37,8 +36,7 @@ header {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-
-        .navColumn{
+        .navColumn {
             display: flex;
             //flex-direction: column;
             justify-content: space-between;
@@ -48,7 +46,6 @@ header {
             button {
                 margin-left: 5px;
                 margin-right: 5px;
-
                 padding: 8px;
                 color: #000;
                 font-size: 1.2em;
@@ -58,19 +55,18 @@ header {
                     cursor: pointer;
                 }
             }
-            #login{
+            #login {
                 background-color: dodgerblue;
                 border-radius: 5px;
                 border: none;
                 color: #fff;
             }
-            #register{
+            #register {
                 background-color: white;
                 border-radius: 5px;
                 border: none;
             }
         }
-
         li {
             list-style: none;
             margin: 0;
@@ -95,21 +91,19 @@ header {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background:linear-gradient(#141414 10% , dodgerblue);
+    background: linear-gradient(#141414 10%, dodgerblue);
     height: 100%;
     .infoContent {
         h1 {
             font-size: 2.5em;
             color: #fff;
         }
-
         h3 {
             margin-top: 1em;
             font-size: 1.2em;
             color: #ffffff;
         }
     }
-
     .container {
         width: 100%;
         display: flex;
@@ -117,7 +111,6 @@ header {
         align-items: center;
         margin: 7vh 0 3vh;
         //overflow:hidden;
-
         .carousel {
             display: block;
             width: 100%;
@@ -127,14 +120,16 @@ header {
             margin: 0;
             white-space: nowrap;
             //hide scrollbar
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE 10+ */
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE 10+ */
             &::-webkit-scrollbar {
                 width: 0;
-                background: transparent; /* Chrome/Safari/Webkit */
+                background: transparent;
+                /* Chrome/Safari/Webkit */
             }
         }
-
         .item {
             display: inline-block;
             width: 180px;
@@ -144,17 +139,15 @@ header {
             background-size: cover;
             position: relative;
             box-shadow: 0 0 10px #dfdfdf;
-
-            div{
+            div {
                 width: 100%;
-                top:10%;
-                position:absolute;
-                text-align:center;
+                top: 10%;
+                position: absolute;
+                text-align: center;
                 font-size: 1em;
                 color: white;
             }
-
-            h1{
+            h1 {
                 top: 50%;
                 position: absolute;
                 color: white;
@@ -163,40 +156,40 @@ header {
                 font-size: 1em;
             }
         }
-        #img1{
-            background-image:url("../img/packart/colorless/1.jpg");
+        #img1 {
+            background-image: url("../img/packart/colorless/1.jpg");
         }
-        #img2{
-            background-image:url("../img/packart/colorless/2.jpg");
+        #img2 {
+            background-image: url("../img/packart/colorless/2.jpg");
         }
-        #img3{
-            background-image:url("../img/packart/colorless/3.jpg");
+        #img3 {
+            background-image: url("../img/packart/colorless/3.jpg");
         }
-        #img4{
-            background-image:url("../img/packart/colorless/4.jpg");
+        #img4 {
+            background-image: url("../img/packart/colorless/4.jpg");
         }
-        #img5{
-            background-image:url("../img/packart/darkness/1.jpg");
+        #img5 {
+            background-image: url("../img/packart/darkness/1.jpg");
         }
-        #img6{
-            background-image:url("../img/packart/darkness/2.jpg");
+        #img6 {
+            background-image: url("../img/packart/darkness/2.jpg");
         }
-        #img7{
-            background-image:url("../img/packart/dragon/1.jpg");
+        #img7 {
+            background-image: url("../img/packart/dragon/1.jpg");
         }
-        #img8{
-            background-image:url("../img/packart/dragon/2.jpg");
+        #img8 {
+            background-image: url("../img/packart/dragon/2.jpg");
         }
-        #img9{
-            background-image:url("../img/packart/dragon/3.jpg");
+        #img9 {
+            background-image: url("../img/packart/dragon/3.jpg");
         }
-        #img10{
-            background-image:url("../img/packart/dragon/4.jpg");
+        #img10 {
+            background-image: url("../img/packart/dragon/4.jpg");
         }
     }
 }
 
-.collectContainer{
+.collectContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -204,24 +197,21 @@ header {
     background: linear-gradient(#cee2ff 10%, #ffffff);
     padding: 7vh 0 3vh;
     height: 100%;
-
-    .collect{
+    .collect {
         width: 100%;
         h1 {
             margin: 0 0 1em 1em;
             font-size: 2.5em;
             color: #141414;
         }
-
         p {
             font-size: 1.2em;
             color: #141414;
         }
-        .imageContainer{
+        .imageContainer {
             display: flex;
             align-items: center;
             justify-content: center;
-
             .item {
                 display: inline-block;
                 width: 250px;
@@ -233,19 +223,15 @@ header {
                 box-shadow: 0 0 10px #141414;
                 border-radius: 10px;
             }
-            #img11{
-                background-image:url(https://images.pokemontcg.io/sma/SV59.png);
+            #img11 {
+                background-image: url(https://images.pokemontcg.io/sma/SV59.png);
             }
-            #img12{
-                background-image:url(https://images.pokemontcg.io/swsh45sv/SV107.png);
+            #img12 {
+                background-image: url(https://images.pokemontcg.io/swsh45sv/SV107.png);
             }
         }
     }
-
-
 }
-
-
 
 footer {
     background-color: #141414;

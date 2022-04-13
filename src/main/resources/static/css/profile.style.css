@@ -15,7 +15,7 @@
   background: rgb(255, 255, 255);
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
 }
-.cadre #edit, .cadre #modifyPassword, .cadre #delete, .cadre #logout, .cadre #myPacks {
+.cadre button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,7 +33,7 @@
   background: none;
   transition: all 0.5s;
 }
-.cadre #edit:hover, .cadre #modifyPassword:hover, .cadre #delete:hover, .cadre #logout:hover, .cadre #myPacks:hover {
+.cadre button:hover {
   background: linear-gradient(to bottom right, dodgerblue, #4eadff);
   color: #fff;
 }
