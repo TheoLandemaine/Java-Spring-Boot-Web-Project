@@ -46,5 +46,13 @@ public record CardService(JdbcTemplate jdbcTemplate) {
         }
     }
 
+    public int getCardPrice(String cardType) {
+        try {
+            return jdbcTemplate.queryForObject("SELECT r_price FROM rarity WHERE r_rarity = ?", Integer.class, cardType);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
 
 }

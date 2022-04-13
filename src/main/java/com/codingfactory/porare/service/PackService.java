@@ -40,4 +40,14 @@ public record PackService(JdbcTemplate jdbcTemplate) {
         }
     }
 
+    public int getPackPrice(String p_type) {
+        try {
+            String sql = "SELECT pp_price FROM pack_price WHERE pp_type = ?";
+            int price = jdbcTemplate.queryForObject(sql, Integer.class, p_type);
+            return price;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
 }
