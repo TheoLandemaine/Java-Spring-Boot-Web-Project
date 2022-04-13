@@ -40,9 +40,24 @@ $(document).on('click', (e) => {
 
         let cardType = target.parentNode.parentNode.getAttribute('data-type');
         let cardId = target.parentNode.parentNode.getAttribute('data-id');
-/*        console.log(cardType);
-        console.log(cardId);*/
-        sellCards(cardId, cardType);
+        // console.log(cardType);
+        // console.log(cardId);
+
+        $('#popupConfirmSell').addClass('confirmSellContainer');
+        $('#popupConfirmSell').append(`
+            <div class="confirmSell">
+                <h2>Are you sure you want to sell this card?</h2>
+                <button type="button" class="yes">Yes</button>
+                <button type="button" class="no">No</button>
+            </div>
+        `);
+        $('.yes').on('click', function () {
+            sellCards(cardId, cardType);
+        });
+        $('.no').on('click', function () {
+            $('#popupConfirmSell').removeClass('confirmSellContainer');
+            $('#popupConfirmSell').empty();
+        });
     }
 })
 
