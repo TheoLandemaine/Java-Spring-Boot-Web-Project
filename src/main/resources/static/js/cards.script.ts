@@ -27,7 +27,7 @@ function generateCardsFromAPI(token) {
 
                     $('.allCards').append(`
                     <div class = "card" data-attr="${card}">
-                    <img src="${response2.data[0].images['large']}" alt="${card.name}">
+                    <img src="${response2.data[0].images['small']}" alt="${card.name}">
                     </div>
                     `);
                     });
