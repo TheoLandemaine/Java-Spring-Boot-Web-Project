@@ -1,3 +1,4 @@
+// @ts-ignore
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -37,48 +38,52 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 // Récupérer tous les pokemons à partir de l'api https://api.pokemontcg.io/v2/cards et les stocker dans un tableau
 // Au chargement du document en jquery
 $(document).ready(function () {
-    // @ts-ignore
-    generatePacksFromAPI(checkCookie());
+    // drawRandomPokemons();
+    //generatePacksFromAPI();
+    generatePacksArtificially();
 });
-var div = document.querySelector('.allPacks');
 function generatePacksFromAPI(token) {
     // Create Fetch API request
     // @ts-ignore
-    var url = '/api/getPacks/';
+    var url = 'http://localhost:8080/api/getPacks';
     // Create XMLHttpRequest request GET
-    var data = {
-        // @ts-ignore
-        token: token
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Clear div
+            var div = document.querySelector(".allPacks")[0];
+            div.innerHTML = '';
+            for (var i = 0; i < JSON.parse(xhr.responseText).length; i++) {
+                var pack = JSON.parse(xhr.responseText)[i];
+                div.innerHTML += "\n                    <div class = \"pack\" data-attr=\"".concat(pack.p_type, "\">\n                        <div class = \"packFace\">\n                        <img  class=\"openPack\" src=\"").concat(packVisual(pack.p_type), "\">\n                    </div> \n                    </tr>\n                ");
+            }
+        }
     };
-    $.post(url, data, function (response) {
-        if (response !== false) {
-            for (var i = 0; i < response.length; i++) {
-                var pack = response[i];
-                $('.allPacks').append("\n                    <div class = \"pack\" data-attr=\"".concat(pack, "\">\n                        <div class = \"packFace\">\n                        <img class=\"openPack\" src=\"").concat(packVisual(pack), "\">\n                    </div> \n                    </tr>\n                "));
-            }
-            if (response.length === 0) {
-                window.location.href = '/shop';
-            }
-        }
-        else {
-            window.location.href = '/profile';
-        }
-    });
+    xhr.open('GET', url, true);
+    xhr.send();
+}
+function generatePacksArtificially() {
+    for (var i = 0; i < 3; i++) {
+        generatePacks('colorless');
+        generatePacks('fire');
+        generatePacks('grass');
+        generatePacks('random');
+    }
+    //
 }
 $(document).click(function (e) {
     // @ts-ignore
     if (e.target.classList.contains('openPack')) {
-        // @ts-ignore
-        deletePackFromDB(e.target.parentNode.parentNode.getAttribute('data-attr'));
         clearPacks();
-        // @ts-ignore
-        animationBoosters(e.target.parentNode.parentNode.getAttribute('data-attr'));
         // @ts-ignore
         drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'));
     }
     // When all cards are drawn, show the button to return the packs
     $('.toFlip').click(function () {
+        //console.log($('.toFlip').length - 1);
+        //console.log($('.carte').length);
         if (document.querySelectorAll('.toFlip').length - 1 === 0 && document.querySelectorAll('.carte').length === 5) {
+            // @ts-ignore
             // @ts-ignore
             $('.returnToPacks').css('display', 'block');
         }
@@ -91,35 +96,16 @@ $(document).mouseover(function (e) {
         e.target.style.cursor = "pointer";
     }
 });
-function animationBoosters(packType) {
-    div.style.height = "100vh";
-    $('.allPacks').append("\n                    <div id=\"pack-opened\" class=\"col-xs-12 open\">\n                        <div class=\"pack-content\" style=\"display: block !important; visibility: visible !important;\" >\n                            <div class=\"pack-flash\">\n                                <div class=\"pack-flash-pack\" >\n                                    <img class=\"front\" src=\"" + packVisual(packType) + " \" > \n                                    <div class=\"top\">\n                                        <img src=\"https://i.imgur.com/b1qmOW6.png\">\n                                        <div class=\"cut\"> \n                                            <img src=\"https://i.imgur.com/k55nnYY.png\">\n                                        </div>\n                                        <span> \n                                            <img src=\"https://i.imgur.com/JqedAsJ.png\">\n                                               <span>\n                                                <img src=\"https://i.imgur.com/WWRXjri.png\">\n                                                    <span>\n                                                        <img src=\"https://i.imgur.com/DzEYvSP.png\" style=\"width: 81px\"> \n                                                    </span>\n                                                </span>\n                                            </span>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>");
-    setTimeout(clearPacks, 2700);
-}
 function generatePacks(packType) {
     packType = packType.toLowerCase();
     $('.allPacks').append("\n            <div class = \"pack\" data-attr=\"".concat(packType, "\">\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n            </div>"));
 }
 function generateCards(pokemonsDrawed) {
-    $('.allCards').empty();
+    console.log(pokemonsDrawed);
+    // @ts-ignore
     for (var i = 0; i < pokemonsDrawed.length; i++) {
         var pokemonImage = pokemonsDrawed[i]['images']['large'];
         var pokemonName = pokemonsDrawed[i]['name'];
-        // Add card to database
-        // @ts-ignore
-        var token = checkCookie();
-        // For each card in the array
-        // @ts-ignore
-        var url_1 = 'api/saveCards';
-        var data_1 = {
-            cardId: pokemonsDrawed[i].id,
-            token: token
-        };
-        $.post(url_1, data_1, function (response) {
-            if (response === false) {
-                alert('Problem while saving cards');
-            }
-        });
         $('.allCards').append("\n            <div class = \"carte\" data-attr=\"".concat(pokemonName, "\">\n                <div class = \"double-face\">\n                <div class = \"face\">\n                <img class=\"imgPokemon\" src=\"").concat(pokemonImage, "\"></div> \n                <div class = \"arriere toFlip\">\n            </div>"));
     }
 }
@@ -131,62 +117,74 @@ function clearCards() {
     $('.allCards').empty();
 }
 function drawPokemons(type) {
-    var saved = false;
     type = type.toLowerCase();
     var pokemonsDrawed = [];
-    if (pokemonsDrawed.length !== 5 && $('.carte').length === 0) {
-        setTimeout(function () {
-            $('.allPacks').append("<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>");
-        }, 2700);
-        // Get out of the interval
-    }
     var _loop_1 = function (i) {
         // If type = Colorless, randomPage could go only to page 7
         var pokemons = [];
-        var pokeCardURL = void 0;
+        var pokeCardURL = '';
         var randomPage = numberPage(type);
         if (type !== 'random') {
-            pokeCardURL = "https://api.pokemontcg.io/v2/cards?q=types:".concat(type);
+            pokeCardURL = "https://api.pokemontcg.io/v2/cards?q=types:".concat(type, "&page=").concat(randomPage);
+            //console.log(" page : " + randomPage);
         }
         else {
             pokeCardURL = "https://api.pokemontcg.io/v2/cards?page=".concat(randomPage);
         }
-        $.get(pokeCardURL, function (data) {
+        fetch(pokeCardURL, {
+            method: "GET",
+            // @ts-ignore
+            withCredentials: true,
+            headers: {
+                "X-API-KEY": "f67d2ff5-723b-4794-bbfb-6b0a4e846179",
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (response) {
+            return response.json();
+        })
+            .then(function (data) {
             // Sort through per card per pokemon name
             // @ts-ignore
-            for (var x = 0; x < data.data.length; x++) {
+            for (x = 0; x < data.data.length; x++) {
+                // @ts-ignore
+                // @ts-ignore
                 pokemons.push(data.data[x]);
             }
-            if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
-                div.style.height = null;
-                clearPacks();
-                generateCards(pokemonsDrawed);
-            }
-            else {
-                console.log('Get ' + i + ' pokemon');
-                var randomPokemon = Math.floor(Math.random() * pokemons.length);
-                // @ts-ignore
-                if (pokemonsDrawed.includes(pokemons[randomPokemon])) {
-                    i--;
-                }
-                else if (pokemons[randomPokemon] != undefined) {
-                    console.log('Add ' + pokemons[randomPokemon].name + ' to the array');
-                    pokemonsDrawed.push(pokemons[randomPokemon]);
-                }
-            }
         });
-        out_i_1 = i;
+        var interval = setInterval(function () {
+            if ($('.carte').length != 5 && $('.pack').length === 0) {
+                //console.log(randomPage);
+                if (pokemonsDrawed.length < 5) {
+                    var random = Math.floor(Math.random() * pokemons.length);
+                    //console.log("COUCOU : " + i + " " + pokemons[random]['name']);
+                    //console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
+                    if (pokemons[random] != undefined) {
+                        pokemonsDrawed.push(pokemons[random]);
+                    }
+                    // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
+                    //console.log($('.toFlip').length);
+                }
+            }
+            if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
+                generateCards(pokemonsDrawed);
+                // Get out of the interval
+            }
+            if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0) {
+                clearInterval(interval);
+                // saveCards(pokemonsDrawed);
+            }
+        }, 1000);
     };
-    var out_i_1;
-    for (var i = -1; i < 5; i++) {
+    for (var i = 0; i < 5; i++) {
         _loop_1(i);
-        i = out_i_1;
     }
 }
 $(document).click(function (e) {
     // If the card is backward and that no card has been turned yet
     // @ts-ignore
     if (e.target.classList.contains('arriere')) {
+        console.log('coucou');
         // @ts-ignore
         e.target.classList.remove('toFlip');
         // @ts-ignore
@@ -195,13 +193,14 @@ $(document).click(function (e) {
         // Flip the card
         // @ts-ignore
         flip(e.target.parentNode);
+        // @ts-ignore
+        console.log(e.target.parentNode.classList);
     }
 });
 $('.returnToPacks').click(function () {
     clearCards();
     // Go to the top of the page
-    // @ts-ignore
-    generatePacksFromAPI(checkCookie());
+    generatePacksArtificially();
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     $('.returnToPacks').css('display', 'none');
@@ -240,6 +239,7 @@ function numberPage(type) {
     }
     else if (type === 'grass') {
         randomPage = Math.ceil(Math.random() * 8);
+        console.log(randomPage);
     }
     else if (type === 'lightning') {
         randomPage = Math.ceil(Math.random() * 5);
@@ -283,23 +283,32 @@ function packVisual(packType) {
     }
     return "./img/packart/".concat(packType, "/").concat(randomImage, ".jpg");
 }
-function deletePackFromDB(packType) {
+function saveCards(cards) {
+    // Get the token of the user
+    var token = localStorage.getItem('token');
+    // For each card in the array
     // @ts-ignore
-    var token = checkCookie();
-    var url = 'http://localhost:8080/api/deletePack';
-    var data = {
-        token: token,
-        packType: packType
-    };
-    $.post(url, data, function (response) {
-        if (response == 4 && response == 200) {
+    var data = new FormData();
+    for (var card = 0; card < cards.length; card++) {
+        data.append("card", cards[card]);
+        data.append("token", token);
+    }
+    var xhr = new XMLHttpRequest();
+    var url = 'http://localhost:8080/api/saveCards';
+    xhr.open('POST', url, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
             // If response is true, redirect to login page
-            if (response !== 'false') {
+            if (xhr.responseText !== 'false') {
+                // Create cookie and stock result in him
+                document.cookie = 'token=' + xhr.responseText;
+                window.location.href = './login';
             }
             else {
                 // If response is false, show error message
-                alert("This pack doesn't exist in this databse");
+                alert('Username already exists');
             }
         }
-    });
+    };
+    xhr.send(data);
 }

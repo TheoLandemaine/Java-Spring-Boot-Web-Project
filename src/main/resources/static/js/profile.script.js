@@ -67,21 +67,28 @@ function sellCards(cardId, cardType) {
 }
 function generateCardsFromAPI(token) {
     // Create Fetch API request
-    // @ts-ignore
     var url = '/api/getCards';
     // Create XMLHttpRequest request GET
     var data = {
-        // @ts-ignore
-        token: token
+        "token": token
     };
     $.post(url, data, function (response) {
         if (response !== false) {
             var _loop_1 = function (i) {
                 var cardId = response[i];
-                var urlAPI = 'https://api.pokemontcg.io/v2/cards/?q=id:' + cardId;
-                $.get(urlAPI, function (response2) {
-                    var card = response2;
-                    $('.allCards').append("\n                    <div class = \"card\" data-type=\"".concat(card.data[0].rarity, "\" data-id=\"").concat(cardId, "\">\n                        <div class=\"cardsBtn\">\n                            <img src=\"").concat(card.data[0].images['small'], "\" alt=\"").concat(card.name, "\">\n                            <button class=\"btn_sell\">Sell card</button>\n                        </div>\n                    </div>\n                    "));
+                var urlAPI = "https://raw.githubusercontent.com/PokemonTCG/pokemon-tcg-data/master/cards/en/".concat(cardId.split('-')[0], ".json");
+                $.get(urlAPI, function (response) {
+                    var card = JSON.parse(response);
+                    console.log(card);
+                    // Check if the card (with id) is in the card Object
+                    for (var i_1 = 0; i_1 < card.length; i_1++) {
+                        if (card[i_1].id === cardId) {
+                            var rarity = card[i_1].rarity;
+                            var image = card[i_1].images['small'];
+                            $('.allCards').append("\n                                <div class = \"card\" data-type=\"".concat(rarity.toLowerCase(), "\" data-id=\"").concat(cardId, "\">\n                                    <div class=\"cardsBtn\">\n                                        <img src=\"").concat(image, "\" alt=\"").concat(cardId, "\">\n                                        <button class=\"btn_sell\">Sell card</button>\n                                    </div>\n                                </div>\n                            "));
+                            break;
+                        }
+                    }
                 });
             };
             for (var i = 0; i < response.length; i++) {

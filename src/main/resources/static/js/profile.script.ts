@@ -86,34 +86,42 @@ function sellCards(cardId, cardType) {
 
 function generateCardsFromAPI(token) {
     // Create Fetch API request
-// @ts-ignore
     const url: string = '/api/getCards';
     // Create XMLHttpRequest request GET
     const data: Object = {
-        // @ts-ignore
-        token: token
+        "token": token
     };
 
-
     $.post(url, data, (response) => {
-
-
         if (response !== false) {
 
             for (let i: number = 0; i < response.length; i++) {
                 let cardId: any = response[i];
-                let urlAPI = 'https://api.pokemontcg.io/v2/cards/?q=id:' + cardId;
-                $.get(urlAPI, (response2) => {
-                    let card:any = response2;
+                let urlAPI = `https://raw.githubusercontent.com/PokemonTCG/pokemon-tcg-data/master/cards/en/${cardId.split('-')[0]}.json`;
 
-                    $('.allCards').append(`
-                    <div class = "card" data-type="${card.data[0].rarity}" data-id="${cardId}">
-                        <div class="cardsBtn">
-                            <img src="${card.data[0].images['small']}" alt="${card.name}">
-                            <button class="btn_sell">Sell card</button>
-                        </div>
-                    </div>
-                    `);
+                $.get(urlAPI, (response) => {
+                    let card: any = JSON.parse(response);
+
+                    console.log(card);
+
+                    // Check if the card (with id) is in the card Object
+                    for (let i = 0; i < card.length; i++) {
+                        if (card[i].id === cardId) {
+                            const rarity = card[i].rarity;
+                            const image = card[i].images['small'];
+
+                            $('.allCards').append(`
+                                <div class = "card" data-type="${rarity.toLowerCase()}" data-id="${cardId}">
+                                    <div class="cardsBtn">
+                                        <img src="${image}" alt="${cardId}">
+                                        <button class="btn_sell">Sell card</button>
+                                    </div>
+                                </div>
+                            `);
+
+                            break;
+                        }
+                    }
                 });
             }
 
