@@ -40,9 +40,13 @@ function generatePacksFromAPI(token) {
                     </tr>
                 `);
                }
+               if (response.length === 0) {
+                   alert('Please buy some packs to play');
+                   window.location.href = '/shop';
+               }
                } else {
-               alert('Vous n\'avez pas de pack, veuillez en acheter');
-               window.location.href = '/shop';
+               alert('Error in the loading');
+               window.location.href = '/profile';
            }
        });
 

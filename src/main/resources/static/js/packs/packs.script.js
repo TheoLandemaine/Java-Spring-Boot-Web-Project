@@ -59,10 +59,14 @@ function generatePacksFromAPI(token) {
                 var pack = response[i];
                 $('.allPacks').append("\n                    <div class = \"pack\" data-attr=\"".concat(pack, "\">\n                        <div class = \"packFace\">\n                        <img class=\"openPack\" src=\"").concat(packVisual(pack), "\">\n                    </div> \n                    </tr>\n                "));
             }
+            if (response.length === 0) {
+                alert('Please buy some packs to play');
+                window.location.href = '/shop';
+            }
         }
         else {
-            alert('Vous n\'avez pas de pack, veuillez en acheter');
-            window.location.href = '/shop';
+            alert('Error in the loading');
+            window.location.href = '/profile';
         }
     });
 }
