@@ -1,6 +1,6 @@
 .cadre {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
   margin: 3.7% 0;
 }
 .cadre .profileContainer {
@@ -12,7 +12,7 @@
   padding: 50px;
   margin: 50px;
   border-radius: 15px;
-  background: rgb(255, 255, 255);
+  background: white;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
 }
 .cadre #edit, .cadre #modifyPassword, .cadre #delete, .cadre #logout, .cadre #myPacks {
@@ -36,6 +36,27 @@
 .cadre #edit:hover, .cadre #modifyPassword:hover, .cadre #delete:hover, .cadre #logout:hover, .cadre #myPacks:hover {
   background: linear-gradient(to bottom right, dodgerblue, #4eadff);
   color: #fff;
+}
+
+myCardsContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0 0;
+  padding: 0 0;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
+}
+myCardsContainer .myCards {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0 0;
+  padding: 0 0;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
 }
 
 /*# sourceMappingURL=profile.style.css.map */

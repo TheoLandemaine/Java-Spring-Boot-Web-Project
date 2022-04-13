@@ -1,6 +1,6 @@
 .cadre {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     margin: 3.7% 0;
 
 .profileContainer {
@@ -40,4 +40,25 @@
  }
 }
 
+}
+
+myCardsContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0 0;
+    padding: 0 0;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px 0 rgb(0 0 0 / 40%);
+    .myCards{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: 0 0;
+        padding: 0 0;
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 5px 10px 0 rgb(0 0 0 / 40%);
+    }
 }
