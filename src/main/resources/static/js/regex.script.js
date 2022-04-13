@@ -143,11 +143,6 @@ document.addEventListener('change', function (e) {
             document.querySelector('.popup').remove();
         }, 3500);
     }
-    // console.log(username || !document.querySelector('#username'));
-    // console.log(email || !document.querySelector('#email'));
-    // console.log(password || !document.querySelector('#password'));
-    // console.log(password_confirm || !document.querySelector('#confirmPassword'));
-    // console.log(exPassword || !document.querySelector('#exPassword'));
     if ((username || !document.querySelector('#username')) && (email || !document.querySelector('#email')) && (password || !document.querySelector('#password')) && (password_confirm || !document.querySelector('#confirmPassword')) && (exPassword || !document.querySelector('#exPassword'))) {
         document.querySelector('#submit').removeAttribute('disabled');
     }

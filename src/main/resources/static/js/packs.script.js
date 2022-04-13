@@ -86,7 +86,6 @@ function generatePacksArtificially() {
 $(document).click(function (e) {
     // @ts-ignore
     if (e.target.classList.contains('openPack')) {
-        console.log("azertyuiop");
         // @ts-ignore
         deletePackFromDB(e.target.parentNode.parentNode.getAttribute('data-attr'));
         clearPacks();
@@ -97,10 +96,7 @@ $(document).click(function (e) {
     }
     // When all cards are drawn, show the button to return the packs
     $('.toFlip').click(function () {
-        //console.log($('.toFlip').length - 1);
-        //console.log($('.carte').length);
         if (document.querySelectorAll('.toFlip').length - 1 === 0 && document.querySelectorAll('.carte').length === 5) {
-            // @ts-ignore
             // @ts-ignore
             $('.returnToPacks').css('display', 'block');
         }
@@ -114,7 +110,6 @@ $(document).mouseover(function (e) {
     }
 });
 function animationBoosters(packType) {
-    console.log("animationBoosters");
     div.style.height = "100vh";
     $('.allPacks').append("\n                    <div id=\"pack-opened\" class=\"col-xs-12 open\">\n                        <div class=\"pack-content\" style=\"display: block !important; visibility: visible !important;\" >\n                            <div class=\"pack-flash\">\n                                <div class=\"pack-flash-pack\" >\n                                    <img class=\"front\" src=\"" + packVisual(packType) + " \" > \n                                    <div class=\"top\">\n                                        <img src=\"https://i.imgur.com/b1qmOW6.png\">\n                                        <div class=\"cut\"> \n                                            <img src=\"https://i.imgur.com/k55nnYY.png\">\n                                        </div>\n                                        <span> \n                                            <img src=\"https://i.imgur.com/JqedAsJ.png\">\n                                               <span>\n                                                <img src=\"https://i.imgur.com/WWRXjri.png\">\n                                                    <span>\n                                                        <img src=\"https://i.imgur.com/DzEYvSP.png\" style=\"width: 81px\"> \n                                                    </span>\n                                                </span>\n                                            </span>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>");
     setTimeout(clearPacks, 2700);
@@ -124,36 +119,26 @@ function generatePacks(packType) {
     $('.allPacks').append("\n            <div class = \"pack\" data-attr=\"".concat(packType, "\">\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n            </div>"));
 }
 function generateCards(pokemonsDrawed) {
-    console.log("test");
-    console.log(pokemonsDrawed);
     $('.allCards').empty();
-    var _loop_1 = function (i) {
+    for (var i = 0; i < pokemonsDrawed.length; i++) {
         var pokemonImage = pokemonsDrawed[i]['images']['large'];
         var pokemonName = pokemonsDrawed[i]['name'];
-        console.log(pokemonsDrawed[i]);
         // Add card to database
         // @ts-ignore
         var token = checkCookie();
         // For each card in the array
         // @ts-ignore
         var url_1 = 'api/saveCards';
-        console.log(pokemonsDrawed[i].id);
         var data_1 = {
             cardId: pokemonsDrawed[i].id,
             token: token
         };
         $.post(url_1, data_1, function (response) {
-            if (response !== false) {
-                console.log('card saved' + pokemonsDrawed[i].id);
-            }
-            else {
+            if (response === false) {
                 alert('Problem while saving cards');
             }
         });
         $('.allCards').append("\n            <div class = \"carte\" data-attr=\"".concat(pokemonName, "\">\n                <div class = \"double-face\">\n                <div class = \"face\">\n                <img class=\"imgPokemon\" src=\"").concat(pokemonImage, "\"></div> \n                <div class = \"arriere toFlip\">\n            </div>"));
-    };
-    for (var i = 0; i < pokemonsDrawed.length; i++) {
-        _loop_1(i);
     }
 }
 //  Vider la div allPacks
@@ -171,14 +156,13 @@ function drawPokemons(type) {
         setTimeout(function () { $('.allPacks').append("<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>"); }, 2700);
         // Get out of the interval
     }
-    var _loop_2 = function (i) {
+    var _loop_1 = function (i) {
         // If type = Colorless, randomPage could go only to page 7
         var pokemons = [];
         var pokeCardURL = '';
         var randomPage = numberPage(type);
         if (type !== 'random') {
             pokeCardURL = "https://api.pokemontcg.io/v2/cards?q=types:".concat(type, "&page=").concat(randomPage);
-            //console.log(" page : " + randomPage);
         }
         else {
             pokeCardURL = "https://api.pokemontcg.io/v2/cards?page=".concat(randomPage);
@@ -202,31 +186,23 @@ function drawPokemons(type) {
                 pokemons.push(data.data[x]);
             }
         });
-        console.log(pokemons);
         var interval = setInterval(function () {
             if ($('.carte').length != 5 && $('.pack').length === 0) {
-                //console.log(randomPage);
                 if (pokemonsDrawed.length < 5) {
                     var random = Math.floor(Math.random() * pokemons.length);
-                    //console.log("COUCOU : " + i + " " + pokemons[random]['name']);
-                    //console.log("COUCOU : " + i + " " + pokemons[random]['images']['large']);
                     if (pokemons[random] != undefined) {
                         pokemonsDrawed.push(pokemons[random]);
                         setTimeout(function () {
                         }, 3000);
                     }
-                    // console.log("Pokemons eu : " + pokemonsDrawed[i]['name']);
-                    //console.log($('.toFlip').length);
                 }
             }
             if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
-                console.log("test dans div generate");
                 div.style.height = null;
                 clearPacks();
                 generateCards(pokemonsDrawed);
                 // Get out of the interval
             }
-            console.log(pokemonsDrawed.length + " " + pokemonsDrawed);
             if (pokemonsDrawed.length === 5 || $('.pack').length !== 0 || $('.carte').length !== 0 || !saved) {
                 clearInterval(interval);
                 saved = true;
@@ -234,14 +210,13 @@ function drawPokemons(type) {
         }, 1000);
     };
     for (var i = 0; i < 5; i++) {
-        _loop_2(i);
+        _loop_1(i);
     }
 }
 $(document).click(function (e) {
     // If the card is backward and that no card has been turned yet
     // @ts-ignore
     if (e.target.classList.contains('arriere')) {
-        console.log('coucou');
         // @ts-ignore
         e.target.classList.remove('toFlip');
         // @ts-ignore
@@ -250,8 +225,6 @@ $(document).click(function (e) {
         // Flip the card
         // @ts-ignore
         flip(e.target.parentNode);
-        // @ts-ignore
-        console.log(e.target.parentNode.classList);
     }
 });
 $('.returnToPacks').click(function () {
@@ -297,7 +270,6 @@ function numberPage(type) {
     }
     else if (type === 'grass') {
         randomPage = Math.ceil(Math.random() * 8);
-        console.log(randomPage);
     }
     else if (type === 'lightning') {
         randomPage = Math.ceil(Math.random() * 5);
@@ -342,7 +314,6 @@ function packVisual(packType) {
     return "./img/packart/".concat(packType, "/").concat(randomImage, ".jpg");
 }
 function deletePackFromDB(packType) {
-    console.log('delete this pack');
     // @ts-ignore
     var token = checkCookie();
     var url = 'http://localhost:8080/api/deletePack';

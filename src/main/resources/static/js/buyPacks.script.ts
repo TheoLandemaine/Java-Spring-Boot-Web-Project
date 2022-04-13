@@ -1,5 +1,5 @@
-$(document).ready( () => {
-generateAllPacks();
+$(document).ready(() => {
+    generateAllPacks();
 })
 
 $(document).click((e) => {
@@ -7,8 +7,6 @@ $(document).click((e) => {
     let target = e.target as HTMLElement;
     if (target.classList.contains('openPack')) {
         $('.allPacks').empty();
-        // @ts-ignore
-        console.log(e.target.parentNode.parentNode.getAttribute('data-attr'))
         // @ts-ignore
         generateBigPreview(e.target.parentNode.parentNode.getAttribute('data-attr'));
     }
@@ -18,10 +16,8 @@ $(document).click((e) => {
         generateAllPacks();
     }
     // @ts-ignore
-    if (target.classList.contains('buyPack')){
-        console.log('coucou');
+    if (target.classList.contains('buyPack')) {
         // @ts-ignore
-
         buyPack(e.target.parentNode.getAttribute('data-attr'), parseInt(e.target.parentNode.getAttribute('data-price')));
     }
 })
@@ -29,11 +25,10 @@ $(document).click((e) => {
 
 // When we mouseover on a pack
 $(document).mouseover((e) => {
-    // @ts-ignore
-    if (e.target.classList.contains('openPack')) {
-        console.log('coucou');
-        // @ts-ignore
-        e.target.style.cursor = 'pointer';
+    const target = e.target as unknown as HTMLElement;
+
+    if (target.classList.contains('openPack')) {
+        target.style.cursor = 'pointer';
     }
 })
 
@@ -85,14 +80,10 @@ function generateBigPreview(packType) {
 
 }
 
-function buyPack(packType, packPrice:Number) {
-    console.log(packType);
-    console.log(packPrice);
-    // @ts-ignore
-    console.log(checkCookie())
-    const url:string = '/api/buyPack';
+function buyPack(packType, packPrice: Number) {
+    const url: string = '/api/buyPack';
 
-    const data:Object = {
+    const data: Object = {
         packType: packType,
         packPrice: packPrice,
         // @ts-ignore
@@ -110,7 +101,7 @@ function buyPack(packType, packPrice:Number) {
     });
 }
 
-function packVisual(packType:string) {
+function packVisual(packType: string) {
 
     // @TODO : Get the length of the file that contains our images for our pack
     // @TODO : Get random number between 1 and the length of the file
@@ -136,7 +127,7 @@ function packVisual(packType:string) {
 
 }
 
-function packName(packType:string) {
+function packName(packType: string) {
     if (packType === 'colorless') {
         return 'Colorless';
     } else if (packType === 'dragon') {

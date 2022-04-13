@@ -7,12 +7,6 @@ data.append("token", checkCookie());
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log(xhr.responseText);
-        console.log(JSON.parse(xhr.responseText));
-        console.log(JSON.parse(xhr.responseText)[0].username);
-        console.log(JSON.parse(xhr.responseText)[0].email);
-        console.log(JSON.parse(xhr.responseText)[0].userId);
-        // insert username
         //@ts-ignore
         document.querySelector("#username").value = JSON.parse(xhr.responseText)[0].username;
     }
@@ -32,7 +26,6 @@ document.querySelector('#submit').addEventListener('click', function (e) {
     data.append("confirmPassword", confirmPassword);
     var xhr = new XMLHttpRequest();
     if (password && username && confirmPassword && password === confirmPassword) {
-        console.log(password + " " + username);
         // Register the account into the api
         var url_1 = './api/editProfile';
         xhr.open('POST', url_1, true);

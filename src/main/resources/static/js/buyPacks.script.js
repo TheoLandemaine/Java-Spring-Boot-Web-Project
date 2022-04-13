@@ -7,8 +7,6 @@ $(document).click(function (e) {
     if (target.classList.contains('openPack')) {
         $('.allPacks').empty();
         // @ts-ignore
-        console.log(e.target.parentNode.parentNode.getAttribute('data-attr'));
-        // @ts-ignore
         generateBigPreview(e.target.parentNode.parentNode.getAttribute('data-attr'));
     }
     // @ts-ignore
@@ -18,7 +16,6 @@ $(document).click(function (e) {
     }
     // @ts-ignore
     if (target.classList.contains('buyPack')) {
-        console.log('coucou');
         // @ts-ignore
         buyPack(e.target.parentNode.getAttribute('data-attr'), parseInt(e.target.parentNode.getAttribute('data-price')));
     }
@@ -27,7 +24,6 @@ $(document).click(function (e) {
 $(document).mouseover(function (e) {
     // @ts-ignore
     if (e.target.classList.contains('openPack')) {
-        console.log('coucou');
         // @ts-ignore
         e.target.style.cursor = 'pointer';
     }
@@ -55,10 +51,6 @@ function generateBigPreview(packType) {
     $('.allPacks').append("\n            <div class = \"packPreview\" data-attr=\"".concat(packType, "\" data-price=\"").concat(packPrice(packType), "\">\n            <button class=\"closePack\">X</button>\n                <div class = \"packFace\">\n                <img  class=\"openPack\" src=\"").concat(packVisual(packType), "\">\n                </div> \n             <h2>Pack : ").concat(packName(packType), "</h2>\n             <h2>").concat(packPrice(packType), " \u20BD</h2>\n             <button class=\"buyPack\" data-attr=\"").concat(packType, "\">Buy</button>\n            </div>"));
 }
 function buyPack(packType, packPrice) {
-    console.log(packType);
-    console.log(packPrice);
-    // @ts-ignore
-    console.log(checkCookie());
     var url = '/api/buyPack';
     var data = {
         packType: packType,

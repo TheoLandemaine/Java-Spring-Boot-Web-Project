@@ -11,14 +11,6 @@ const url4:string = 'http://localhost:8080/api/getUserInformations';
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-
-            console.log(xhr.responseText);
-            console.log(JSON.parse(xhr.responseText));
-            console.log(JSON.parse(xhr.responseText)[0].username);
-            console.log(JSON.parse(xhr.responseText)[0].email);
-            console.log(JSON.parse(xhr.responseText)[0].userId);
-
-            // insert username
             //@ts-ignore
             document.querySelector("#username").value = JSON.parse(xhr.responseText)[0].username;
         }
@@ -46,7 +38,6 @@ document.querySelector('#submit').addEventListener('click', function(e) {
 
     const xhr:XMLHttpRequest = new XMLHttpRequest();
     if ( password && username && confirmPassword && password === confirmPassword) {
-        console.log(password + " " + username);
         // Register the account into the api
         const url: string = './api/editProfile';
 

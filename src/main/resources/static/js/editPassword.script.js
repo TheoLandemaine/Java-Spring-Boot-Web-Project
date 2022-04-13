@@ -1,9 +1,6 @@
 var url5 = 'http://localhost:8080/api/getUserInformations';
 // @ts-ignore
 $.post(url5, { 'token': checkCookie() }, function (data) {
-    console.log(data[0].username);
-    console.log(data[0].email);
-    console.log(data[0].userId);
     // Change document.querySelector("#username") input value to data[0].username
     var username = document.querySelector("#username");
     username.value = data[0].username;
