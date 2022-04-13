@@ -151,6 +151,20 @@ public class PorareRestController {
         return cardService.deleteCard(token, cardId, cardType);
     }
 
+    @PostMapping("getPackPrice")
+    public int getPackPrice(@RequestParam String packType,
+                            HttpServletRequest httpServletRequest) {
+
+        return packService.getPackPrice(packType);
+    }
+
+    @PostMapping("getCardPrice")
+    public int getCardPrice(@RequestParam String cardType,
+                            HttpServletRequest httpServletRequest) {
+
+        return cardService.getCardPrice(cardType);
+    }
+
 
 }
 
