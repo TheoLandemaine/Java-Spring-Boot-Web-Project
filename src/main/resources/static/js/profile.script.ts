@@ -1,39 +1,25 @@
-// @ts-ignore
-$('#logout').on('click', () => {
-        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        window.location.href = '/';
+$('#edit').on('click', function () {
+    window.location.href = '/edit';
+});
 
-})
+$('#modifyPassword').on('click', function () {
+    window.location.href = '/modifyPassword';
+});
 
-const edit = document.querySelector('#edit');
-const modifyPassword = document.querySelector('#modifyPassword');
-const supp = document.querySelector('#delete');
-const logout = document.querySelector('#logout');
-const myPacks = document.querySelector('#myPacks');
+$('#delete').on('click', function () {
+    window.location.href = '/delete';
+});
+
+$('#myPacks').on('click', function () {
+    window.location.href = '/myPacks';
+});
+
+$('#logout').on('click', function () {
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    window.location.href = '/';
+});
+
 const myCards = document.querySelector('#myCards');
-
-edit.addEventListener("click", function (e) {
-        window.location.href = '/edit';
-})
-
-modifyPassword.addEventListener("click", function (e) {
-        window.location.href = '/password';
-})
-
-/*
-supp.addEventListener("click", function (e) {
-        window.location.href = '/delete';
-})
-*/
-
-logout.addEventListener("click", function (e) {
-        window.location.href = '/';
-})
-
-myPacks.addEventListener("click", function (e) {
-        window.location.href = '/myPacks';
-})
-
 myCards.addEventListener("click", function (e) {
-        window.location.href = '/myCards';
-})
+    window.location.href = '/myCards';
+});

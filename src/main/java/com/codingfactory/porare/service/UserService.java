@@ -84,6 +84,48 @@ public record UserService(JdbcTemplate jdbcTemplate) {
         }
     }
 
+    public Boolean editUsername(String token, String newusername) {
+        try {
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
+
+            // Update the username
+            jdbcTemplate.update("UPDATE user SET u_username = '" + newusername + "' WHERE u_id = '" + userId + "'");
+
+            return true;
+        } catch (JWTVerificationException exception) {
+            //Invalid signature/claims
+            return false;
+        }
+    }
+
+    public Boolean editPassword(String token, String actualPassword, String newPassword, String newPasswordConfirmation) {
+        try {
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
+
+            // Check if the actual password is correct
+            List<Map<String, Object>> userInformations = jdbcTemplate.queryForList("SELECT * FROM user WHERE u_id = '" + userId + "'");
+
+            for (Map<String, Object> userInformation : userInformations) {
+                if (!((String) userInformation.get("u_password")).equals(actualPassword)) {
+                    return false;
+                }
+            }
+
+            // Check if the new password and the new password confirmation are the same
+            if (!newPassword.equals(newPasswordConfirmation)) {
+                return false;
+            }
+
+            // Update the password
+            jdbcTemplate.update("UPDATE user SET u_password = '" + newPassword + "' WHERE u_id = '" + userId + "'");
+
+            return true;
+        } catch (JWTVerificationException exception) {
+            //Invalid signature/claims
+            return false;
+        }
+    }
+
     public int getUserCoins(String token) {
         try {
             // Get User Id
