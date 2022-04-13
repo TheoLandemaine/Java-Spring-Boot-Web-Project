@@ -13,15 +13,17 @@ public record PackService(JdbcTemplate jdbcTemplate) {
         try {
 
           Integer userId = userTools.checkToken(token, jdbcTemplate);
+            int coins = jdbcTemplate.queryForObject("SELECT u_coin FROM user WHERE u_id = ?", Integer.class, userId);
+            coins -= packPrice;
+            if (coins > 0) {
             String sql = "INSERT INTO pack (p_type, p_fk_user_id) VALUES (?, ?)";
             jdbcTemplate.update(sql, packType, userId);
-            int coins = jdbcTemplate.queryForObject("SELECT u_coin FROM user WHERE u_id = ?", Integer.class, userId);
-
-            coins -= packPrice;
-
-            String sql2 = "UPDATE user SET u_coin = ? WHERE u_id = ?";
-            jdbcTemplate.update(sql2, coins, userId);
-            return "true";
+                String sql2 = "UPDATE user SET u_coin = ? WHERE u_id = ?";
+                jdbcTemplate.update(sql2, coins, userId);
+                return "true";
+            } else {
+                return "false";
+            }
         } catch (Exception e) {
             return "false";
         }
