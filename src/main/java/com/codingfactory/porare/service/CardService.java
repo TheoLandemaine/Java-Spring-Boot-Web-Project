@@ -19,12 +19,16 @@ public record CardService(JdbcTemplate jdbcTemplate) {
             jdbcTemplate.update(sql, cardId, userId);
             return "true";
         } catch (Exception e) {
+
             return "false";
         }
     }
 
     // delete card
     public boolean deleteCard(String token, String cardId, String cardType) {
+        if (cardType == "undefined") {
+            cardType = "Common";
+        }
         try {
         Integer userId = userTools.checkToken(token, jdbcTemplate);
 
@@ -32,6 +36,7 @@ public record CardService(JdbcTemplate jdbcTemplate) {
         jdbcTemplate.update(sql, userId, cardId);
 
         int coins = jdbcTemplate.queryForObject("SELECT u_coin FROM user WHERE u_id = ?", Integer.class, userId);
+
 
         int cardPrice = jdbcTemplate.queryForObject("SELECT r_price FROM rarity WHERE r_rarity = ?", Integer.class, cardType);
 
@@ -41,6 +46,7 @@ public record CardService(JdbcTemplate jdbcTemplate) {
         jdbcTemplate.update(sql, coins, userId);
         return true;
         } catch (Exception e) {
+
             return false;
         }
     }
