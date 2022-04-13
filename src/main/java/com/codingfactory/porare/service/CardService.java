@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public record CardService(JdbcTemplate jdbcTemplate) {
 
     // add card
-    public void addCard(String token, int cardId) {
+    public void addCard(String token, String cardId) {
         DecodedJWT jwt = JWT.decode(token);
 
-        String sql = "INSERT INTO card (u_id, c_id) VALUES (?, ?)";
+        String sql = "INSERT INTO card (c_id, c_fk_user_id) VALUES (?, ?)";
         jdbcTemplate.update(sql, jwt.getClaim("userId"), cardId);
 
     }

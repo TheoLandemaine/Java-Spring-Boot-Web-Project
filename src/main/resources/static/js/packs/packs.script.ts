@@ -11,6 +11,9 @@ $(document).ready(() => {
     generatePacksArtificially();
 });
 
+let div = document.querySelector('.allPacks');
+
+
 function generatePacksFromAPI(token) {
     // Create Fetch API request
 // @ts-ignore
@@ -97,7 +100,6 @@ $(document).mouseover((e) => {
 function animationBoosters(packType) {
     console.log("animationBoosters");
 
-    let div = document.querySelector('.allPacks');
     div.style.height = "100vh";
 
     $('.allPacks').append( `
@@ -127,7 +129,7 @@ function animationBoosters(packType) {
                         </div>
                     </div>`);
 
-    setTimeout(() => {div.style.height = null;}, 2700);
+    // setTimeout(() => {div.style.height = null;}, 2700);
 
     setTimeout(clearPacks, 2700);
 }
@@ -149,10 +151,13 @@ function generatePacks(packType) {
 function generateCards(pokemonsDrawed) {
     console.log("test");
     console.log(pokemonsDrawed);
+    $('.allCards').empty();
+
     // @ts-ignore
     for (let i = 0; i < pokemonsDrawed.length; i++) {
         let pokemonImage = pokemonsDrawed[i]['images']['large'];
         let pokemonName = pokemonsDrawed[i]['name'];
+
 
         $('.allCards').append(`
             <div class = "carte" data-attr="${pokemonName}">
@@ -177,6 +182,12 @@ function drawPokemons(type) {
     type = type.toLowerCase();
 
     let pokemonsDrawed = [];
+
+    if (pokemonsDrawed.length !== 5 && $('.carte').length === 0) {
+        setTimeout(() => {$('.allPacks').append(`<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>`)},2700);
+        // Get out of the interval
+    }
+
 
     for (let i = 0; i < 5; i++) {
         // If type = Colorless, randomPage could go only to page 7
@@ -236,6 +247,8 @@ function drawPokemons(type) {
 
             if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
                 console.log("test dans div generate")
+                div.style.height = null;
+                clearPacks();
                 generateCards(pokemonsDrawed);
                 // Get out of the interval
             }

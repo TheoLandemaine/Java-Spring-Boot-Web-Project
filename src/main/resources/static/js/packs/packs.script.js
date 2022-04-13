@@ -42,6 +42,7 @@ $(document).ready(function () {
     //generatePacksFromAPI();
     generatePacksArtificially();
 });
+var div = document.querySelector('.allPacks');
 function generatePacksFromAPI(token) {
     // Create Fetch API request
     // @ts-ignore
@@ -51,11 +52,11 @@ function generatePacksFromAPI(token) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Clear div
-            var div = document.querySelector(".allPacks")[0];
-            div.innerHTML = '';
+            var div_1 = document.querySelector(".allPacks")[0];
+            div_1.innerHTML = '';
             for (var i = 0; i < JSON.parse(xhr.responseText).length; i++) {
                 var pack = JSON.parse(xhr.responseText)[i];
-                div.innerHTML += "\n                    <div class = \"pack\" data-attr=\"".concat(pack.p_type, "\">\n                        <div class = \"packFace\">\n                        <img  class=\"openPack\" src=\"").concat(packVisual(pack.p_type), "\">\n                    </div> \n                    </tr>\n                ");
+                div_1.innerHTML += "\n                    <div class = \"pack\" data-attr=\"".concat(pack.p_type, "\">\n                        <div class = \"packFace\">\n                        <img  class=\"openPack\" src=\"").concat(packVisual(pack.p_type), "\">\n                    </div> \n                    </tr>\n                ");
             }
         }
     };
@@ -100,10 +101,9 @@ $(document).mouseover(function (e) {
 });
 function animationBoosters(packType) {
     console.log("animationBoosters");
-    var div = document.querySelector('.allPacks');
     div.style.height = "100vh";
     $('.allPacks').append("\n                    <div id=\"pack-opened\" class=\"col-xs-12 open\">\n                        <div class=\"pack-content\" style=\"display: block !important; visibility: visible !important;\" >\n                            <div class=\"pack-flash\">\n                                <div class=\"pack-flash-pack\" >\n                                    <img class=\"front\" src=\"" + packVisual(packType) + " \" > \n                                    <div class=\"top\">\n                                        <img src=\"https://i.imgur.com/b1qmOW6.png\">\n                                        <div class=\"cut\"> \n                                            <img src=\"https://i.imgur.com/k55nnYY.png\">\n                                        </div>\n                                        <span> \n                                            <img src=\"https://i.imgur.com/JqedAsJ.png\">\n                                               <span>\n                                                <img src=\"https://i.imgur.com/WWRXjri.png\">\n                                                    <span>\n                                                        <img src=\"https://i.imgur.com/DzEYvSP.png\" style=\"width: 81px\"> \n                                                    </span>\n                                                </span>\n                                            </span>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>");
-    setTimeout(function () { div.style.height = null; }, 2700);
+    // setTimeout(() => {div.style.height = null;}, 2700);
     setTimeout(clearPacks, 2700);
 }
 function generatePacks(packType) {
@@ -113,6 +113,7 @@ function generatePacks(packType) {
 function generateCards(pokemonsDrawed) {
     console.log("test");
     console.log(pokemonsDrawed);
+    $('.allCards').empty();
     // @ts-ignore
     for (var i = 0; i < pokemonsDrawed.length; i++) {
         var pokemonImage = pokemonsDrawed[i]['images']['large'];
@@ -130,6 +131,10 @@ function clearCards() {
 function drawPokemons(type) {
     type = type.toLowerCase();
     var pokemonsDrawed = [];
+    if (pokemonsDrawed.length !== 5 && $('.carte').length === 0) {
+        setTimeout(function () { $('.allPacks').append("<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>"); }, 2700);
+        // Get out of the interval
+    }
     var _loop_1 = function (i) {
         // If type = Colorless, randomPage could go only to page 7
         var pokemons = [];
@@ -179,6 +184,8 @@ function drawPokemons(type) {
             }
             if (pokemonsDrawed.length === 5 && $('.carte').length === 0) {
                 console.log("test dans div generate");
+                div.style.height = null;
+                clearPacks();
                 generateCards(pokemonsDrawed);
                 // Get out of the interval
             }
