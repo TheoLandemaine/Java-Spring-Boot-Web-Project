@@ -117,13 +117,16 @@ body {
 #search-button{
   width: 75px;
   height:auto;
-  background: linear-gradient(to bottom right, red, #ff9999);
-  border: solid black;
+  border: solid 2px dodgerblue;
+  background: none;
+  transition: all 0.5s;
   border-radius: 2em;
   padding: 0.5em;
+  color: dodgerblue;
 
   &:hover{
-    background: linear-gradient(to bottom right, #ff5C5C, #ff5C5C);
+    background: linear-gradient(to bottom right, dodgerblue, #4eadff);
+    color: #fff;
   }
 }
 
@@ -1416,8 +1419,8 @@ h3 {
   }
 
   input[type=text]:not(.browser-default):focus:not([readonly]) {
-    border-bottom: 1px solid #ff5C5C;
-    box-shadow: 0 1px 0 0 #ff5C5C;
+    border-bottom: 1px solid dodgerblue;
+    box-shadow: 0 1px 0 0 dodgerblue;
   }
 
 .rarity_search, .type-search {
