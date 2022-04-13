@@ -46,7 +46,7 @@ public record PackService(JdbcTemplate jdbcTemplate) {
             int price = jdbcTemplate.queryForObject(sql, Integer.class, p_type);
             return price;
         } catch (Exception e) {
-            return 0;
+            return -1;
         }
     }
 
