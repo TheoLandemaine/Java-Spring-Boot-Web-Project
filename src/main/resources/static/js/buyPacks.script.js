@@ -68,20 +68,34 @@ function buyPack(packType) {
         packType: packType
     };
     $.post(url2, data2, function (response2) {
-        var data = {
-            packType: packType,
-            packPrice: response2,
+        var urlCoins = '/api/getUserCoins';
+        var dataCoins = {
             // @ts-ignore
             token: checkCookie()
         };
-        $.post(url, data, function (response) {
-            // If response is true, redirect to login page
-            if (response !== false) {
-                window.location.href = '/shop';
+        $.post(urlCoins, dataCoins, function (responseCoins) {
+            if (responseCoins >= response2) {
+                var data_1 = {
+                    packType: packType,
+                    packPrice: response2,
+                    // @ts-ignore
+                    token: checkCookie()
+                };
+                $.post(url, data_1, function (response) {
+                    // If response is true, redirect to login page
+                    if (response !== false) {
+                        window.location.href = '/shop';
+                    }
+                    else {
+                        // If response is false, show error message
+                        alert('An error has occured, please try again');
+                    }
+                });
             }
             else {
-                // If response is false, show error message
-                alert('An error has occured, please try again');
+                alert('You do not have enough coins');
+                // Redirect to shop
+                window.location.href = '/profile';
             }
         });
     });
