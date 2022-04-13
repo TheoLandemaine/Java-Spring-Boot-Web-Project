@@ -1,4 +1,4 @@
-var url5 = 'http://localhost:8080/api/getUserInformations';
+var url5 = '/api/getUserInformations';
 // @ts-ignore
 $.post(url5, { 'token': checkCookie() }, function (data) {
     // Change document.querySelector("#username") input value to data[0].username

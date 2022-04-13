@@ -163,12 +163,14 @@ function drawPokemons(type) {
                 generateCards(pokemonsDrawed);
             }
             else {
+                console.log('Get ' + i + ' pokemon');
                 var randomPokemon = Math.floor(Math.random() * pokemons.length);
                 // @ts-ignore
                 if (pokemonsDrawed.includes(pokemons[randomPokemon])) {
                     i--;
                 }
                 else if (pokemons[randomPokemon] != undefined) {
+                    console.log('Add ' + pokemons[randomPokemon].name + ' to the array');
                     pokemonsDrawed.push(pokemons[randomPokemon]);
                 }
             }
@@ -284,15 +286,16 @@ function packVisual(packType) {
 function deletePackFromDB(packType) {
     // @ts-ignore
     var token = checkCookie();
-    var url = 'http://localhost:8080/api/deletePack';
+    var url = '/api/deletePack';
     var data = {
-        token: token,
-        packType: packType
+        "token": token,
+        "packType": packType
     };
     $.post(url, data, function (response) {
         if (response == 4 && response == 200) {
             // If response is true, redirect to login page
-            if (response !== 'false') {
+            if (response !== false) {
+                console.log('Successfully deleted pack from DB');
             }
             else {
                 // If response is false, show error message

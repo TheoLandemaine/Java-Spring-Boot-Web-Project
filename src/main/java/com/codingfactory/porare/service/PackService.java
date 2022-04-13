@@ -59,17 +59,18 @@ public record PackService(JdbcTemplate jdbcTemplate) {
 
             Integer userId = userTools.checkToken(token, jdbcTemplate);
 
-            String sql = "SELECT p_type FROM pack WHERE p_fk_user_id = ?";
-            String packType = jdbcTemplate.queryForObject(sql, String.class, userId);
+            System.out.println(userId);
 
-            if (packType.equals(p_type)) {
-                /* Nice ! User has pack, now delete them */
+            String sql = "SELECT COUNT(*) FROM pack WHERE p_fk_user_id = ? AND p_type = ?";
+            System.out.println(sql);
+            int count = jdbcTemplate.queryForObject(sql, Integer.class, userId, p_type);
+
+            if (count > 0) {
                 sql = "DELETE FROM pack WHERE p_fk_user_id = ? AND p_type = ? LIMIT 1";
                 jdbcTemplate.update(sql, userId, p_type);
 
                 return true;
             } else {
-                /* Error : User has not this pack */
                 return false;
             }
         } catch (Exception e) {

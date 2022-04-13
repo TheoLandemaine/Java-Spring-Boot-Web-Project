@@ -1,5 +1,5 @@
 // Replace the username with user's username
-var url4 = 'http://localhost:8080/api/getUserInformations';
+var url4 = '/api/getUserInformations';
 // Create XMLHttpRequest request POST
 var data = new FormData();
 // @ts-ignore

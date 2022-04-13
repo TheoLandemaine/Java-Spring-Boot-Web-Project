@@ -317,17 +317,17 @@ function packVisual(packType) {
 function deletePackFromDB(packType) {
     // @ts-ignore
     let token = checkCookie();
-    const url = 'http://localhost:8080/api/deletePack';
+    const url = '/api/deletePack';
     const data = {
-        token: token,
-        packType: packType
+        "token": token,
+        "packType": packType
     }
 
     $.post(url, data, (response) => {
         if (response == 4 && response == 200) {
             // If response is true, redirect to login page
-            if (response !== 'false') {
-
+            if (response !== false) {
+                console.log('Successfully deleted pack from DB');
             } else {
                 // If response is false, show error message
                 alert("This pack doesn't exist in this databse");

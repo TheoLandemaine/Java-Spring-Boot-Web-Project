@@ -1,4 +1,4 @@
-const url5: string = 'http://localhost:8080/api/getUserInformations';
+const url5: string = '/api/getUserInformations';
 
 // @ts-ignore
 $.post(url5, {'token': checkCookie()}, function (data) {

@@ -1,6 +1,6 @@
 
 // Replace the username with user's username
-const url4:string = 'http://localhost:8080/api/getUserInformations';
+const url4:string = '/api/getUserInformations';
 
     // Create XMLHttpRequest request POST
     const data = new FormData();
