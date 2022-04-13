@@ -18,7 +18,7 @@ function generateCardsFromAPI(token) {
                 var urlAPI = 'https://api.pokemontcg.io/v2/cards/?q=id:' + cardId;
                 $.get(urlAPI, function (response2) {
                     var card = response2;
-                    $('.allCards').append("\n                    <div class = \"card\" data-attr=\"".concat(card, "\">\n                    <img src=\"").concat(response2.data[0].images['large'], "\" alt=\"").concat(card.name, "\">\n                    </div>\n                    "));
+                    $('.allCards').append("\n                    <div class = \"card\" data-attr=\"".concat(card, "\">\n                    <img src=\"").concat(response2.data[0].images['small'], "\" alt=\"").concat(card.name, "\">\n                    </div>\n                    "));
                 });
             }
         }

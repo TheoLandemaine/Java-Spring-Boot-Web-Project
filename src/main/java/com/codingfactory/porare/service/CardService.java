@@ -2,8 +2,6 @@ package com.codingfactory.porare.service;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Service;
 
 import static com.codingfactory.porare.service.UserService.userTools;
@@ -26,11 +24,26 @@ public record CardService(JdbcTemplate jdbcTemplate) {
     }
 
     // delete card
-    public void deleteCard(int c_id, String token) {
-        DecodedJWT jwt = JWT.decode(token);
+    public boolean deleteCard(String token, String cardId, String cardType) {
+        try {
+        Integer userId = userTools.checkToken(token, jdbcTemplate);
 
-        String sql = "DELETE FROM card WHERE u_id = ? AND c_id = ? LIMIT 1";
-        jdbcTemplate.update(sql, jwt.getClaim("userId"), c_id);
+        String sql = "DELETE FROM card WHERE c_fk_user_id = ? AND c_id = ? LIMIT 1";
+        jdbcTemplate.update(sql, userId, cardId);
+
+        int coins = jdbcTemplate.queryForObject("SELECT u_coin FROM user WHERE u_id = ?", Integer.class, userId);
+
+        int cardPrice = jdbcTemplate.queryForObject("SELECT r_price FROM rarity WHERE r_rarity = ?", Integer.class, cardType);
+
+        coins += cardPrice;
+
+        sql = "UPDATE user SET u_coin = ? WHERE u_id = ?";
+        jdbcTemplate.update(sql, coins, userId);
+        return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
 

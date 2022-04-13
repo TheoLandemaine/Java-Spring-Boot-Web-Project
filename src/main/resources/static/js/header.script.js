@@ -21,3 +21,15 @@ if (checkCookie() !== 'false') {
     $('.navColumn').append("<li><a href=\"/profile\">Profile</a></li>");
     $('.firstNav').append("\n        <li><a href=\"./\">Home</a></li>\n        <li><a href=\"./users\">Users</a></li>\n        <li><a href=\"./search\">Catalog</a></li>\n        <li><a href=\"./shop\">Shop</a></li>\n    ");
 }
+// @ts-ignore
+$.post('/api/getCards', { 'token': checkCookie() }, function (data) {
+    if (data.length > 0) {
+        $('.firstNav').append("<li><a href=\"./myCards\">My Cards</a></li>");
+    }
+});
+// @ts-ignore
+$.post('/api/getPacks', { 'token': checkCookie() }, function (data) {
+    if (data.length > 0) {
+        $('.firstNav').append("<li><a href=\"./myPacks\">My Packs</a></li>");
+    }
+});

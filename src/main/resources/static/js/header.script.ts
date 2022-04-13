@@ -1,12 +1,12 @@
 document.addEventListener('click', (e) => {
-    const target:any = e.target as HTMLElement;
+    const target: any = e.target as HTMLElement;
     if (target.classList.contains('logotype')) {
         window.location.href = '/';
     }
 })
 
 document.addEventListener('mouseover', (e) => {
-    const target:any = e.target as HTMLElement;
+    const target: any = e.target as HTMLElement;
     if (target.classList.contains('logotype')) {
         target.style.cursor = 'pointer';
     }
@@ -18,16 +18,32 @@ $.post('/api/getUserCoins', {'token': checkCookie()}, (data) => {
 });
 
 // @ts-ignore
-    if (checkCookie() !== 'false') {
-        $('.navColumn').empty();
-        $('.firstNav').empty();
+if (checkCookie() !== 'false') {
+    $('.navColumn').empty();
+    $('.firstNav').empty();
 
-        $('.navColumn').append(`<li><a href="/profile">Profile</a></li>`);
+    $('.navColumn').append(`<li><a href="/profile">Profile</a></li>`);
 
-        $('.firstNav').append(`
+    $('.firstNav').append(`
         <li><a href="./">Home</a></li>
         <li><a href="./users">Users</a></li>
         <li><a href="./search">Catalog</a></li>
         <li><a href="./shop">Shop</a></li>
     `);
+}
+
+// @ts-ignore
+$.post('/api/getCards', {'token': checkCookie()}, (data) => {
+    if(data.length > 0) {
+        $('.firstNav').append(`<li><a href="./myCards">My Cards</a></li>`);
     }
+});
+
+// @ts-ignore
+$.post('/api/getPacks', {'token': checkCookie()}, (data) => {
+    if(data.length > 0) {
+        $('.firstNav').append(`<li><a href="./myPacks">My Packs</a></li>`);
+    }
+});
+
+
