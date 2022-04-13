@@ -7,49 +7,100 @@ import static com.codingfactory.porare.service.UserService.userTools;
 
 @Service
 public record PackService(JdbcTemplate jdbcTemplate) {
-
-
-    public String addPack(String token, String packType, int packPrice) {
+    public boolean addPack(String token, String packType, int packPrice) {
         try {
-
-          Integer userId = userTools.checkToken(token, jdbcTemplate);
+            /*
+            * Get user coins and calculate if the user has enough coin to make the purchase
+            */
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
             int coins = jdbcTemplate.queryForObject("SELECT u_coin FROM user WHERE u_id = ?", Integer.class, userId);
             coins -= packPrice;
             if (coins > 0) {
-            String sql = "INSERT INTO pack (p_type, p_fk_user_id) VALUES (?, ?)";
-            jdbcTemplate.update(sql, packType, userId);
+                /*
+                 * Remove coins from user
+                 */
                 String sql2 = "UPDATE user SET u_coin = ? WHERE u_id = ?";
                 jdbcTemplate.update(sql2, coins, userId);
-                return "true";
+
+                /*
+                 * Add pack to user
+                 */
+                String sql = "INSERT INTO pack (p_type, p_fk_user_id) VALUES (?, ?)";
+                jdbcTemplate.update(sql, packType, userId);
+
+                /* Everything is ok ? Return ✨ True ✨ */
+                return true;
             } else {
-                return "false";
+                /*
+                 * Error :
+                 * Not enough coins
+                 */
+
+                return false;
             }
         } catch (Exception e) {
-            return "false";
+            /*
+             * Error :
+             * User not found
+             * Token not found
+             * Sql error
+             * ...
+             */
+            return false;
         }
     }
 
-    public String deletePack(String p_type, String token) {
+    public boolean deletePack(String p_type, String token) {
         try {
+            /*
+            * Check if user has pack. If not, return false
+            * If yes, delete pack
+            */
+
             Integer userId = userTools.checkToken(token, jdbcTemplate);
 
-            String sql = "DELETE FROM pack WHERE p_fk_user_id = ? AND p_type = ? LIMIT 1";
-            jdbcTemplate.update(sql, userId, p_type);
-            System.out.println("delete pack");
-            return "true";
+            String sql = "SELECT p_type FROM pack WHERE p_fk_user_id = ?";
+            String packType = jdbcTemplate.queryForObject(sql, String.class, userId);
+
+            if (packType.equals(p_type)) {
+                /* Nice ! User has pack, now delete them */
+                sql = "DELETE FROM pack WHERE p_fk_user_id = ? AND p_type = ? LIMIT 1";
+                jdbcTemplate.update(sql, userId, p_type);
+
+                return true;
+            } else {
+                /* Error : User has not this pack */
+                return false;
+            }
         } catch (Exception e) {
-            return "false";
+            /*
+             * Error :
+             * User not found
+             * Token not found
+             * Sql error
+             * ...
+             */
+            return false;
         }
     }
 
     public int getPackPrice(String p_type) {
         try {
+            /*
+            * Get Pack price and return it
+             */
+
             String sql = "SELECT pp_price FROM pack_price WHERE pp_type = ?";
-            int price = jdbcTemplate.queryForObject(sql, Integer.class, p_type);
-            return price;
+            return jdbcTemplate.queryForObject(sql, Integer.class, p_type);
         } catch (Exception e) {
+            /*
+             * Error :
+             * Pack not found
+             * Sql error
+             * ...
+             */
+
             return -1;
         }
     }
-
 }
