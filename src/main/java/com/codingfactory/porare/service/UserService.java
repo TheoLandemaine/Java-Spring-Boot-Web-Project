@@ -214,13 +214,18 @@ public record UserService(JdbcTemplate jdbcTemplate) {
 
     public boolean giveGift(String token, int randomGift) {
         try {
-            int userId = userTools.checkToken(token, jdbcTemplate);
-        int coins = getUserCoins(token);
-        coins += randomGift;
-        jdbcTemplate.update("UPDATE user SET u_coin = '" + coins + "' WHERE u_id = '" + userId + "'");
+            // Check if u_gift == 1
+            if (getDailyAccess(token)) {
+                int userId = userTools.checkToken(token, jdbcTemplate);
+                int coins = getUserCoins(token);
+                coins += randomGift;
+                jdbcTemplate.update("UPDATE user SET u_coin = '" + coins + "' WHERE u_id = '" + userId + "'");
 
-        jdbcTemplate.update( "UPDATE user SET u_gift = 0 WHERE u_id = '" + userId + "'");
-        return true;
+                jdbcTemplate.update("UPDATE user SET u_gift = 0 WHERE u_id = '" + userId + "'");
+                return true;
+            } else {
+                return false;
+            }
         } catch (JWTDecodeException exception) {
             //Invalid token
             return false;
