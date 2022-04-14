@@ -42,8 +42,7 @@ public record CardService(JdbcTemplate jdbcTemplate) {
              */
             Integer userId = userTools.checkToken(token, jdbcTemplate);
 
-            String sql = "DELETE FROM card WHERE c_fk_user_id = ? AND c_id = ? LIMIT 1";
-            jdbcTemplate.update(sql, userId, cardId);
+
 
             int coins = jdbcTemplate.queryForObject("SELECT u_coin FROM user WHERE u_id = ?", Integer.class, userId);
 
@@ -51,8 +50,11 @@ public record CardService(JdbcTemplate jdbcTemplate) {
 
             coins += cardPrice;
 
-            sql = "UPDATE user SET u_coin = ? WHERE u_id = ?";
+            String sql = "UPDATE user SET u_coin = ? WHERE u_id = ?";
             jdbcTemplate.update(sql, coins, userId);
+
+            sql = "DELETE FROM card WHERE c_fk_user_id = ? AND c_id = ? LIMIT 1";
+            jdbcTemplate.update(sql, userId, cardId);
             return true;
         } catch (Exception e) {
             /*
