@@ -194,6 +194,20 @@ public class PorareRestController {
         return userService.editUsername(token, newUsername);
     }
 
+    @PostMapping("editPassword")
+    public Boolean editPassword(@RequestParam String token,
+                                @RequestParam String actualPassword,
+                                @RequestParam String newPassword,
+                                @RequestParam String newPasswordConfirmation,
+                                HttpServletRequest httpServletRequest) {
+        return userService.editPassword(token, actualPassword, newPassword, newPasswordConfirmation);
+    }
+
+    @PostMapping("deleteAccount")
+    public Boolean deleteAccount(@RequestParam String token,
+                                 HttpServletRequest httpServletRequest) {
+        return userService.deleteAccount(token);
+    }
 }
 
 

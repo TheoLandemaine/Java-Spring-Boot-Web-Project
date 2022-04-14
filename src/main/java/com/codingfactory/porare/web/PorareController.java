@@ -55,7 +55,7 @@ public class PorareController {
 	@GetMapping("edit")
 	public String editProfile() { return "profile/edit"; }
 
-	@GetMapping("password")
+	@GetMapping("editPassword")
 	public String editPassword() { return "profile/editPassword"; }
 
 	@GetMapping("myCards")

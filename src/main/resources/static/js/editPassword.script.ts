@@ -10,29 +10,31 @@ $.post(url5, {'token': checkCookie()}, function (data) {
 // On submit click
 document.querySelector('#submit').addEventListener('click', function (e) {
     e.preventDefault();
-
+console.log('submit');
 
     const username: string = (<HTMLInputElement>document.querySelector('#username')).value; // Get the email value
-    const exPassword: string = (<HTMLInputElement>document.querySelector('#exPassword')).value; // Get the password value
-    const password: string = (<HTMLInputElement>document.querySelector('#password')).value; // Get the password value
-    const confirmPassword: string = (<HTMLInputElement>document.querySelector('#confirmPassword')).value; // Get the confirm password value
+    const actualPassword: string = (<HTMLInputElement>document.querySelector('#exPassword')).value; // Get the password value
+    const newPassword: string = (<HTMLInputElement>document.querySelector('#password')).value; // Get the password value
+    const newPasswordConfirmation: string = (<HTMLInputElement>document.querySelector('#confirmPassword')).value; // Get the confirm password value
 
     const data = {
-        'username': username,
-        'exPassword': exPassword,
-        'password': password,
-        'editPassword': confirmPassword
+        // @ts-ignore
+        token: checkCookie(),
+        'actualPassword': actualPassword,
+        'newPassword': newPassword,
+        'newPasswordConfirmation': newPasswordConfirmation
     };
 
-
-    if (password && username && exPassword && confirmPassword && password === confirmPassword) {
+    console.log(data);
+    if (newPassword && username && actualPassword && newPasswordConfirmation && newPassword === newPasswordConfirmation) {
         // Register the account into the api
         const url: string = './api/editPassword';
-
+console.log(data);
         $.post(url, data, function (data) {
             // If response is true, redirect to login page
-            if (data === 'true') {
-                window.location.href = './profile';
+            if (data !== false) {
+                document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                window.location.href = './login';
             } else {
                 // If response is false, show error message
                 document.querySelector('#popUpContainer').innerHTML +=
@@ -42,7 +44,7 @@ document.querySelector('#submit').addEventListener('click', function (e) {
                     '</div>';
             }
         });
-    } else if (!password || !password || !confirmPassword) {
+    } else if (!newPassword || !newPassword || !newPasswordConfirmation) {
         document.querySelector('#popUpContainer').innerHTML +=
             '<div class="popup">' +
             '<p class="popupMessage">Please fill in all the fields</p>' +
