@@ -23,18 +23,22 @@ document.querySelector('#submit').addEventListener('click', function (e) {
             } else {
                 // If response is false, show error message
                 document.querySelector('#popUpContainer').innerHTML +=
-                    '<div class="popup">' +
-                    '<p class="popupMessage">This account does not exist</p>' +
-                    '<button class="popupButton">OK</button>' +
-                    '</div>';
+                    // @ts-ignore
+                    Swal.fire(
+                        'Error!',
+                        'Check your email and password',
+                        'error'
+                    )
             }
         });
     } else if (!password || !email) {
         document.querySelector('#popUpContainer').innerHTML +=
-            '<div class="popup">' +
-            '<p class="popupMessage">Please fill in all the fields</p>' +
-            '<button class="popupButton">OK</button>' +
-            '</div>';
+            // @ts-ignore
+            Swal.fire(
+                'Error!',
+                'Please fill in all the fields',
+                'error'
+            )
     }
 
     let popups = document.querySelectorAll('.popup');

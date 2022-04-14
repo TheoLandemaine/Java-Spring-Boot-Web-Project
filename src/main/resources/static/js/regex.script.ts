@@ -20,11 +20,12 @@ document.addEventListener('change', (e) => {
             target.style.backgroundColor = '#f8d7da';
             username = false;
 
-            document.querySelector('#popUpContainer').innerHTML +=
-                '<div class="popup">' +
-                '<p class="popupMessage">Invalid Username</p>' +
-                '<button class="popupButton">OK</button>' +
-                '</div>';
+                // @ts-ignore
+                Swal.fire(
+                    'Error!',
+                    'Invalid Username',
+                    'error'
+                )
 
 
             // If it is empty, make it neutral
@@ -49,11 +50,12 @@ document.addEventListener('change', (e) => {
             target.style.backgroundColor = '#f8d7da';
             email = false;
 
-            document.querySelector('#popUpContainer').innerHTML +=
-                '<div class="popup">' +
-                '<p class="popupMessage">Email is incorrect</p>' +
-                '<button class="popupButton">OK</button>' +
-                '</div>';
+                // @ts-ignore
+                Swal.fire(
+                    'Error!',
+                    'Your email is incorrect',
+                    'error'
+                )
 
             // If it is empty, make it neutral
         } else {
@@ -89,12 +91,12 @@ document.addEventListener('change', (e) => {
             } else if (document.querySelector('#exPassword') && target.getAttribute('id') === 'exPassword') {
                 exPassword = false;
             }
-
-            document.querySelector('#popUpContainer').innerHTML +=
-                '<div class="popup">' +
-                '<p class="popupMessage">Your password must be at least 8 characters longer</p>' +
-                '<button class="popupButton">OK</button>' +
-                '</div>';
+                // @ts-ignore
+                Swal.fire(
+                    'Error!',
+                    'Your password must be at least 8 characters long',
+                    'error'
+                )
 
 
             // After 1.5 seconds the popup will disappear
@@ -106,12 +108,12 @@ document.addEventListener('change', (e) => {
         } else if (target.value != "" && !target.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
             target.style.borderColor = 'red';
             target.style.backgroundColor = '#f8d7da';
-            let popup = document.createElement('div');
-            document.querySelector('#popUpContainer').innerHTML +=
-                '<div class="popup">' +
-                '<p class="popupMessage">Your password must contain at least one uppercase letter, one lowercase letter and one special character </p>' +
-                '<button class="popupButton">OK</button>' +
-                '</div>';
+                // @ts-ignore
+                Swal.fire(
+                    'Error!',
+                    'Your password must at least contain one uppercase letter, one lowercase letter, one number and one special character',
+                    'error'
+                )
 
 
             // If it is empty, make it neutral
@@ -127,33 +129,6 @@ document.addEventListener('change', (e) => {
                 exPassword = false;
             }
         }
-    }
-    let popups = document.querySelectorAll('.popup');
-    if (popups.length > 0) {
-        for (let y = 0; y < popups.length; y++) {
-            if (popups[y].classList.contains('coming')) {
-                popups[y].classList.remove('coming');
-            }
-        }
-        for (let i = popups.length - 1; i < popups.length; i++) {
-            popups[i].classList.add('coming');
-        }
-
-
-        setTimeout(function () {
-            let popups = document.querySelectorAll('.popup')
-            for (let i = 0; i < popups.length; i++) {
-                if (!popups[i].classList.contains('leaving')) {
-                    popups[i].classList.add('leaving');
-                    break;
-                }
-            }
-        }, 3000);
-
-        // After 1.5 seconds the popup will disappear
-        setTimeout(function () {
-            document.querySelector('.popup').remove();
-        }, 3500);
     }
 
     if ((username || !document.querySelector('#username'))&& (password || !document.querySelector('#password')) && (password_confirm || !document.querySelector('#confirmPassword')) && (exPassword || !document.querySelector('#exPassword'))) {
