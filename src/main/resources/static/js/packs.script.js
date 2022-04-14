@@ -69,12 +69,29 @@ $(document).click(function (e) {
     // @ts-ignore
     if (e.target.classList.contains('openPack')) {
         // @ts-ignore
-        deletePackFromDB(e.target.parentNode.parentNode.getAttribute('data-attr'));
-        clearPacks();
         // @ts-ignore
-        animationBoosters(e.target.parentNode.parentNode.getAttribute('data-attr'));
+        var token = checkCookie();
+        var url_1 = '/api/checkPack';
+        var data_1 = {
+            "token": token,
+            // @ts-ignore
+            "packType": e.target.parentNode.parentNode.getAttribute('data-attr')
+        };
+        $.post(url_1, data_1, function (response) {
+            if (response !== false) {
+                // @ts-ignore
+                deletePackFromDB(e.target.parentNode.parentNode.getAttribute('data-attr'));
+                // @ts-ignore
+                animationBoosters(e.target.parentNode.parentNode.getAttribute('data-attr'));
+                // @ts-ignore
+                drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'));
+            }
+            else {
+                // @ts-ignore
+                Swal.fire('Error!', 'This pack does not exist anymore', 'error');
+            }
+        });
         // @ts-ignore
-        drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'));
     }
     // When all cards are drawn, show the button to return the packs
     $('.toFlip').click(function () {
@@ -110,12 +127,12 @@ function generateCards(pokemonsDrawed) {
         var token = checkCookie();
         // For each card in the array
         // @ts-ignore
-        var url_1 = 'api/saveCards';
-        var data_1 = {
+        var url_2 = 'api/saveCards';
+        var data_2 = {
             cardId: pokemonsDrawed[i].id,
             token: token
         };
-        $.post(url_1, data_1, function (response) {
+        $.post(url_2, data_2, function (response) {
             if (response === false) {
                 alert('Problem while saving cards');
             }
@@ -292,5 +309,10 @@ function deletePackFromDB(packType) {
         "token": token,
         "packType": packType
     };
-    $.post(url, data, function (response) { });
+    $.post(url, data, function (response) {
+        if (response === false) {
+            // @ts-ignore
+            Swal.fire('Error!', 'Error while deleting pack', 'error');
+        }
+    });
 }

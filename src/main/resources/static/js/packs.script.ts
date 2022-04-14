@@ -42,14 +42,35 @@ $(document).click((e) => {
     // @ts-ignore
     if (e.target.classList.contains('openPack')) {
         // @ts-ignore
-        deletePackFromDB(e.target.parentNode.parentNode.getAttribute('data-attr'));
-        clearPacks();
-
         // @ts-ignore
-        animationBoosters(e.target.parentNode.parentNode.getAttribute('data-attr'));
+        let token = checkCookie();
+        const url = '/api/checkPack';
+        const data = {
+            "token": token,
+            // @ts-ignore
+            "packType": e.target.parentNode.parentNode.getAttribute('data-attr')
+        }
 
+        $.post(url, data, (response) => {
+            if (response !== false) {
+                // @ts-ignore
+                deletePackFromDB(e.target.parentNode.parentNode.getAttribute('data-attr'));
+
+                // @ts-ignore
+                animationBoosters(e.target.parentNode.parentNode.getAttribute('data-attr'));
+
+                // @ts-ignore
+                drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'))
+            } else {
+                // @ts-ignore
+                Swal.fire(
+                    'Error!',
+                    'This pack does not exist anymore',
+                    'error'
+                )
+            }
+        });
         // @ts-ignore
-        drawPokemons(e.target.parentNode.parentNode.getAttribute('data-attr'))
     }
 
 
@@ -324,5 +345,15 @@ function deletePackFromDB(packType) {
         "packType": packType
     }
 
-    $.post(url, data, (response) => {/* ok */});
+    $.post(url, data, (response) => {
+        if (response === false) {
+            // @ts-ignore
+            Swal.fire(
+                'Error!',
+                'Error while deleting pack',
+                'error'
+            )
+        }
+    });
 }
+
