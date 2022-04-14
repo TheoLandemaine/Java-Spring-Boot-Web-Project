@@ -95,13 +95,19 @@ function buyPack(packType) {
                         $.post(url_1, data_1, function (response) {
                             // If response is true, redirect to login page
                             if (response !== false) {
+                                // Create Swal.fire popup with success message and two buttons : Buy another pack and Go to my packs
                                 // @ts-ignore
                                 Swal.fire({
+                                    title: 'Success!',
+                                    text: 'You bought a pack!',
                                     icon: 'success',
-                                    title: 'Your pack as been successfully bought!',
-                                    buttons: ['Buy another pack', 'Go to my packs']
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Buy another pack',
+                                    cancelButtonText: 'Go to my packs'
                                 }).then(function (result) {
-                                    if (result.value === 'Buy another pack') {
+                                    if (result.isConfirmed) {
                                         window.location.href = '/shop';
                                     }
                                     else {

@@ -127,6 +127,20 @@ public record UserService(JdbcTemplate jdbcTemplate) {
         }
     }
 
+    public Boolean deleteAccount(String token) {
+        try {
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
+
+            // Delete the user
+            jdbcTemplate.update("DELETE FROM user WHERE u_id = '" + userId + "'");
+
+            return true;
+        } catch (JWTVerificationException exception) {
+            //Invalid signature/claims
+            return false;
+        }
+    }
+
     public int getUserCoins(String token) {
         try {
             // Get User Id
