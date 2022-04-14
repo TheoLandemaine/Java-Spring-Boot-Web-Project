@@ -208,6 +208,13 @@ public class PorareRestController {
                                  HttpServletRequest httpServletRequest) {
         return userService.deleteAccount(token);
     }
+
+    @PostMapping("checkPack")
+    public boolean checkPack(@RequestParam String token,
+                             @RequestParam String packType,
+                             HttpServletRequest httpServletRequest) {
+        return packService.checkPack(packType, token);
+    }
 }
 
 
