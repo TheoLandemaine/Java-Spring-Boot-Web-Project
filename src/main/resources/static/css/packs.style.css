@@ -7,12 +7,12 @@
   padding: 0;
 }
 
-.buyPack {
+.buyPack, .returnToPacks {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 20px;
-  margin: 10% 0;
+  margin: 3% 0;
   width: 100%;
   height: 50px;
   font-size: 15px;
@@ -25,7 +25,7 @@
   background: none;
   transition: all 0.5s;
 }
-.buyPack:hover {
+.buyPack:hover, .returnToPacks:hover {
   background: linear-gradient(to bottom right, dodgerblue, #4eadff);
   color: #fff;
 }
@@ -33,7 +33,7 @@
 .allPacks {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 1rem;
   overflow-x: hidden;
 }
@@ -43,7 +43,7 @@
   right: 50%;
   z-index: 4;
   border: none;
-  background-color: rgb(190, 190, 190);
+  background-color: #bebebe;
   width: 30px;
   border-radius: 30px;
   height: 30px;
@@ -51,7 +51,7 @@
 .allPacks .closePack:hover {
   cursor: pointer;
   color: red;
-  background-color: rgb(236, 185, 185);
+  background-color: #ecb9b9;
 }
 .allPacks .pack {
   width: calc(34% - 1rem);
