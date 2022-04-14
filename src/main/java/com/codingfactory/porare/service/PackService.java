@@ -10,8 +10,8 @@ public record PackService(JdbcTemplate jdbcTemplate) {
     public boolean addPack(String token, String packType, int packPrice) {
         try {
             /*
-            * Get user coins and calculate if the user has enough coin to make the purchase
-            */
+             * Get user coins and calculate if the user has enough coin to make the purchase
+             */
             Integer userId = userTools.checkToken(token, jdbcTemplate);
             int coins = jdbcTemplate.queryForObject("SELECT u_coin FROM user WHERE u_id = ?", Integer.class, userId);
             coins -= packPrice;
@@ -53,9 +53,10 @@ public record PackService(JdbcTemplate jdbcTemplate) {
     public boolean deletePack(String p_type, String token) {
         try {
             /*
-            * Check if user has pack. If not, return false
-            * If yes, delete pack
-            */
+             * Check if user has pack. If not, return false
+             * If yes, delete pack
+             */
+
 
             Integer userId = userTools.checkToken(token, jdbcTemplate);
 
@@ -88,7 +89,7 @@ public record PackService(JdbcTemplate jdbcTemplate) {
     public int getPackPrice(String p_type) {
         try {
             /*
-            * Get Pack price and return it
+             * Get Pack price and return it
              */
 
             String sql = "SELECT pp_price FROM pack_price WHERE pp_type = ?";
@@ -102,6 +103,36 @@ public record PackService(JdbcTemplate jdbcTemplate) {
              */
 
             return -1;
+        }
+
+    }
+
+    public boolean checkPack(String p_type, String token) {
+        try {
+            /*
+             * Check if user has pack. If not, return false
+             * If yes, return true
+             */
+
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
+
+            String sql = "SELECT COUNT(*) FROM pack WHERE p_fk_user_id = ? AND p_type = ?";
+            int count = jdbcTemplate.queryForObject(sql, Integer.class, userId, p_type);
+
+            if (count > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            /*
+             * Error :
+             * User not found
+             * Token not found
+             * Sql error
+             * ...
+             */
+            return false;
         }
     }
 }
