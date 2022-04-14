@@ -54,7 +54,7 @@ function generatePacksFromAPI(token) {
         if (response !== false) {
             for (var i = 0; i < response.length; i++) {
                 var pack = response[i];
-                $('.allPacks').append("\n                    <div class = \"pack\" data-attr=\"".concat(pack, "\">\n                        <div class = \"packFace\">\n                        <img class=\"openPack\" src=\"").concat(packVisual(pack), "\">\n                    </div> \n                    </tr>\n                "));
+                $('.allPacks').append("\n                    <div class = \"pack\" data-attr=\"".concat(pack.toLowerCase(), "\">\n                        <div class = \"packFace\">\n                        <img class=\"openPack\" src=\"").concat(packVisual(pack), "\">\n                    </div> \n                    </tr>\n                "));
             }
             if (response.length === 0) {
                 window.location.href = '/shop';
@@ -259,6 +259,7 @@ function numberPage(type) {
     return randomPage;
 }
 function packVisual(packType) {
+    packType = packType.toLowerCase();
     // @TODO : Get the length of the file that contains our images for our pack
     // @TODO : Get random number between 1 and the length of the file
     // @TODO : Get the image from the random number
