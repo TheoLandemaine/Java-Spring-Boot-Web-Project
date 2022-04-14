@@ -213,7 +213,7 @@
   position: relative;
   opacity: 1;
   padding-top: 55%;
-  margin: 10% 10%;
+  margin: 10%;
   -webkit-transform-style: preserve-3d;
   -ms-transform-style: preserve-3d;
   transform-style: preserve-3d;
@@ -330,7 +330,7 @@
 
 #pack-opened .pack-flash .pack-flash-pack .pack-count-corner {
   top: 0;
-  right: 0px;
+  right: 0;
   z-index: 3;
 }
 
@@ -588,5 +588,3 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-/*# sourceMappingURL=packs.style.css.map */
