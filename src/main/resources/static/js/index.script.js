@@ -36,7 +36,7 @@ function searchingPokeData(TheRarity, theType, name) {
             return response.json();
         })
             .then(function (data) {
-            chargement();
+            // chargement();
             postPokemonCardInfo(data.data);
             if (document.querySelectorAll('.resultsImage').length == 0) {
                 document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
@@ -59,7 +59,7 @@ function searchingPokeData(TheRarity, theType, name) {
             // return response.json();
         })
             .then(function (data) {
-            chargement();
+            // chargement();
             postPokemonCardInfo(data.data);
             if (document.querySelectorAll('.resultsImage').length == 0) {
                 document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
@@ -81,7 +81,7 @@ function searchingPokeData(TheRarity, theType, name) {
             return response.json();
         })
             .then(function (data) {
-            chargement();
+            // chargement();
             postPokemonCardInfo(data.data);
             if (document.querySelectorAll('.resultsImage').length == 0) {
                 document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
@@ -103,7 +103,7 @@ function searchingPokeData(TheRarity, theType, name) {
             return response.json();
         })
             .then(function (data) {
-            chargement();
+            // chargement();
             postPokemonCardInfo(data.data);
             if (document.querySelectorAll('.resultsImage').length == 0) {
                 document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
@@ -125,7 +125,7 @@ function searchingPokeData(TheRarity, theType, name) {
             return response.json();
         })
             .then(function (data) {
-            chargement();
+            // chargement();
             postPokemonCardInfo(data.data);
             if (document.querySelectorAll('.resultsImage').length == 0) {
                 document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
@@ -147,7 +147,7 @@ function searchingPokeData(TheRarity, theType, name) {
             return response.json();
         })
             .then(function (data) {
-            chargement();
+            // chargement();
             postPokemonCardInfo(data.data);
             if (document.querySelectorAll('.resultsImage').length == 0) {
                 document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
@@ -164,12 +164,13 @@ function searchingPokeData(TheRarity, theType, name) {
     }
     else if (name) {
         var nameURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name;
+        console.log("test 1");
         fetch(nameURL)
             .then(function (response) {
+            console.log("test");
             return response.json();
         })
             .then(function (data) {
-            chargement();
             postPokemonCardInfo(data.data);
             if (document.querySelectorAll('.resultsImage').length == 0) {
                 document.querySelector('#pokeResults').innerHTML = "<h2 class='titleNoCard'>No card matches your search</h2>";
@@ -258,6 +259,8 @@ searchButton1.addEventListener("click", function () {
     // parameterRarity = selectRarity.value;
     var parameterRarity = recupRarity(selectRarity);
     var searchedName = nameSearch1.value.toLowerCase();
+    console.log("test de chargement");
+    chargement();
     searchingPokeData(parameterRarity, parameterType, searchedName);
     resultsContainer.innerHTML = "";
 });
@@ -302,10 +305,14 @@ function postSavedCards(dataTCG) {
     });
 }
 function chargement() {
-    document.querySelector('#pokeResults').innerHTML = "<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>";
-    var pokeball = document.querySelector('.center-on-page');
+    console.log("début de chargement");
+    var chargement = document.querySelector('.chargementCatalog');
+    chargement.style.height = "100vh";
+    chargement.innerHTML = "<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>";
     setTimeout(function () {
-        pokeball.style.display = "none";
+        $(chargement).empty();
+        chargement.style.height = "0vh";
+        console.log("fin de chargement");
     }, 3700);
 }
 var typeTitle = document.getElementsByClassName("typeTitle")[0];

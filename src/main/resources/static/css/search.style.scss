@@ -123,11 +123,22 @@ body {
   border-radius: 2em;
   padding: 0.5em;
   color: dodgerblue;
+  cursor: pointer;
 
   &:hover{
     background: linear-gradient(to bottom right, dodgerblue, #4eadff);
     color: #fff;
   }
+}
+
+.chargementCatalog {
+  width: 70%;
+  margin-left: auto;
+  left: auto;
+  right: auto;
+  //height: 80vh;
+  top: 1rem;
+  position: relative;
 }
 
 //#generation-search:hover{

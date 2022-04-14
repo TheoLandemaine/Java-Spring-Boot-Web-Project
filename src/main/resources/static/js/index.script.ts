@@ -48,7 +48,7 @@ function searchingPokeData(TheRarity, theType, name) {
                 return response.json();
             })
             .then(function (data) {
-                chargement();
+                // chargement();
 
                 postPokemonCardInfo(data.data);
 
@@ -74,7 +74,7 @@ function searchingPokeData(TheRarity, theType, name) {
                 // return response.json();
             })
             .then(function (data) {
-                chargement();
+                // chargement();
 
                 postPokemonCardInfo(data.data);
 
@@ -100,7 +100,7 @@ function searchingPokeData(TheRarity, theType, name) {
                 return response.json();
             })
             .then(function (data) {
-                chargement();
+                // chargement();
 
                 postPokemonCardInfo(data.data);
 
@@ -124,7 +124,7 @@ function searchingPokeData(TheRarity, theType, name) {
                 return response.json();
             })
             .then(function (data) {
-                chargement();
+                // chargement();
 
                 postPokemonCardInfo(data.data);
 
@@ -148,7 +148,7 @@ function searchingPokeData(TheRarity, theType, name) {
                 return response.json();
             })
             .then(function (data) {
-                chargement();
+                // chargement();
 
                 postPokemonCardInfo(data.data);
                 if (document.querySelectorAll('.resultsImage').length == 0) {
@@ -171,7 +171,7 @@ function searchingPokeData(TheRarity, theType, name) {
                 return response.json();
             })
             .then(function (data) {
-                chargement();
+                // chargement();
 
                 postPokemonCardInfo(data.data);
 
@@ -191,12 +191,14 @@ function searchingPokeData(TheRarity, theType, name) {
     } else if (name) {
         const nameURL = "https://api.pokemontcg.io/v2/cards?q=name:" + name;
 
+        console.log("test 1");
+
         fetch(nameURL)
             .then(function (response) {
+                console.log("test");
                 return response.json();
             })
             .then(function (data) {
-                chargement();
 
                 postPokemonCardInfo(data.data);
 
@@ -305,6 +307,10 @@ searchButton1.addEventListener("click", () => {
 
     const searchedName = nameSearch1.value.toLowerCase();
 
+    console.log("test de chargement");
+
+    chargement();
+
     searchingPokeData(parameterRarity, parameterType, searchedName);
 
     resultsContainer.innerHTML = "";
@@ -358,11 +364,15 @@ function postSavedCards(dataTCG) {
 }
 
 function chargement() {
-    document.querySelector('#pokeResults').innerHTML = "<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>";
-    let pokeball = document.querySelector('.center-on-page') as HTMLElement;
+    console.log("début de chargement");
+
+    let chargement = document.querySelector('.chargementCatalog') as HTMLElement;
+    chargement.style.height = "100vh";
+    chargement.innerHTML = "<div class='center-on-page'><div class='pokeball'><div class='pokeball__button'></div></div></div>";
     setTimeout(() => {
-        pokeball.style.display = "none"
+        $(chargement).empty();chargement.style.height = "0vh"; console.log("fin de chargement")
     }, 3700);
+
 }
 
 var typeTitle = document.getElementsByClassName("typeTitle")[0];
