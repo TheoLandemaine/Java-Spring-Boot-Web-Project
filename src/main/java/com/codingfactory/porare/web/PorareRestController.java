@@ -202,6 +202,12 @@ public class PorareRestController {
                                 HttpServletRequest httpServletRequest) {
         return userService.editPassword(token, actualPassword, newPassword, newPasswordConfirmation);
     }
+
+    @PostMapping("deleteAccount")
+    public Boolean deleteAccount(@RequestParam String token,
+                                 HttpServletRequest httpServletRequest) {
+        return userService.deleteAccount(token);
+    }
 }
 
 

@@ -36,11 +36,16 @@ public record CardService(JdbcTemplate jdbcTemplate) {
         }
 
         try {
+
+            // Check if user has card
+            Integer userId = userTools.checkToken(token, jdbcTemplate);
+            String cardIdInt = jdbcTemplate.queryForObject("SELECT c_id FROM card WHERE c_id = ? AND c_fk_user_id = ?", String.class, cardId, userId);
+            System.out.println(cardIdInt);
             /*
              * Check if user have card. If not, return false
              * If user have card, refund user and delete card from user
              */
-            Integer userId = userTools.checkToken(token, jdbcTemplate);
+            if (cardIdInt != null) {
 
 
 
@@ -56,7 +61,12 @@ public record CardService(JdbcTemplate jdbcTemplate) {
             sql = "DELETE FROM card WHERE c_fk_user_id = ? AND c_id = ? LIMIT 1";
             jdbcTemplate.update(sql, userId, cardId);
             return true;
+            } else {
+                return false;
+            }
+            
         } catch (Exception e) {
+            System.out.println(e);
             /*
              * Error:
              * User not found
