@@ -192,8 +192,7 @@ public record UserService(JdbcTemplate jdbcTemplate) {
 
     public int randomGiftToken(String token) {
         try {
-            int randomGift = new Random().nextInt(9)+1;
-            return randomGift;
+            return 5;
         } catch (Exception e) {
             return -1;
         }
