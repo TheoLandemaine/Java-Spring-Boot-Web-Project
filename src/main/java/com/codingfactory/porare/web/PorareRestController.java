@@ -194,6 +194,12 @@ public class PorareRestController {
         return userService.editUsername(token, newUsername);
     }
 
+    @PostMapping("deleteAccount")
+    public Boolean deleteAccount(@RequestParam String token,
+                                 HttpServletRequest httpServletRequest) {
+        return userService.deleteAccount(token);
+    }
+
 }
 
 
