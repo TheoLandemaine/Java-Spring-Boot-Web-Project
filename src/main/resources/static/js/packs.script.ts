@@ -22,7 +22,7 @@ function generatePacksFromAPI(token) {
                for (let i: number = 0; i < response.length; i++) {
                    let pack: any = response[i];
                    $('.allPacks').append(`
-                    <div class = "pack" data-attr="${pack}">
+                    <div class = "pack" data-attr="${pack.toLowerCase()}">
                         <div class = "packFace">
                         <img class="openPack" src="${packVisual(pack)}">
                     </div> 
@@ -289,6 +289,7 @@ function numberPage(type) {
 
 
 function packVisual(packType) {
+    packType = packType.toLowerCase();
 
     // @TODO : Get the length of the file that contains our images for our pack
     // @TODO : Get random number between 1 and the length of the file
