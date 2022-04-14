@@ -60,19 +60,21 @@ $(document).on('click', function (e) {
         var cardId_1 = target.parentNode.parentNode.getAttribute('data-id');
         // console.log(cardType);
         // console.log(cardId);
-        // @ts-ignore
-        Swal.fire({
-            title: 'Are you sure to sell this card?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, sell it!'
-        }).then(function (result) {
-            if (result.isConfirmed) {
-                sellCard(cardType_1, cardId_1);
-            }
+        $.post('/api/getCardPrice', { 'cardType': cardType_1 }, function (response) {
+            // @ts-ignore
+            Swal.fire({
+                title: "Are you sure to sell this card\n".concat(response, " coins ?"),
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, sell it!'
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    sellCard(cardType_1, cardId_1);
+                }
+            });
         });
     }
 });
