@@ -79,6 +79,7 @@ $(document).click(function (e) {
         };
         $.post(url_1, data_1, function (response) {
             if (response !== false) {
+                clearPacks();
                 // @ts-ignore
                 deletePackFromDB(e.target.parentNode.parentNode.getAttribute('data-attr'));
                 // @ts-ignore

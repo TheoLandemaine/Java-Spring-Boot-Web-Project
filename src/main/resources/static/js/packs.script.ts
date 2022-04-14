@@ -51,8 +51,13 @@ $(document).click((e) => {
             "packType": e.target.parentNode.parentNode.getAttribute('data-attr')
         }
 
+
+
         $.post(url, data, (response) => {
+
             if (response !== false) {
+                
+                clearPacks();
                 // @ts-ignore
                 deletePackFromDB(e.target.parentNode.parentNode.getAttribute('data-attr'));
 
