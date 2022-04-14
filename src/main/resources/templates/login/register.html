@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="./css/form.style.css">
+    <link rel="stylesheet" href="./css/popup.style.css">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Register</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header class="header"></header>
+
+<div id="popUpContainer"></div>
+
+<div class="formContainer">
+    <form class="form" method="post" action="">
+        <!-- Add an input for username, email and password and confirm password -->
+        <div class="formRow">
+            <input type="text" name="username" id="username" placeholder="Username">
+            <input type="text" name="email" id="email" placeholder="Email">
+        </div>
+        <div class="formRow">
+            <input type="password" name="password" id="password" placeholder="Password">
+            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+        </div>
+        <div class="formRow">
+            <input type="submit" disabled="disabled" id="submit" name="submit" value="Register">
+        </div>
+    </form>
+</div>
+
+<footer></footer>
+
+<script src="./js/global.script.ts"></script>
+<script src="./js/loader.script.js" id="loader"></script>
+<script src="./js/register.script.js" id="register"></script>
+<script src="./js/header.script.js"></script>
+<script src="./js/regex.script.js"></script>
+</body>
+
+</html>

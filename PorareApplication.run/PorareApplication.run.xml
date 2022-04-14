@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PorareApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <option name="ACTIVE_PROFILES" />
+    <module name="Java-Spring-Boot-Web-Project" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.codingfactory.porare.PorareApplication" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.codingfactory.porare.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

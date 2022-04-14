@@ -1,0 +1,569 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.buyPack, .returnToPacks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  margin: 3% 0;
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  color: dodgerblue;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+  border: solid 2px dodgerblue;
+  border-radius: 20px;
+  background: none;
+  transition: all 0.5s;
+
+  &:hover {
+    background: linear-gradient(to bottom right, dodgerblue, #4eadff);
+    color: #fff;
+  }
+}
+
+.allPacks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 1rem;
+  overflow-x:hidden;
+
+  .closePack {
+    position:absolute;
+    top: 30px;
+    right: 50%;
+    z-index: 4;
+    border:none;
+    background-color: rgb(190, 190, 190);
+    width: 30px;
+    border-radius: 30px;
+    height: 30px;
+
+    &:hover {
+      cursor: pointer;
+
+      color: red;
+      background-color: rgb(236, 185, 185);
+    }
+  }
+
+  .pack {
+    width: calc(34% - 1rem);
+    margin-bottom: 30px;
+
+     @media (max-width: 850px) {
+      width: 100%;
+    }
+    .packFace {
+      img {
+        width: 280px;
+        height: 400px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+
+
+      }
+    }
+        h2 {
+          font-size: 1.5rem;
+          font-weight: bold;
+          margin-top: 0;
+          margin-bottom: 0;
+          margin-left: 58%;
+          transform: translateX(-50%);
+        }
+  }
+}
+
+.packPreview {
+  width: calc(100% - 1rem);
+  margin-bottom: 60px;
+  margin-left: 60%;
+  transform: translateX(-50%);
+
+
+
+
+  .packFace {
+
+
+    width: 50%;
+    padding: 40px;
+    border-radius:30px;
+
+
+    img {
+      width: 300px;
+      height: 500px;
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 45%;
+    transform: translateX(-50%);
+  }
+  .buyPack {
+    width: 40%;
+    min-width:300px;
+    margin-left:3%;
+    padding: 10px;
+
+  }
+
+}
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+
+
+  .returnToPacks {
+    display: none;
+    width: 40%;
+    min-width:300px;
+    padding: 10px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+
+  }
+.allCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+
+
+  .carte {
+    background-color: transparent;
+    width: 30%;
+    height: 30%;
+    min-height: 400px;
+    perspective: 1000px;
+    margin: 20px;
+    margin-bottom: 50px;
+
+    .double-face {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.3s;
+
+      .face,
+      .arriere {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 30px;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+
+
+      .face {
+        transform: rotateY(90deg);
+      }
+
+      .face img {
+        width: 250px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+
+
+      }
+
+      .arriere {
+        background-image: url('./../img/backgroundCard.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 80px;
+        max-width: 280px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+      }
+
+    }
+
+    .active {
+      transform: rotateY(270deg);
+      // Make a smooth transition between the two sides
+
+
+      transform-style: preserve-3d;
+
+
+    }
+  }
+}
+
+}
+
+#pack-opened .pack-flash {
+  position: absolute;
+  width: 400px;
+  left: 50%;
+  pointer-events: none;
+  transform: translateX(-50%);
+  z-index: 5;
+  perspective: 5000px;
+  -webkit-perspective: 5000px;
+}
+#pack-opened .pack-flash .pack-flash-light, #pack-opened .pack-flash .pack-flash-particles, #pack-opened .pack-flash .pack-flash-pack {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#pack-opened .pack-flash .pack-flash-light, #pack-opened .pack-flash .pack-flash-particles {
+  width: 100%;
+}
+#pack-opened.open .pack-flash .pack-flash-light {
+  -webkit-animation: pack-flash-light 3s ease-out;
+  animation: pack-flash-light 3s ease-out;
+  opacity: 0;
+}
+#pack-opened.open .pack-flash .pack-flash-particles {
+  -webkit-animation: pack-flash-particles 3s ease-out;
+  animation: pack-flash-particles 3s ease-out;
+  opacity: 0;
+}
+#pack-opened .pack-flash .pack-flash-pack {
+  position: relative;
+  opacity: 1;
+  padding-top: 55%;
+  margin: 10% 10%;
+  -webkit-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  background-size: 0 0;
+}
+#pack-opened.open .pack-flash .pack-flash-pack {
+  opacity: 0;
+  -webkit-animation: pack-flash-pack 3s ease-in-out;
+  animation: pack-flash-pack 3s ease-in-out;
+}
+#pack-opened .pack-flash .pack-flash-pack .front {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
+#pack-opened .pack-flash .pack-flash-pack .bottom {
+  position: absolute;
+  top: 100%;
+  left: -5%;
+  width: 110%;
+  height: 6.74157303%;
+}
+#pack-opened .pack-flash .pack-flash-pack .top {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+}
+#pack-opened.open .pack-flash .pack-flash-pack .top {
+  -webkit-animation: pack-flash-pack-top 0.9s ease-in 1.2s forwards;
+  animation: pack-flash-pack-top 0.9s ease-in 1.2s forwards;
+}
+#pack-opened .pack-flash .pack-flash-pack .top img, #pack-opened .pack-flash .pack-flash-pack .top span {
+  float: left;
+  height: 100%;
+  width: 25%;
+}
+#pack-opened .pack-flash .pack-flash-pack .top img {
+  height: 100%;
+  width: 100%;
+}
+#pack-opened .pack-flash .pack-flash-pack .top .cut {
+  position: absolute;
+  bottom: 0;
+  top: 100%;
+  opacity: 0;
+  z-index: 9;
+}
+#pack-opened.open .pack-flash .pack-flash-pack .top .cut {
+  -webkit-animation: pack-flash-pack-cut 0.9s ease-out;
+  animation: pack-flash-pack-cut 0.9s ease-out;
+  opacity: 0;
+  width: 120px;
+  height: 120px;
+  margin-left: -60px;
+  margin-top: -60px;
+}
+#pack-opened .pack-flash .pack-flash-pack .top .cut img {
+  width: 100%;
+}
+#pack-opened .pack-flash .pack-flash-pack .top span {
+  -webkit-transform-origin: 0% 100%;
+  -ms-transform-origin: 0% 100%;
+  transform-origin: 0% 100%;
+  display: inline-block;
+}
+#pack-opened.open .pack-flash .pack-flash-pack .top span {
+  -webkit-animation: pack-flash-pack-rip 0.75s ease-in-out 0.9s forwards;
+  animation: pack-flash-pack-rip 0.75s ease-in-out 0.9s forwards;
+}
+#pack-opened .pack-flash .pack-flash-pack .top > img {
+  width: 25%;
+}
+#pack-opened .pack-flash .pack-flash-pack .top > span {
+  width: 75%;
+}
+#pack-opened .pack-flash .pack-flash-pack .top > span > img {
+  width: 33.33%;
+}
+#pack-opened .pack-flash .pack-flash-pack .top > span > span {
+  width: 66.66%;
+}
+#pack-opened .pack-flash .pack-flash-pack .top > span > span > img {
+  width: 50%;
+}
+#pack-opened .pack-flash .pack-flash-pack .top > span > span > span {
+  width: 50%;
+}
+#pack-opened .pack-flash .pack-flash-pack .top > span > span > span > img {
+  width: 100%;
+}
+#pack-opened .pack-flash .pack-flash-pack .pack-count-corner {
+  top: 0;
+  right: 0px;
+  z-index: 3;
+}
+#pack-opened .cards-reveal {
+  width: 400px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 50px;
+  z-index: 4;
+  perspective: 5000px;
+  -webkit-perspective: 5000px;
+}
+#pack-opened .cards-reveal ul {
+  margin: 50px;
+  position: relative;
+  overflow: visible;
+}
+#pack-opened .cards-reveal ul li {
+  width: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+}
+#pack-opened .cards-reveal ul li img {
+  width: 100%;
+}
+#pack-opened.open .cards-reveal ul li.card-01 {
+  animation: card-spread-01 0.5s ease forwards;
+  animation-delay: 2.5s;
+  z-index: 4;
+}
+#pack-opened.open .cards-reveal ul li.card-02 {
+  animation: card-spread-02 0.5s ease forwards;
+  animation-delay: 2.5s;
+  z-index: 3;
+}
+#pack-opened.open .cards-reveal ul li.card-03 {
+  animation: card-spread-03 0.5s ease forwards;
+  animation-delay: 2.5s;
+  z-index: 2;
+}
+#pack-opened.open .cards-reveal ul li.card-04 {
+  animation: card-spread-04 0.5s ease forwards;
+  animation-delay: 2.5s;
+  z-index: 1;
+}
+#pack-opened.open .cards-reveal ul li.gold {
+  box-shadow: 0 0 100px #fede3c;
+}
+@keyframes pack-flash-pack {
+  0% {
+    -webkit-transform: scale(1) rotateY(0deg);
+    -ms-transform: scale(1) rotateY(0deg);
+    transform: scale(1) rotateY(0deg);
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  40% {
+    -webkit-transform: scale(1) rotateY(0deg);
+    -ms-transform: scale(1) rotateY(0deg);
+    transform: scale(1) rotateY(0deg);
+    opacity: 1;
+  }
+  55% {
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    transform: translateY(0%);
+  }
+  75% {
+    -webkit-transform: translateY(300%);
+    -ms-transform: translateY(300%);
+    transform: translateY(300%);
+    opacity: 1;
+  }
+  85% {
+    -webkit-transform: translateY(300%);
+    -ms-transform: translateY(300%);
+    transform: translateY(300%);
+    opacity: 0;
+  }
+}
+@keyframes pack-flash-pack-top {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotate(-180deg) translateX(200%);
+    -ms-transform: rotate(-180deg) translateX(200%);
+    transform: rotate(-180deg) translateX(200%);
+    opacity: 0;
+  }
+}
+@keyframes pack-flash-pack-cut {
+  0% {
+    left: 0;
+    opacity: 0;
+    transform: rotate(0);
+  }
+  30% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+}
+@keyframes pack-flash-pack-rip {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-40deg);
+    -ms-transform: rotate(-40deg);
+    transform: rotate(-40deg);
+  }
+}
+@keyframes pack-flash-light {
+  0% {
+    -webkit-transform: scale(0.8) translateZ(-300px);
+    -ms-transform: scale(0.8) translateZ(-300px);
+    transform: scale(0.8) translateZ(-300px);
+  }
+  10% {
+    -webkit-transform: scale(1) translateZ(-300px);
+    -ms-transform: scale(1) translateZ(-300px);
+    transform: scale(1) translateZ(-300px);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+}
+
+
+/* Poké Styles */
+.pokeball {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  border: 10px solid #000;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: inset -10px 10px 0 10px #ccc;
+  animation: fall .25s ease-in-out,
+  shake 1.25s cubic-bezier(.36,.07,.19,.97) infinite;
+}
+.pokeball::before,
+.pokeball::after {
+  content:"";
+  position: absolute;
+  left: 0;
+}
+.pokeball::before {
+  background: red;
+  width: 100%;
+  height: 50%;
+}
+.pokeball::after {
+  top: calc(50% - 10px);
+  width: 100%;
+  height: 20px;
+  background: #000;
+}
+.pokeball__button {
+  position: absolute;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  width: 60px;
+  height: 60px;
+  background: #7f8c8d;
+  border: 10px solid #fff;
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: 0 0 0 10px black;
+  animation: blink .5s alternate infinite;
+}
+/* Animation */
+@keyframes blink {
+  from { background: #eee;}
+  to { background: #e74c3c; }
+}
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0); }
+  20% { transform: translate(-10px, 0) rotate(-20deg); }
+  30% { transform: translate(10px, 0) rotate(20deg); }
+  50% { transform: translate(-10px, 0) rotate(-10deg); }
+  60% { transform: translate(10px, 0) rotate(10deg); }
+  100% { transform: translate(0, 0) rotate(0); }
+}
+
+@keyframes fall {
+  0% { top: -200px }
+  60% { top: 0 }
+  80% { top: -20px }
+  100% { top: 0 }
+}
+
+.center-on-page {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
