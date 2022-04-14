@@ -16,6 +16,8 @@ import com.codingfactory.porare.tools.UserTools;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -106,14 +108,64 @@ public record UserService(JdbcTemplate jdbcTemplate) {
             // Check if the actual password is correct
             List<Map<String, Object>> userInformations = jdbcTemplate.queryForList("SELECT * FROM user WHERE u_id = '" + userId + "'");
 
+            try {
+                // Create MessageDigest instance for MD5
+                MessageDigest md = MessageDigest.getInstance("MD5");
+
+                // Add password bytes to digest
+                md.update(actualPassword.getBytes());
+
+                // Get the hash's bytes
+                byte[] bytes = md.digest();
+
+                // This bytes[] has bytes in decimal format. Convert it to hexadecimal format
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < bytes.length; i++) {
+                    sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                }
+
+                // Get complete hashed password in hex format
+                actualPassword = sb.toString();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+                return false;
+            }
+
             for (Map<String, Object> userInformation : userInformations) {
                 if (!((String) userInformation.get("u_password")).equals(actualPassword)) {
+                    System.out.println("Wrong password");
+                    System.out.println("Actual password: " + actualPassword);
+                    System.out.println("Password in database: " + userInformation.get("u_password"));
                     return false;
                 }
             }
 
             // Check if the new password and the new password confirmation are the same
             if (!newPassword.equals(newPasswordConfirmation)) {
+                System.out.println("New password and new password confirmation are not the same");
+                return false;
+            }
+
+            try {
+                // Create MessageDigest instance for MD5
+                MessageDigest md = MessageDigest.getInstance("MD5");
+
+                // Add password bytes to digest
+                md.update(newPassword.getBytes());
+
+                // Get the hash's bytes
+                byte[] bytes = md.digest();
+
+                // This bytes[] has bytes in decimal format. Convert it to hexadecimal format
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < bytes.length; i++) {
+                    sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                }
+
+                // Get complete hashed password in hex format
+                newPassword = sb.toString();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
                 return false;
             }
 
@@ -123,6 +175,7 @@ public record UserService(JdbcTemplate jdbcTemplate) {
             return true;
         } catch (JWTVerificationException exception) {
             //Invalid signature/claims
+            System.out.println("Invalid token");
             return false;
         }
     }

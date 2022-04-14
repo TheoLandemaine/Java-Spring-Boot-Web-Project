@@ -61,7 +61,7 @@ document.addEventListener('change', (e) => {
             target.style.backgroundColor = 'rgba(250, 247, 247, 0.406)';
             email = false;
         }
-    } else if (target.getAttribute('id') === "password" || target.getAttribute('id') === "confirmPassword" || (target.getAttribute('id') === "exPassword" && document.querySelector('exPassword'))) {
+    } else if (target.getAttribute('id') === "password" || target.getAttribute('id') === "confirmPassword" || (target.getAttribute('id') === "exPassword" && document.querySelector('#exPassword'))) {
 
 
         // If it corresponds to the format make it valid
@@ -156,7 +156,7 @@ document.addEventListener('change', (e) => {
         }, 3500);
     }
 
-    if ((username || !document.querySelector('#username')) && (email || !document.querySelector('#email')) && (password || !document.querySelector('#password')) && (password_confirm || !document.querySelector('#confirmPassword')) && (exPassword || !document.querySelector('#exPassword'))) {
+    if ((username || !document.querySelector('#username'))&& (password || !document.querySelector('#password')) && (password_confirm || !document.querySelector('#confirmPassword')) && (exPassword || !document.querySelector('#exPassword'))) {
         document.querySelector('#submit').removeAttribute('disabled');
     } else {
         document.querySelector('#submit').setAttribute('disabled', 'disabled');

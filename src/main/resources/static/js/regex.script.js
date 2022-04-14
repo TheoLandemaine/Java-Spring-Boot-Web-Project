@@ -55,7 +55,7 @@ document.addEventListener('change', function (e) {
             email = false;
         }
     }
-    else if (target.getAttribute('id') === "password" || target.getAttribute('id') === "confirmPassword" || (target.getAttribute('id') === "exPassword" && document.querySelector('exPassword'))) {
+    else if (target.getAttribute('id') === "password" || target.getAttribute('id') === "confirmPassword" || (target.getAttribute('id') === "exPassword" && document.querySelector('#exPassword'))) {
         // If it corresponds to the format make it valid
         if (target.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
             target.style.borderColor = 'green';
@@ -143,7 +143,7 @@ document.addEventListener('change', function (e) {
             document.querySelector('.popup').remove();
         }, 3500);
     }
-    if ((username || !document.querySelector('#username')) && (email || !document.querySelector('#email')) && (password || !document.querySelector('#password')) && (password_confirm || !document.querySelector('#confirmPassword')) && (exPassword || !document.querySelector('#exPassword'))) {
+    if ((username || !document.querySelector('#username')) && (password || !document.querySelector('#password')) && (password_confirm || !document.querySelector('#confirmPassword')) && (exPassword || !document.querySelector('#exPassword'))) {
         document.querySelector('#submit').removeAttribute('disabled');
     }
     else {

@@ -3,7 +3,7 @@ $('#edit').on('click', function () {
 });
 
 $('#modifyPassword').on('click', function () {
-    window.location.href = '/modifyPassword';
+    window.location.href = '/editPassword';
 });
 
 $('#delete').on('click', function () {
