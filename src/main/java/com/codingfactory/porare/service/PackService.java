@@ -15,7 +15,7 @@ public record PackService(JdbcTemplate jdbcTemplate) {
             Integer userId = userTools.checkToken(token, jdbcTemplate);
             int coins = jdbcTemplate.queryForObject("SELECT u_coin FROM user WHERE u_id = ?", Integer.class, userId);
             coins -= packPrice;
-            if (coins > 0) {
+            if (coins >= 0) {
                 /*
                  * Remove coins from user
                  */
