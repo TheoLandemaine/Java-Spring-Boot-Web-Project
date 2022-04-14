@@ -5,7 +5,20 @@ $('#modifyPassword').on('click', function () {
     window.location.href = '/modifyPassword';
 });
 $('#delete').on('click', function () {
-    window.location.href = '/delete';
+    // @ts-ignore
+    Swal.fire({
+        title: "Are you sure to delete your account ?",
+        text: "You won't be able to revert this !",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then(function (result) {
+        if (result.isConfirmed) {
+            deleteAccount();
+        }
+    });
 });
 $('#myPacks').on('click', function () {
     window.location.href = '/myPacks';
@@ -110,6 +123,22 @@ function generateCardsFromAPI(token) {
         else {
             alert('Vous n\'avez pas de pack, veuillez en acheter');
             window.location.href = '/shop';
+        }
+    });
+}
+function deleteAccount() {
+    var url = '/api/deleteAccount';
+    var data = {
+        // @ts-ignore
+        'token': checkCookie()
+    };
+    $.post(url, data, function (response) {
+        if (response !== false) {
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            window.location.href = '/register';
+        }
+        else {
+            alert('Error while deleting your account');
         }
     });
 }
