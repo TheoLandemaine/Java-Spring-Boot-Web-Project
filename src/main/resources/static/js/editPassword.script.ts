@@ -36,10 +36,10 @@ document.querySelector('#submit').addEventListener('click', function (e) {
             } else {
                 // If response is false, show error message
                 document.querySelector('#popUpContainer').innerHTML +=
-                    '<div class="popup">'
-                '<p class="popupMessage">Your previous password do not correspond to your account</p>' +
-                '<button class="popupButton">OK</button>' +
-                '</div>';
+                    '<div class="popup">'+
+                    '<p class="popupMessage">Your previous password do not correspond to your account</p>' +
+                    '<button class="popupButton">OK</button>' +
+                    '</div>';
             }
         });
     } else if (!password || !password || !confirmPassword) {

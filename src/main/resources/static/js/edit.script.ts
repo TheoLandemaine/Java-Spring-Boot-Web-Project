@@ -27,25 +27,24 @@ document.querySelector('#submit').addEventListener('click', function(e) {
 
 
 
-    const username:string = (<HTMLInputElement>document.querySelector('#username')).value; // Get the email value
+    const newUsername:string = (<HTMLInputElement>document.querySelector('#username')).value; // Get the email value
     const password:string = (<HTMLInputElement>document.querySelector('#password')).value; // Get the password value
     const confirmPassword:string = (<HTMLInputElement>document.querySelector('#confirmPassword')).value; // Get the confirm password value
-    const data = new FormData();
-    data.append("username", username);
-    data.append("password", password);
-    data.append("confirmPassword", confirmPassword);
 
+    const data: Object= {
+        //@ts-ignore
+        token : checkCookie(),
+        newUsername: newUsername,
+    };
 
-    const xhr:XMLHttpRequest = new XMLHttpRequest();
-    if ( password && username && confirmPassword && password === confirmPassword) {
+    console.log(data);
+
+    if ( password && newUsername && confirmPassword && password === confirmPassword) {
         // Register the account into the api
         const url: string = './api/editProfile';
 
-        xhr.open('POST', url, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // If response is true, redirect to login page
-                if (xhr.responseText === 'true') {
+        $.post(url, data, function (response) {
+                if (response !== false) {
                     window.location.href = './profile';
                 } else {
                     // If response is false, show error message
@@ -56,9 +55,7 @@ document.querySelector('#submit').addEventListener('click', function(e) {
                         '</div>';
 
                 }
-            }
-        };
-        xhr.send(data);
+            });
     } else if ( !password || !password || !confirmPassword) {
         document.querySelector('#popUpContainer').innerHTML +=
             '<div class="popup">' +

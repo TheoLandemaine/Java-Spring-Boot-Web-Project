@@ -17,35 +17,31 @@ xhr.send(data);
 // On submit click
 document.querySelector('#submit').addEventListener('click', function (e) {
     e.preventDefault();
-    var username = document.querySelector('#username').value; // Get the email value
+    var newUsername = document.querySelector('#username').value; // Get the email value
     var password = document.querySelector('#password').value; // Get the password value
     var confirmPassword = document.querySelector('#confirmPassword').value; // Get the confirm password value
-    var data = new FormData();
-    data.append("username", username);
-    data.append("password", password);
-    data.append("confirmPassword", confirmPassword);
-    var xhr = new XMLHttpRequest();
-    if (password && username && confirmPassword && password === confirmPassword) {
+    var data = {
+        //@ts-ignore
+        token: checkCookie(),
+        newUsername: newUsername
+    };
+    console.log(data);
+    if (password && newUsername && confirmPassword && password === confirmPassword) {
         // Register the account into the api
         var url_1 = './api/editProfile';
-        xhr.open('POST', url_1, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                // If response is true, redirect to login page
-                if (xhr.responseText === 'true') {
-                    window.location.href = './profile';
-                }
-                else {
-                    // If response is false, show error message
-                    document.querySelector('#popUpContainer').innerHTML +=
-                        '<div class="popup">' +
-                            '<p class="popupMessage">Password do not correspond to your account</p>' +
-                            '<button class="popupButton">OK</button>' +
-                            '</div>';
-                }
+        $.post(url_1, data, function (response) {
+            if (response !== false) {
+                window.location.href = './profile';
             }
-        };
-        xhr.send(data);
+            else {
+                // If response is false, show error message
+                document.querySelector('#popUpContainer').innerHTML +=
+                    '<div class="popup">' +
+                        '<p class="popupMessage">Password do not correspond to your account</p>' +
+                        '<button class="popupButton">OK</button>' +
+                        '</div>';
+            }
+        });
     }
     else if (!password || !password || !confirmPassword) {
         document.querySelector('#popUpContainer').innerHTML +=

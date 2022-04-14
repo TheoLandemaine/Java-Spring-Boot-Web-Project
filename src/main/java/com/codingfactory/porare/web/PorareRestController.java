@@ -186,6 +186,14 @@ public class PorareRestController {
                                  HttpServletRequest httpServletRequest) {
         return userService.getDailyAccess(token);
     }
+
+    @PostMapping("editProfile")
+    public Boolean editProfile(@RequestParam String token,
+                               @RequestParam String newUsername,
+                               HttpServletRequest httpServletRequest) {
+        return userService.editUsername(token, newUsername);
+    }
+
 }
 
 
