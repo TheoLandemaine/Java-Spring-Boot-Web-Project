@@ -26,7 +26,7 @@ $.post('api/getGiftAccess', {'token': checkCookie()}, (data) => {
 // @ts-ignore
 
 $.post('/api/getUserCoins', {'token': checkCookie()}, (data) => {
-    $('.navColumn').append(`<li><a class="nav" href="./shop">${data} <i class="fas fa-coins"></i></a></li>`);
+    $('.navColumn').append(`<li><a class="nav" href="./shop"><span id="actualCoins">${data}</span> <i class="fas fa-coins"></i></a></li>`);
 });
 
 

@@ -23,7 +23,7 @@ $.post('api/getGiftAccess', { 'token': checkCookie() }, function (data) {
 });
 // @ts-ignore
 $.post('/api/getUserCoins', { 'token': checkCookie() }, function (data) {
-    $('.navColumn').append("<li><a class=\"nav\" href=\"./shop\">".concat(data, " <i class=\"fas fa-coins\"></i></a></li>"));
+    $('.navColumn').append("<li><a class=\"nav\" href=\"./shop\"><span id=\"actualCoins\">".concat(data, "</span> <i class=\"fas fa-coins\"></i></a></li>"));
 });
 // @ts-ignore
 if (checkCookie() !== 'false') {
