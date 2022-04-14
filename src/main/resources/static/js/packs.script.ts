@@ -323,15 +323,5 @@ function deletePackFromDB(packType) {
         "packType": packType
     }
 
-    $.post(url, data, (response) => {
-        if (response == 4 && response == 200) {
-            // If response is true, redirect to login page
-            if (response !== false) {
-                console.log('Successfully deleted pack from DB');
-            } else {
-                // If response is false, show error message
-                alert("This pack doesn't exist in this databse");
-            }
-        }
-    });
+    $.post(url, data, (response) => {/* ok */});
 }
