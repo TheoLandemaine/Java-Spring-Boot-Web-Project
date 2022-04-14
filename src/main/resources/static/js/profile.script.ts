@@ -42,14 +42,22 @@ function sellCard(cardType: string, cardId: string) {
     $.post(url, data, function (response) {
         if (response === true) {
             $(`#${cardId}`).remove();
+
+            const actualCoins = parseInt($(`#actualCoins`).text());
+
             $(`#actualCoins`).text("Updating...");
 
             // @ts-ignore
-            Swal.fire(
-                'Sold!',
-                'Your card has been sold.',
-                'success'
-            )
+            $.post('/api/getUserCoins', {'token': checkCookie()}, (data) => {
+                $('#actualCoins').text(`${data}`);
+
+                // @ts-ignore
+                Swal.fire(
+                    `Sold! +${parseInt(data) - actualCoins} coins`,
+                    'Your card has been sold.',
+                    'success'
+                )
+            });
         } else {
             // @ts-ignore
             Swal.fire(

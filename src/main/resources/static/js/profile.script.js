@@ -35,9 +35,14 @@ function sellCard(cardType, cardId) {
     $.post(url, data, function (response) {
         if (response === true) {
             $("#".concat(cardId)).remove();
+            var actualCoins_1 = parseInt($("#actualCoins").text());
             $("#actualCoins").text("Updating...");
             // @ts-ignore
-            Swal.fire('Sold!', 'Your card has been sold.', 'success');
+            $.post('/api/getUserCoins', { 'token': checkCookie() }, function (data) {
+                $('#actualCoins').text("".concat(data));
+                // @ts-ignore
+                Swal.fire("Sold! +".concat(parseInt(data) - actualCoins_1, " coins"), 'Your card has been sold.', 'success');
+            });
         }
         else {
             // @ts-ignore

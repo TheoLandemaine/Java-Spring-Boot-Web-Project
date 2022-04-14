@@ -173,7 +173,7 @@ public record UserService(JdbcTemplate jdbcTemplate) {
         List<String> cards = new ArrayList<>();
 
         try {
-            String sql = "SELECT c_id FROM card WHERE c_fk_user_id = '" + userTools.checkToken(token, jdbcTemplate) + "'";
+            String sql = "SELECT c_id FROM card WHERE c_fk_user_id = '" + userTools.checkToken(token, jdbcTemplate) + "' ORDER BY c_number DESC";
 
             // Fetch element and console log the password
             List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
