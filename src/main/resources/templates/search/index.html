@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+    <link rel="stylesheet" href="./css/search.style.css">
+    <link rel="stylesheet" href="./css/form.style.css">
+    <link rel="stylesheet" href="./css/popup.style.css">
+    <title>Catalog</title>
+
+</head>
+
+
+<body>
+<header class="header"></header>
+
+
+<div class="row">
+    <div class="col s12 m4 l3">
+        <ul id="slide-out" class="sidenav sidenav-fixed">
+
+            <h3>Search your Pokemon cards </h3>
+            <div class="input-field col s12">
+                <label for="current-search">Pokemon Name</label>
+                <input type="text" id="name-input" name="current-search">
+
+                <h5 class="rarityTitle">Pokemon Rarity <i class="fa-solid fa-angles-down"></i></h5>
+
+                <div class="rarity_search">
+                    <label><input type="radio" value="common"    name="rarity" />Common</label>
+                    <label><input type="radio" value="uncommon"  name="rarity" />Uncommon</label>
+                    <label><input type="radio" value="rare"      name="rarity" />Rare</label>
+                    <label><input type="radio" value="vm"        name="rarity" />VM</label>
+                    <label><input type="radio" value="holo"      name="rarity" />Rare Holo</label>
+                    <label><input type="radio" value="ex"        name="rarity" />Rare Holo EX</label>
+                    <label><input type="radio" value="gx"        name="rarity" />Rare Holo GX</label>
+                    <label><input type="radio" value="lv"        name="rarity" />Rare Holo LV.X</label>
+                    <label><input type="radio" value="star"      name="rarity" />Rare Holo Star</label>
+                    <label><input type="radio" value="v"         name="rarity" />Rare Holo V</label>
+                    <label><input type="radio" value="vmax"      name="rarity" />Rare Holo VMAX</label>
+                    <label><input type="radio" value="vstar"     name="rarity" />Rare Holo VSTAR</label>
+                    <label><input type="radio" value="prime"     name="rarity" />Rare Prime</label>
+                    <label><input type="radio" value="star"      name="rarity" />Rare Prime Star</label>
+                    <label><input type="radio" value="rainbow"   name="rarity" />Rare Rainbow</label>
+                    <label><input type="radio" value="secret"    name="rarity" />Rare Secret</label>
+                    <label><input type="radio" value="shining"   name="rarity" />Rare Shining</label>
+                    <label><input type="radio" value="shiny"     name="rarity" />Rare Shiny</label>
+                    <label><input type="radio" value="ultra"     name="rarity" />Rare Ultra</label>
+                    <label><input type="radio" value="break"     name="rarity" />Rare BREAK</label>
+                    <label><input type="radio" value="amazing"   name="rarity" />Amazing Rare</label>
+                    <label><input type="radio" value="legend"    name="rarity" />LEGEND</label>
+                    <label><input type="radio" value="promo"     name="rarity" />Promo</label>
+                </div>
+
+                <h5 class="typeTitle">Pokemon Type</h5>
+
+                <div class="type-search">
+                    <label><input type="radio" value="Grass"     name="type" />Grass</label>
+                    <label><input type="radio" value="Fire"      name="type" />Fire</label>
+                    <label><input type="radio" value="Water"     name="type" />Water</label>
+                    <label><input type="radio" value="Lightning" name="type" />Lightning</label>
+                    <label><input type="radio" value="Psychic"   name="type" />Psychic</label>
+                    <label><input type="radio" value="Fighting"  name="type" />Fighting</label>
+                    <label><input type="radio" value="Darkness"  name="type" />Darkness</label>
+                    <label><input type="radio" value="Metal"     name="type" />Metal</label>
+                    <label><input type="radio" value="Dragon"    name="type" />Dragon</label>
+                    <label><input type="radio" value="Fairy"     name="type" />Fairy</label>
+                    <label><input type="radio" value="Colorless" name="type" />Colorless</label>
+                </div>
+
+
+                <br><br>
+                <button id="search-button">Search</button>
+
+            </div>
+        </ul>
+    </div>
+    <div class="chargementCatalog"></div>
+    <div class="col s12 m8 l9">
+        <!-- Teal page content  -->
+        <div class="row responsive-img" id="pokeResults">
+
+        </div>
+    </div>
+</div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h4 id="modal-card-name"></h4>
+        <h2 id="modal-card-type"></h2>
+        <img class="responsive-img" src="" alt="" id="modal-card-image">
+        <table class="responsive-table highlight">
+
+
+            <tbody>
+            <!--            <tr>-->
+            <!--                <td>Holofoil Market Price</td>-->
+            <!--                <td id="modal-HoloFoil-price"></td>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td>Reverse Holofoil Market Price</td>-->
+            <!--                <td id="modal-reverseHolofoil-price"></td>-->
+
+            <!--            </tr>-->
+            <tr>
+                <td>Normal Market Price</td>
+                <td id="modal-normal-price"></td>
+
+            </tr>
+            </tbody>
+        </table>
+        <button id="card-saver"><img class="responsive-img" src=images/Pball.jpg></button>
+
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="collections-modal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="col s12 m8 l9">
+            <div class="row" id="collection-results"></div>
+        </div>
+    </div>
+</div>
+
+<footer></footer>
+
+<script src="./js/global.script.ts"></script>
+<script src="./js/loader.script.js" id="loader"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="./js/index.script.js"></script>
+<script src="./js/header.script.js"></script>
+</body>
+
+</html>
